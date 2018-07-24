@@ -1,4 +1,4 @@
-$( iset.mm - Version of 10-Jun-2018
+$( iset.mm - Version of 22-Jul-2018
 
 Created by Mario Carneiro, starting from the 21-Jan-2015 version of
 set.mm
@@ -53,6 +53,10 @@ processed manually.
 
 DONE:
 Date      Old       New         Notes
+9-Jul-18  a4ime     spimeh
+9-Jul-18  a4im      spimh
+9-Jul-18  a4imt     spimth
+9-Jul-18  a4i       spi
 23-May-18 sb8eu     sb8euh
 23-May-18 sb8e      sb8eh
 23-May-18 sb8       sb8h
@@ -5061,9 +5065,9 @@ $)
   pm5.19 $p |- -. ( ph <-> -. ph ) $=
     ( wn wb bi1 pm2.01d id mpbird pm2.65i ) AABZCZAJAIJAAIDEZJFGKH $.
 
-  $( Theorem *4.8 of [WhiteheadRussell] p. 122.  This one is valid in
-     intuitionistic logic, whereas ~ pm4.81 is not.  (Contributed by NM,
-     3-Jan-2005.) $)
+  $( Theorem *4.8 of [WhiteheadRussell] p. 122.  This one holds for all
+     propositions, but compare with ~ pm4.81dc which requires a decidability
+     condition.  (Contributed by NM, 3-Jan-2005.) $)
   pm4.8 $p |- ( ( ph -> -. ph ) <-> -. ph ) $=
     ( wn wi pm2.01 ax-1 impbii ) AABZCGADGAEF $.
 
@@ -5072,6 +5076,14 @@ $)
   imnan $p |- ( ( ph -> -. ps ) <-> -. ( ph /\ ps ) ) $=
     ( wn wi wa pm3.2im imp con2i pm3.2 con3rr3 impbii ) ABCDZABEZCMLABLCABFGHAB
     MABIJK $.
+
+  ${
+    imnani.1 $e |- -. ( ph /\ ps ) $.
+    $( Express implication in terms of conjunction.  (Contributed by Mario
+       Carneiro, 28-Sep-2015.) $)
+    imnani $p |- ( ph -> -. ps ) $=
+      ( wn wi wa imnan mpbir ) ABDEABFDCABGH $.
+  $}
 
   $( Theorem to move a conjunct in and out of a negation.  (Contributed by NM,
      9-Nov-2003.) $)
@@ -6183,6 +6195,11 @@ $)
     ( wdc wi wn wo notnotdc imbi1d wb dcn dfordc syl bitr4d ) ACZABDA
     EZEZBDZOBFZNAPBAGHNOCRQIAJOBKLM $.
 
+  $( Implication in terms of disjunction.  One direction of theorem *4.6 of
+     [WhiteheadRussell] p. 120.  (Contributed by Jim Kingdon, 21-Jul-2018.) $)
+  imorr $p |- ( ( -. ph \/ ps ) -> ( ph -> ps ) ) $=
+    ( wn wi ax-in2 ax-1 jaoi ) ACABDBABEBAFG $.
+
   $( Implication in terms of disjunction.  Like Theorem *4.62 of
      [WhiteheadRussell] p. 120, but for a decidable antecedent.  (Contributed
      by Jim Kingdon, 21-Apr-2018.) $)
@@ -6277,6 +6294,12 @@ $)
   pm2.26dc $p |- ( DECID ph -> ( -. ph \/ ( ( ph -> ps ) -> ps ) ) ) $=
     ( wdc wi wn wo pm2.27 imordc mpbii ) ACAABDBDZDAEJFABGAJHI $.
 
+  $( Theorem *4.81 of [WhiteheadRussell] p. 122, for decidable propositions.
+     This one needs a decidability condition, but compare with ~ pm4.8 which
+     holds for all propositions.  (Contributed by Jim Kingdon, 4-Jul-2018.) $)
+  pm4.81dc $p |- ( DECID ph -> ( ( -. ph -> ph ) <-> ph ) ) $=
+    ( wdc wn wi pm2.18dc pm2.24 impbid1 ) ABACADAAEAAFG $.
+
   $( A decidable proposition or its negation implies a second proposition.
      Based on theorem *5.11 of [WhiteheadRussell] p. 123.  (Contributed by Jim
      Kingdon, 29-Mar-2018.) $)
@@ -6312,6 +6335,25 @@ $)
         ( ( ( ph \/ ps ) <-> ph ) \/ ( ( ph \/ ps ) <-> ps ) ) ) $=
     ( wdc wn wo wb df-dc biort bicomd biorf orim12i sylbi ) ACAADZEAB
     EZAFZNBFZEAGAOMPAANABHIMBNABJIKL $.
+
+  $( Peirce's theorem for a decidable proposition.  This odd-looking theorem
+     can be seen as an alternative to ~ exmiddc , ~ condc , or ~ notnotdc in
+     the sense of expressing the "difference" between an intuitionistic system
+     of propositional calculus and a classical system.  In intuitionistic
+     logic, it only holds for decidable propositions.  (Contributed by Jim
+     Kingdon, 3-Jul-2018.) $)
+  peircedc $p |- ( DECID ph -> ( ( ( ph -> ps ) -> ph ) -> ph ) ) $=
+    ( wdc wn wo wi df-dc ax-1 pm2.21 imim1i com12 jaoi sylbi ) ACAADZ
+    EABFZAFZAFZAGAQNAPHPNANOAABIJKLM $.
+
+  $( The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
+     of Lukasiewicz, but where one of the propositions is decidable.  Using
+     ~ dfor2dc , we can see that this expresses "disjunction commutes."
+     Theorem *2.69 of [WhiteheadRussell] p. 108 (plus the decidability
+     condition).  (Contributed by NM, 12-Aug-2004.) $)
+  looinvdc $p |- ( DECID ph ->
+      ( ( ( ph -> ps ) -> ps ) -> ( ( ps -> ph ) -> ph ) ) ) $=
+    ( wi wdc imim1 peircedc syl9r ) ABCZBCBACHACADAHBAEABFG $.
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -9051,8 +9093,8 @@ $)
     FUDABGUFTUBHUGUAUHUCUAATEZFUIUAFUAUGUAUIIUIUAAJKABTLPABMNOUAUCIUAUEUCBTQRO
     $.
 
-  $( A consequence of exclusive or.  In classical logic this would be an
-     equivalence.  (Contributed by Jim Kingdon, 8-Mar-2018.) $)
+  $( A consequence of exclusive or.  In classical logic the converse also
+     holds.  (Contributed by Jim Kingdon, 8-Mar-2018.) $)
   xorbin $p  |- ( ( ph \/_ ps ) -> ( ph <-> -. ps ) ) $=
     ( wn wo wa wi df-xor imnan biimpri adantl sylbi pm2.53 orcoms adantr impbid
     wxo ) ABPZABCZQABDZABECZEZARFZABGZTUBSUBTABHIJKQUARAFZUCSUDTBAUDBALMNKO $.
@@ -9062,8 +9104,9 @@ $)
   pm5.18im $p |- ( ( ph <-> ps ) -> -. ( ph <-> -. ps ) ) $=
     ( wb wn pm5.19 bibi1 notbid mpbiri ) ABCZABDZCZDBJCZDBEIKLABJFGH $.
 
-  $( A consequence of exclusive or.  In classical logic this would be an
-     equivalence.  (Contributed by Jim Kingdon, 10-Mar-2018.) $)
+  $( A consequence of exclusive or.  For decidable propositions this is an
+     equivalence, as seen at ~ xornbidc .  (Contributed by Jim Kingdon,
+     10-Mar-2018.) $)
   xornbi $p  |- ( ( ph \/_ ps ) -> -. ( ph <-> ps ) ) $=
     ( wxo wn wb xorbin pm5.18im con2i syl ) ABCABDEZABEZDABFKJABGHI $.
 
@@ -9150,7 +9193,7 @@ $)
     HDZUFUJDZUNUOFUEURUFUCUDURABLMNUEUFOZUCUDUFUSUCUFUIDZUDUSACLZBUILPQUHCUJIRS
     UGUFUDVAULUKFUTUCUDUFTUCUFVAUDUCUFVAVBMUACBUIIRUB $.
 
-  $( An alternate definition of the biconditional for decicable propositions.
+  $( An alternate definition of the biconditional for decidable propositions.
      Theorem *5.23 of [WhiteheadRussell] p. 124, but with decidability
      conditions.  (Contributed by Jim Kingdon, 5-May-2018.) $)
   dfbi3dc $p |- ( DECID ph -> ( DECID ps ->
@@ -9167,6 +9210,19 @@ $)
                 ( ( ph /\ -. ps ) \/ ( ps /\ -. ph ) ) ) ) ) $=
     ( wdc wa wn wo wb dfbi3dc imp notbid xordc bitr3d ex ) ACZBCZABDA
     EZBEZDFZEZAQDBPDFZGNODZABGZEZSTUAUBRNOUBRGABHIJNOUCTGABKILM $.
+
+  $( Conjunction distributes over exclusive-or, for decidable propositions.
+     This is one way to interpret the distributive law of multiplication over
+     addition in modulo 2 arithmetic.  (Contributed by Jim Kingdon,
+     14-Jul-2018.) $)
+  xordidc $p |- ( DECID ph -> ( DECID ps -> ( DECID ch ->
+    ( ( ph /\ ( ps \/_ ch ) ) <->
+      ( ( ph /\ ps ) \/_ ( ph /\ ch ) ) ) ) ) ) $=
+    ( wdc wxo wa wb wn dcbi imp wi annimdc pm5.32 notbii syl6bb sylan2 xornbidc
+    adantl anbi2d dcan adantrr adantrl sylc 3bitr4d exp32 ) ADZBDZCDZABCEZFZABF
+    ZACFZEZGUFUGUHFZFZABCGZHZFZUKULGZHZUJUMUNUFUPDZURUTGUGUHVABCIJUFVAFURAUPKZH
+    ZUTUFVAURVCGAUPLJVBUSABCMNOPUOUIUQAUNUIUQGZUFUGUHVDBCQJRSUOUKDZULDZUMUTGUFU
+    GVEUHUFUGVEABTJUAUFUHVFUGUFUHVFACTJUBUKULQUCUDUE $.
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -9567,6 +9623,7 @@ $)
   $v w $.
   $v v $.
   $v u $.
+  $v t $.
   $( Let ` x ` be an individual variable. $)
   vx $f set x $.
   $( Let ` y ` be an individual variable. $)
@@ -9579,6 +9636,8 @@ $)
   vv $f set v $.
   $( Let ` u ` be an individual variable. $)
   vu $f set u $.
+  $( Let ` t ` be an individual variable. $)
+  vt $f set t $.
 
   $( Extend wff definition to include the universal quantifier ('for all').
      ` A. x ph ` is read " ` ph ` (phi) is true for all ` x ` ."  Typically, in
@@ -9608,7 +9667,7 @@ $)
        calculus.  See e.g.  Rule 2 of [Hamilton] p. 74.  This rule says that if
        something is unconditionally true, then it is true for all values of a
        variable.  For example, if we have proved ` x = x ` , we can conclude
-       ` A. x x = x ` or even ` A. y x = x ` .  Theorem ~ a4i shows we can go
+       ` A. x x = x ` or even ` A. y x = x ` .  Theorem ~ spi shows we can go
        the other way also: in other words we can add or remove universal
        quantifiers from the beginning of any theorem as required.  (Contributed
        by NM, 5-Aug-1993.) $)
@@ -10517,10 +10576,10 @@ $)
 
 
   ${
-    a4i.1 $e |- A. x ph $.
+    spi.1 $e |- A. x ph $.
     $( Inference rule reversing generalization.  (Contributed by NM,
        5-Aug-1993.) $)
-    a4i $p |- ph $=
+    spi $p |- ph $=
       ( wal ax-4 ax-mp ) ABDACABEF $.
   $}
 
@@ -10621,32 +10680,42 @@ $)
     ( wal hba1 hbim ) ACDBCDCACEBCEF $.
 
   ${
-    19.3.1 $e |- ( ph -> A. x ph ) $.
+    19.3h.1 $e |- ( ph -> A. x ph ) $.
     $( A wff may be quantified with a variable not free in it.  Theorem 19.3 of
        [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.)  (Revised by NM,
        21-May-2007.) $)
-    19.3 $p |- ( A. x ph <-> ph ) $=
+    19.3h $p |- ( A. x ph <-> ph ) $=
       ( wal ax-4 impbii ) ABDAABECF $.
+  $}
+
+  ${
+    19.3.1 $e |- F/ x ph $.
+    $( A wff may be quantified with a variable not free in it.  Theorem 19.3 of
+       [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
+       Carneiro, 24-Sep-2016.) $)
+    19.3 $p |- ( A. x ph <-> ph ) $=
+      ( wal sp nfri impbii ) ABDAABEABCFG $.
   $}
 
   ${
     19.16.1 $e |- ( ph -> A. x ph ) $.
     $( Theorem 19.16 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
     19.16 $p |- ( A. x ( ph <-> ps ) -> ( ph <-> A. x ps ) ) $=
-      ( wal wb 19.3 albi syl5bbr ) AACEABFCEBCEACDGABCHI $.
+      ( wal wb 19.3h albi syl5bbr ) AACEABFCEBCEACDGABCHI $.
   $}
 
   ${
     19.17.1 $e |- ( ps -> A. x ps ) $.
     $( Theorem 19.17 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
     19.17 $p |- ( A. x ( ph <-> ps ) -> ( A. x ph <-> ps ) ) $=
-      ( wb wal albi 19.3 syl6bb ) ABECFACFBCFBABCGBCDHI $.
+      ( wb wal albi 19.3h syl6bb ) ABECFACFBCFBABCGBCDHI $.
   $}
 
   ${
     19.21h.1 $e |- ( ph -> A. x ph ) $.
     $( Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
-       as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.) $)
+       as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) $)
     19.21h $p |- ( A. x ( ph -> ps ) <-> ( ph -> A. x ps ) ) $=
       ( wi wal alim syl5 hba1 hbim ax-4 imim2i alrimih impbii ) ABEZCFZABCFZEZAA
       CFPQDABCGHROCAQCDBCIJQBABCKLMN $.
@@ -10659,20 +10728,6 @@ $)
        by NM, 4-Feb-2005.) $)
     19.21-2 $p |- ( A. x A. y ( ph -> ps ) <-> ( ph -> A. x A. y ps ) ) $=
       ( wi wal 19.21h albii bitri ) ABGDHZCHABDHZGZCHAMCHGLNCABDFIJAMCEIK $.
-  $}
-
-  ${
-    stdpc5.1 $e |- ( ph -> A. x ph ) $.
-    $( An axiom scheme of standard predicate calculus that emulates Axiom 5 of
-       [Mendelson] p. 69.  The hypothesis ` ( ph -> A. x ph ) ` can be thought
-       of as emulating " ` x ` is not free in ` ph ` ."  With this convention,
-       the meaning of "not free" is less restrictive than the usual textbook
-       definition; for example ` x ` would not (for us) be free in ` x = x ` by
-       ~ hbequid .  This theorem scheme can be proved as a metatheorem of
-       Mendelson's axiom system, even though it is slightly stronger than his
-       Axiom 5.  (Contributed by NM, 22-Sep-1993.) $)
-    stdpc5 $p |- ( A. x ( ph -> ps ) -> ( ph -> A. x ps ) ) $=
-      ( wi wal 19.21h biimpi ) ABECFABCFEABCDGH $.
   $}
 
   ${
@@ -10695,14 +10750,14 @@ $)
     19.27.1 $e |- ( ps -> A. x ps ) $.
     $( Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
     19.27 $p |- ( A. x ( ph /\ ps ) <-> ( A. x ph /\ ps ) ) $=
-      ( wa wal 19.26 19.3 anbi2i bitri ) ABECFACFZBCFZEKBEABCGLBKBCDHIJ $.
+      ( wa wal 19.26 19.3h anbi2i bitri ) ABECFACFZBCFZEKBEABCGLBKBCDHIJ $.
   $}
 
   ${
     19.28.1 $e |- ( ph -> A. x ph ) $.
     $( Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
     19.28 $p |- ( A. x ( ph /\ ps ) <-> ( ph /\ A. x ps ) ) $=
-      ( wa wal 19.26 19.3 anbi1i bitri ) ABECFACFZBCFZEALEABCGKALACDHIJ $.
+      ( wa wal 19.26 19.3h anbi1i bitri ) ABECFACFZBCFZEALEABCGKALACDHIJ $.
   $}
 
   ${
@@ -10840,7 +10895,7 @@ $)
     ( wal nfa1 nfim ) ACDBCDCACEBCEF $.
 
   $( Closed form of Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
-     27-May-1997.) $)
+     27-May-1997.)  (New usage is discouraged.) $)
   19.21ht $p |- ( A. x ( ph -> A. x ph ) ->
                ( A. x ( ph -> ps ) <-> ( ph -> A. x ps ) ) ) $=
     ( wal wi alim imim2d com12 sps hba1 ax-4 a1i hbimd imim2i alimi syl6 impbid
@@ -10860,6 +10915,21 @@ $)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
     19.21 $p |- ( A. x ( ph -> ps ) <-> ( ph -> A. x ps ) ) $=
       ( wnf wi wal wb 19.21t ax-mp ) ACEABFCGABCGFHDABCIJ $.
+  $}
+
+  ${
+    stdpc5.1 $e |- F/ x ph $.
+    $( An axiom scheme of standard predicate calculus that emulates Axiom 5 of
+       [Mendelson] p. 69.  The hypothesis ` F/ x ph ` can be thought of as
+       emulating " ` x ` is not free in ` ph ` ."  With this definition, the
+       meaning of "not free" is less restrictive than the usual textbook
+       definition; for example ` x ` would not (for us) be free in ` x = x ` by
+       ~ nfequid .  This theorem scheme can be proved as a metatheorem of
+       Mendelson's axiom system, even though it is slightly stronger than his
+       Axiom 5.  (Contributed by NM, 22-Sep-1993.)  (Revised by Mario Carneiro,
+       12-Oct-2016.)  (Proof shortened by Wolf Lammen, 1-Jan-2018.) $)
+    stdpc5 $p |- ( A. x ( ph -> ps ) -> ( ph -> A. x ps ) ) $=
+      ( wi wal 19.21 biimpi ) ABECFABCFEABCDGH $.
   $}
 
   ${
@@ -10913,7 +10983,7 @@ $)
   $( If a wff is true, it is true for at least one instance.  Special case of
      Theorem 19.8 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
   19.8a $p |- ( ph -> E. x ph ) $=
-    ( wex wi wal id hbe1 19.23 mpbir a4i ) AABCZDZBLBEKKDKFAKBABGHIJ $.
+    ( wex wi wal id hbe1 19.23 mpbir spi ) AABCZDZBLBEKKDKFAKBABGHIJ $.
 
   ${
     19.23bi.1 $e |- ( E. x ph -> ps ) $.
@@ -10924,19 +10994,28 @@ $)
   $}
 
   ${
-    exlimi.1 $e |- ( ps -> A. x ps ) $.
-    exlimi.2 $e |- ( ph -> ps ) $.
+    exlimih.1 $e |- ( ps -> A. x ps ) $.
+    exlimih.2 $e |- ( ph -> ps ) $.
     $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
-    exlimi $p |- ( E. x ph -> ps ) $=
+    exlimih $p |- ( E. x ph -> ps ) $=
       ( wi wex 19.23 mpgbi ) ABFACGBFCABCDHEI $.
+  $}
+
+  ${
+    exlimi.1 $e |- F/ x ps $.
+    exlimi.2 $e |- ( ph -> ps ) $.
+    $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) $)
+    exlimi $p |- ( E. x ph -> ps ) $=
+      ( nfri exlimih ) ABCBCDFEG $.
   $}
 
   ${
     exlimd2.1 $e |- ( ph -> A. x ph ) $.
     exlimd2.2 $e |- ( ph -> ( ch -> A. x ch ) ) $.
     exlimd2.3 $e |- ( ph -> ( ps -> ch ) ) $.
-    $( Deduction from Theorem 19.23 of [Margaris] p. 90.  Similar to ~ exlimd
+    $( Deduction from Theorem 19.23 of [Margaris] p. 90.  Similar to ~ exlimdh
        but with one slightly different hypothesis.  (Contributed by Jim
        Kingdon, 30-Dec-2017.) $)
     exlimd2 $p |- ( ph -> ( E. x ps -> ch ) ) $=
@@ -10945,13 +11024,24 @@ $)
   $}
 
   ${
-    exlimd.1 $e |- ( ph -> A. x ph ) $.
-    exlimd.2 $e |- ( ch -> A. x ch ) $.
-    exlimd.3 $e |- ( ph -> ( ps -> ch ) ) $.
+    exlimdh.1 $e |- ( ph -> A. x ph ) $.
+    exlimdh.2 $e |- ( ch -> A. x ch ) $.
+    exlimdh.3 $e |- ( ph -> ( ps -> ch ) ) $.
     $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        28-Jan-1997.) $)
-    exlimd $p |- ( ph -> ( E. x ps -> ch ) ) $=
+    exlimdh $p |- ( ph -> ( E. x ps -> ch ) ) $=
       ( wi wal wex alrimih 19.23 sylib ) ABCHZDIBDJCHANDEGKBCDFLM $.
+  $}
+
+  ${
+    exlimd.1 $e |- F/ x ph $.
+    exlimd.2 $e |- F/ x ch $.
+    exlimd.3 $e |- ( ph -> ( ps -> ch ) ) $.
+    $( Deduction from Theorem 19.9 of [Margaris] p. 89.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.)  (Proof rewritten by Jim Kingdon,
+       18-Jun-2018.) $)
+    exlimd $p |- ( ph -> ( E. x ps -> ch ) ) $=
+      ( nfri exlimdh ) ABCDADEHCDFHGI $.
   $}
 
   ${
@@ -10984,13 +11074,13 @@ $)
        the final theorem ` ps ` .  (Contributed by NM, 5-Aug-1993.)  (Revised
        by NM, 25-Jul-2012.) $)
     exlimiv $p |- ( E. x ph -> ps ) $=
-      ( ax-17 exlimi ) ABCBCEDF $.
+      ( ax-17 exlimih ) ABCBCEDF $.
   $}
 
   $( Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Wolf Lammen, 4-Jul-2014.) $)
   exim $p |- ( A. x ( ph -> ps ) -> ( E. x ph -> E. x ps ) ) $=
-    ( wi wal wex hba1 hbe1 19.8a imim2i sps exlimd ) ABDZCEABCFZCMCGBCHMANDCBNA
+    ( wi wal wex hba1 hbe1 19.8a imim2i sps exlimdh ) ABDZCEABCFZCMCGBCHMANDCBNA
     BCIJKL $.
 
   ${
@@ -11004,6 +11094,14 @@ $)
        consequent.  (Contributed by NM, 3-Feb-2005.) $)
     2eximi $p |- ( E. x E. y ph -> E. x E. y ps ) $=
       ( wex eximi ) ADFBDFCABDEGG $.
+  $}
+
+  ${
+    eximii.1 $e |- E. x ph $.
+    eximii.2 $e |- ( ph -> ps ) $.
+    $( Inference associated with ~ eximi .  (Contributed by BJ, 3-Feb-2018.) $)
+    eximii $p |- E. x ps $=
+      ( wex eximi ax-mp ) ACFBCFDABCEGH $.
   $}
 
   $( A transformation of quantifiers and logical connectives.  (Contributed by
@@ -11151,8 +11249,9 @@ $)
     ( wal wex wa 19.29r 19.29 eximi syl ) ADEZCFBDFZCEGLMGZCFABGDFZCFLMCHNOCABD
     IJK $.
 
-  $( Forward direction of Theorem 19.35 of [Margaris] p. 90.  (Contributed by
-     Mario Carneiro, 2-Feb-2015.) $)
+  $( Forward direction of Theorem 19.35 of [Margaris] p. 90.  The converse
+     holds for classical logic but not (for all propositions) in intuitionistic
+     logic (Contributed by Mario Carneiro, 2-Feb-2015.) $)
   19.35-1 $p |- ( E. x ( ph -> ps ) -> ( A. x ph -> E. x ps ) ) $=
     ( wal wi wex wa 19.29 pm3.35 eximi syl expcom ) ACDZABEZCFZBCFZMOGANGZCFPAN
     CHQBCABIJKL $.
@@ -11172,10 +11271,18 @@ $)
     ( wi wex wal 19.35-1 alimi exim syl ) ABECFZDGACGZBCFZEZDGMDFNDFELODABCHIMN
     DJK $.
 
+  $( Theorem 19.30 of [Margaris] p. 90, with an additional decidability
+     condition.  (Contributed by Jim Kingdon, 21-Jul-2018.) $)
+  19.30dc $p |- ( DECID E. x ps ->
+      ( A. x ( ph \/ ps ) -> ( A. x ph \/ E. x ps ) ) ) $=
+    ( wex wdc wn wo wal wi df-dc olc a1d alnex al2imi sylbir orc syl6
+    orel2 jaoi sylbi ) BCDZEUAUAFZGABGZCHZACHZUAGZIZUAJUAUGUBUAUFUDUA
+    UEKLUBUDUEUFUBBFZCHUDUEIBCMUHUCACBARNOUEUAPQST $.
+
   $( Theorem 19.43 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Mario Carneiro, 2-Feb-2015.) $)
   19.43 $p |- ( E. x ( ph \/ ps ) <-> ( E. x ph \/ E. x ps ) ) $=
-    ( wo wex hbe1 hbor 19.8a orim12i exlimi orc eximi olc jaoi impbii ) ABDZCEZ
+    ( wo wex hbe1 hbor 19.8a orim12i exlimih orc eximi olc jaoi impbii ) ABDZCEZ
     ACEZBCEZDZPTCRSCACFBCFGARBSACHBCHIJRQSAPCABKLBPCBAMLNO $.
 
   $( The antecedent provides a condition implying the converse of ~ 19.33 .
@@ -11224,7 +11331,7 @@ $)
     $( If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by NM, 5-Aug-1993.)  (Revised by NM, 2-Feb-2015.) $)
     hbex $p |- ( E. y ph -> A. x E. y ph ) $=
-      ( wex wal hbe1 hbal 19.8a alrimih exlimi ) AACEZBFCLCBACGHALBDACIJK $.
+      ( wex wal hbe1 hbal 19.8a alrimih exlimih ) AACEZBFCLCBACGHALBDACIJK $.
   $}
 
   ${
@@ -11240,6 +11347,23 @@ $)
      (Contributed by O'Cat, 31-Mar-2008.) $)
   19.2 $p |- ( A. x ph -> E. y ph ) $=
     ( wex 19.8a sps ) AACDBACEF $.
+
+  ${
+    i19.24.1 $e |- ( ( A. x ph -> E. x ps ) -> E. x ( ph -> ps ) ) $.
+    $( Theorem 19.24 of [Margaris] p. 90, with an additional hypothesis.  The
+       hypothesis is the converse of ~ 19.35-1 , and is a theorem of classical
+       logic, but in intuitionistic logic it will only be provable for some
+       propositions.  (Contributed by Jim Kingdon, 22-Jul-2018.) $)
+    i19.24 $p |- ( ( A. x ph -> A. x ps ) -> E. x ( ph -> ps ) ) $=
+      ( wal wi wex 19.2 imim2i syl ) ACEZBCEZFKBCGZFABFCGLMKBCCHIDJ $.
+
+    $( Theorem 19.39 of [Margaris] p. 90, with an additional hypothesis.  The
+       hypothesis is the converse of ~ 19.35-1 , and is a theorem of classical
+       logic, but in intuitionistic logic it will only be provable for some
+       propositions.  (Contributed by Jim Kingdon, 22-Jul-2018.) $)
+    i19.39 $p |- ( ( E. x ph -> E. x ps ) -> E. x ( ph -> ps ) ) $=
+      ( wex wi wal 19.2 imim1i syl ) ACEZBCEZFACGZLFABFCEMKLACCHIDJ $.
+  $}
 
   $( A closed version of one direction of ~ 19.9 .  (Contributed by NM,
      5-Aug-1993.) $)
@@ -11271,13 +11395,31 @@ $)
       ( nfri 19.9h ) ABABCDE $.
   $}
 
+  $( One direction of theorem 19.6 of [Margaris] p. 89.  (Contributed by Jim
+     Kingdon, 2-Jul-2018.) $)
+  alexim $p |- ( A. x ph -> -. E. x -. ph ) $=
+    ( wal wn wex wfal wi pm2.24 alimi exim syl nfv 19.9 syl6ib sylibr
+    dfnot ) ABCZADZBEZFGSDQSFBEZFQRFGZBCSTGAUABAFHIRFBJKFBFBLMNSPO $.
+
+  $( One direction of Theorem 19.14 of [Margaris] p. 90.  In classical logic
+     the converse also holds.  (Contributed by Jim Kingdon, 15-Jul-2018.) $)
+  exnalim $p |- ( E. x -. ph -> -. A. x ph ) $=
+    ( wal wn wex alexim con2i ) ABCADBEABFG $.
+
+  $( A transformation of quantifiers and logical connectives.  In classical
+     logic the converse also holds.  (Contributed by Jim Kingdon,
+     15-Jul-2018.) $)
+  exanaliim $p |- ( E. x ( ph /\ -. ps ) -> -. A. x ( ph -> ps ) ) $=
+    ( wn wa wex wi wal annimim eximi exnalim syl ) ABDEZCFABGZDZCFNCH
+    DMOCABIJNCKL $.
+
   ${
     ax6blem.1 $e |- ( ph -> A. x ph ) $.
     $( If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .  This
        theorem doesn't use ~ ax6b compared to ~ hbnt .  (Contributed by GD,
        27-Jan-2018.) $)
     ax6blem $p |- ( -. ph -> A. x -. ph ) $=
-      ( wn wex wal id exlimi con3i alnex sylibr ) ADZABEZDLBFMAAABCAGHIABJK $.
+      ( wn wex wal id exlimih con3i alnex sylibr ) ADZABEZDLBFMAAABCAGHIABJK $.
   $}
 
   $( Quantified Negation.  Axiom C5-2 of [Monk2] p. 113.
@@ -11398,13 +11540,59 @@ $)
     ( wnf wex wal wi nf2 nfe1 nfri 19.21h bitr4i ) ABCABDZABEFLAFBEABGLABLBABHIJ
     K $.
 
+  $( Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
+     or always false, given a decidability condition.  The reverse direction,
+     ~ nf4r , holds for all propositions.  (Contributed by Jim Kingdon,
+     21-Jul-2018.) $)
+  nf4dc $p |- ( DECID E. x ph -> ( F/ x ph <-> ( A. x ph \/ A. x -. ph ) ) ) $=
+    ( wex wdc wnf wn wal wo wi nf2 imordc syl5bb orbi2i bitr4i syl6bb
+    orcom alnex ) ABCZDZABEZRFZABGZHZUBAFBGZHZTRUBISUCABJRUBKLUCUBUAH
+    UEUAUBPUDUAUBABQMNO $.
+
+  $( If ` ph ` is always true or always false, then variable ` x ` is
+     effectively not free in ` ph ` .  The converse holds given a decidability
+     condition, as seen at ~ nf4dc .  (Contributed by Jim Kingdon,
+     21-Jul-2018.) $)
+  nf4r $p |- ( ( A. x ph \/ A. x -. ph ) -> F/ x ph ) $=
+    ( wal wn wo wex wnf orcom alnex orbi2i bitr4i wi imorr nf2 sylibr
+    sylbir ) ABCZADBCZEZABFZDZQEZABGZUBQUAESUAQHRUAQABIJKUBTQLUCTQMAB
+    NOP $.
+
   ${
-    19.36i.1 $e |- ( ps -> A. x ps ) $.
+    19.36i.1 $e |- F/ x ps $.
     19.36i.2 $e |- E. x ( ph -> ps ) $.
     $( Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.)  (Revised by NM, 2-Feb-2015.) $)
     19.36i $p |- ( A. x ph -> ps ) $=
       ( wal wex 19.35i id exlimi syl ) ACFBCGBABCEHBBCDBIJK $.
+  $}
+
+  ${
+    19.36-1.1 $e |- F/ x ps $.
+    $( Closed form of ~ 19.36i .  One direction of Theorem 19.36 of [Margaris]
+       p. 90.  The converse holds in classical logic, but does not hold (for
+       all propositions) in intuitionistic logic.  (Contributed by Jim Kingdon,
+       20-Jun-2018.) $)
+    19.36-1 $p |- ( E. x ( ph -> ps ) -> ( A. x ph -> ps ) ) $=
+      ( wi wex wal 19.35-1 19.9 syl6ib ) ABECFACGBCFBABCHBCDIJ $.
+  $}
+
+  ${
+    19.37-1.1 $e |- F/ x ph $.
+    $( One direction of Theorem 19.37 of [Margaris] p. 90.  The converse holds
+       in classical logic but not, in general, here.  (Contributed by Jim
+       Kingdon, 21-Jun-2018.) $)
+    19.37-1 $p |- ( E. x ( ph -> ps ) -> ( ph -> E. x ps ) ) $=
+      ( wal wi wex 19.3 19.35-1 syl5bir ) AACEABFCGBCGACDHABCIJ $.
+  $}
+
+  ${
+    $d x ph $.
+    19.37aiv.1 $e |- E. x ( ph -> ps ) $.
+    $( Inference from Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) $)
+    19.37aiv $p |- ( ph -> E. x ps ) $=
+      ( wi wex nfv 19.37-1 ax-mp ) ABECFABCFEDABCACGHI $.
   $}
 
   $( Theorem 19.38 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
@@ -11453,7 +11641,7 @@ $)
     $( Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
     19.41h $p |- ( E. x ( ph /\ ps ) <-> ( E. x ph /\ ps ) ) $=
-      ( wa wex 19.40 id exlimi anim2i syl pm3.21 eximdh impcom impbii ) ABEZCFZA
+      ( wa wex 19.40 id exlimih anim2i syl pm3.21 eximdh impcom impbii ) ABEZCFZA
       CFZBEZQRBCFZESABCGTBRBBCDBHIJKBRQBAPCDBALMNO $.
   $}
 
@@ -11550,7 +11738,7 @@ $)
   $( An implication related to substitution.  (Contributed by NM, 5-Aug-1993.)
      (Revised by NM, 3-Feb-2015.) $)
   ax9o $p |- ( A. x ( x = y -> A. x ph ) -> ph ) $=
-    ( cv wceq wex wal wi a9e wa 19.29r hba1 pm3.35 exlimi ax-4 syl mpan ) BDCDE
+    ( cv wceq wex wal wi a9e wa 19.29r hba1 pm3.35 exlimih ax-4 syl mpan ) BDCDE
     ZBFZRABGZHZBGZABCISUBJRUAJZBFZARUABKUDTAUCTBABLRTMNABOPPQ $.
 
   ${
@@ -11564,9 +11752,17 @@ $)
        possible ways of proving this theorem.  (Contributed by NM,
        1-Apr-2005.) $)
     equid $p |- x = x $=
-      ( vy weq wex a9e ax-17 ax-8 pm2.43i exlimi ax-mp ) BACZBDAACZBAEKLBLBFKLB
+      ( vy weq wex a9e ax-17 ax-8 pm2.43i exlimih ax-mp ) BACZBDAACZBAEKLBLBFKLB
       AAGHIJ $.
   $}
+
+  $( Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+     that any variable, including ` x ` , is effectively not free in
+     ` x = x ` , even though ` x ` is technically free according to the
+     traditional definition of free variable.  (Contributed by NM,
+     13-Jan-2011.)  (Revised by NM, 21-Aug-2017.) $)
+  nfequid $p |- F/ y x = x $=
+    ( weq equid nfth ) AACBADE $.
 
   $( One of the two equality axioms of standard predicate calculus, called
      reflexivity of equality.  (The other one is ~ stdpc7 .)  Axiom 6 of
@@ -11738,7 +11934,7 @@ $)
     $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) $)
     equsal $p |- ( A. x ( x = y -> ph ) <-> ps ) $=
-      ( weq wi wal 19.3 syl6bbr pm5.74i albii a1d alrimih ax9o impbii bitr4i ) C
+      ( weq wi wal 19.3h syl6bbr pm5.74i albii a1d alrimih ax9o impbii bitr4i ) C
       DGZAHZCISBCIZHZCIZBTUBCSAUASABUAFBCEJKLMBUCBUBCEBUASENOBCDPQR $.
   $}
 
@@ -11748,7 +11944,7 @@ $)
     $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Revised by NM, 3-Feb-2015.) $)
     equsex $p |- ( E. x ( x = y /\ ph ) <-> ps ) $=
-      ( cv wceq wa wex biimpa exlimi a9e idd biimprcd jcad eximdh mpi impbii ) C
+      ( cv wceq wa wex biimpa exlimih a9e idd biimprcd jcad eximdh mpi impbii ) C
       GDGHZAIZCJZBUABCETABFKLBTCJUBCDMBTUACEBTTABTNTABFOPQRS $.
   $}
 
@@ -11808,20 +12004,31 @@ $)
       JBEJQSCDEOABPRFABCDEFKLKAEMBEMN $.
   $}
 
-  $( Closed theorem form of ~ a4im .  (Contributed by NM, 15-Jan-2008.) $)
-  a4imt $p |- ( A. x ( ( ps -> A. x ps ) /\ ( x = y -> ( ph -> ps ) ) ) ->
+  $( Closed theorem form of ~ spim .  (Contributed by NM, 15-Jan-2008.)
+     (New usage is discouraged.) $)
+  spimth $p |- ( A. x ( ( ps -> A. x ps ) /\ ( x = y -> ( ph -> ps ) ) ) ->
               ( A. x ph -> ps ) ) $=
     ( wal wi weq wa imim2 imim2d imp com23 al2imi ax9o syl6 ) BBCEZFZCDGZABFZFZ
     HZCEACERPFZCEBUAAUBCUARAPQTRAPFZFQSUCRBPAIJKLMBCDNO $.
 
+  $( Closed theorem form of ~ spim .  (Contributed by NM, 15-Jan-2008.)
+     (Revised by Mario Carneiro, 17-Oct-2016.)  (Proof shortened by Wolf
+     Lammen, 24-Feb-2018.) $)
+  spimt $p |- ( ( F/ x ps /\ A. x ( x = y -> ( ph -> ps ) ) ) ->
+              ( A. x ph -> ps ) ) $=
+    ( cv wceq wi wal wex wnf a9e mpi 19.35-1 syl 19.9t biimpd sylan9r
+    exim ) CEDEFZABGZGCHZACHZBCIZBCJZBUATCIZUBUCGUASCIUECDKSTCRLABCMN
+    UDUCBBCOPQ $.
+
   ${
-    a4im.1 $e |- ( ps -> A. x ps ) $.
-    a4im.2 $e |- ( x = y -> ( ph -> ps ) ) $.
+    spimh.1 $e |- ( ps -> A. x ps ) $.
+    spimh.2 $e |- ( x = y -> ( ph -> ps ) ) $.
     $( Specialization, using implicit substitition.  Compare Lemma 14 of
-       [Tarski] p. 70.  The ~ a4im series of theorems requires that only one
+       [Tarski] p. 70.  The ~ spim series of theorems requires that only one
        direction of the substitution hypothesis hold.  (Contributed by NM,
-       5-Aug-1993.)  (Revised by NM, 8-May-2008.) $)
-    a4im $p |- ( A. x ph -> ps ) $=
+       5-Aug-1993.)  (Revised by NM, 8-May-2008.)
+       (New usage is discouraged.) $)
+    spimh $p |- ( A. x ph -> ps ) $=
       ( wal weq wi syl6com alimi ax9o syl ) ACGCDHZBCGZIZCGBAPCNABOFEJKBCDLM $.
   $}
 
@@ -11834,26 +12041,48 @@ $)
        5-Aug-1993.)  (Revised by Mario Carneiro, 3-Oct-2016.)  (Proof rewritten
        by Jim Kingdon, 10-Jun-2018.) $)
     spim $p |- ( A. x ph -> ps ) $=
-      ( nfri a4im ) ABCDBCEGFH $.
+      ( nfri spimh ) ABCDBCEGFH $.
   $}
 
   ${
-    a4ime.1 $e |- ( ph -> A. x ph ) $.
-    a4ime.2 $e |- ( x = y -> ( ph -> ps ) ) $.
+    spimeh.1 $e |- ( ph -> A. x ph ) $.
+    spimeh.2 $e |- ( x = y -> ( ph -> ps ) ) $.
     $( Existential introduction, using implicit substitition.  Compare Lemma 14
        of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.)  (Revised by NM,
-       3-Feb-2015.) $)
-    a4ime $p |- ( ph -> E. x ps ) $=
+       3-Feb-2015.)  (New usage is discouraged.) $)
+    spimeh $p |- ( ph -> E. x ps ) $=
       ( cv wceq wex a9e com12 eximdh mpi ) ACGDGHZCIBCICDJANBCENABFKLM $.
   $}
 
   ${
-    a4imed.1 $e |- ( ch -> A. x ch ) $.
-    a4imed.2 $e |- ( ch -> ( ph -> A. x ph ) ) $.
-    a4imed.3 $e |- ( x = y -> ( ph -> ps ) ) $.
-    $( Deduction version of ~ a4ime .  (Contributed by NM, 5-Aug-1993.) $)
-    a4imed $p |- ( ch -> ( ph -> E. x ps ) ) $=
-      ( wex wa wal adantr imp 19.26 sylanbrc weq adantld a4ime ex ) CABDICAJZBD
+    spimed.1 $e |- ( ch -> F/ x ph ) $.
+    spimed.2 $e |- ( x = y -> ( ph -> ps ) ) $.
+    $( Deduction version of ~ spime .  (Contributed by NM, 5-Aug-1993.)
+       (Revised by Mario Carneiro, 3-Oct-2016.)  (Proof shortened by Wolf
+       Lammen, 19-Feb-2018.) $)
+    spimed $p |- ( ch -> ( ph -> E. x ps ) ) $=
+      ( wal wex nfrd weq wi a9e eximii 19.35i syl6 ) CAADHBDICADFJABDDEKABLDDEM
+      GNOP $.
+  $}
+
+  ${
+    spime.1 $e |- F/ x ph $.
+    spime.2 $e |- ( x = y -> ( ph -> ps ) ) $.
+    $( Existential introduction, using implicit substitution.  Compare Lemma 14
+       of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.)  (Revised by Mario
+       Carneiro, 3-Oct-2016.)  (Proof shortened by Wolf Lammen, 6-Mar-2018.) $)
+    spime $p |- ( ph -> E. x ps ) $=
+      ( wex wi wtru wnf a1i spimed trud ) ABCGHABICDACJIEKFLM $.
+  $}
+
+  ${
+    spimedh.1 $e |- ( ch -> A. x ch ) $.
+    spimedh.2 $e |- ( ch -> ( ph -> A. x ph ) ) $.
+    spimedh.3 $e |- ( x = y -> ( ph -> ps ) ) $.
+    $( Deduction version of ~ spime .  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) $)
+    spimedh $p |- ( ch -> ( ph -> E. x ps ) ) $=
+      ( wex wa wal adantr imp 19.26 sylanbrc weq adantld spimeh ex ) CABDICAJZBD
       ETCDKZADKZTDKCUAAFLCAUBGMCADNODEPABCHQRS $.
   $}
 
@@ -11963,7 +12192,7 @@ $)
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Feb-2015.) $)
     cbvexh $p |- ( E. x ph <-> E. y ps ) $=
-      ( wex hbex cv wceq wa wb bicomd equcoms equsex simpr eximi sylbir exlimi
+      ( wex hbex cv wceq wa wb bicomd equcoms equsex simpr eximi sylbir exlimih
       impbii ) ACHZBDHZAUCCBCDFIADJZCJZKZBLZDHUCBADCEBAMCDUEUDKZABGNOPUGBDUFBQR
       STBUBDADCEIBUHALZCHUBABCDFGPUIACUHAQRSTUA $.
   $}
@@ -11979,13 +12208,14 @@ $)
   $}
 
   ${
-    chv2.1 $e |- ( ps -> A. x ps ) $.
-    chv2.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
-    chv2.3 $e |- ph $.
+    chvar.1 $e |- F/ x ps $.
+    chvar.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    chvar.3 $e |- ph $.
     $( Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
-       by Raph Levien, 9-Jul-2003.) $)
+       by Raph Levien, 9-Jul-2003.)  (Revised by Mario Carneiro,
+       3-Oct-2016.) $)
     chvar $p |- ps $=
-      ( weq biimpd a4im mpg ) ABCABCDECDHABFIJGK $.
+      ( weq biimpd spim mpg ) ABCABCDECDHABFIJGK $.
   $}
 
   $( A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109,
@@ -12006,7 +12236,7 @@ $)
   equveli $p |- ( A. z ( z = x <-> z = y ) -> x = y ) $=
     ( cv wb wal wi wa albiim wo ax12or equequ1 imbi12d sps equid syl6bi adantrd
     wceq ax-4 jaoi dral2 a1bi biimpri dral1 mpi equcomi syl adantld hbequid a1i
-    hba1 hbimd equtr ax-8 imim12d ax-gen 19.26 a4imt sylbir sylancl ax-mp sylbi
+    hba1 hbimd equtr ax-8 imim12d ax-gen 19.26 spimth sylbir sylancl ax-mp sylbi
     a5i mpii ) CDZADZRZVEBDZRZECFVGVIGZCFZVIVGGZCFZHZVFVHRZVGVICIVGCFZVICFZVOVO
     CFGZCFZJZJVNVOGZABCKVPWAVTVPVKVOVMVPVKVFVFRZVOGZCFZVOVJWCCACVGVJWCECVGVGWBV
     IVOCAALCABLMNUAWCVOCVOWCWBVOAOZUBUCNPQVQWAVSVQVMVOVKVQVMVHVHRZVHVFRZGZBFZVO
@@ -12044,49 +12274,10 @@ $)
   $c / $. $( Division. $)
   $c ] $.  $( Right bracket $)
 
-  $( --- Start of patch to prevent connective overloading $)
-  ${
-    $v A $.
-    wsbc.cA $f class A $.
-    $( Extend wff notation to include the proper substitution of a class for a
-       set.  Read this notation as "the proper substitution of class ` A ` for
-       set variable ` x ` in wff ` ph ` ."
-
-       (The purpose of introducing ` wff [ A / x ] ph ` here is to allow us to
-       express i.e.  "prove" the ~ wsb of predicate calculus in terms of the
-       ~ wsbc of set theory, so that we don't "overload" its connectives with
-       two syntax definitions.  This is done to prevent ambiguity that would
-       complicate some Metamath parsers.  The class variable ` A ` is
-       introduced temporarily for the purpose of this definition but otherwise
-       not used in predicate calculus.) $)
-    wsbc $a wff [ A / x ] ph $.
-  $}
-
   $( Extend wff definition to include proper substitution (read "the wff that
      results when ` y ` is properly substituted for ` x ` in wff ` ph ` ").
-
-     (Instead of introducing ~ wsb as an axiomatic statement, as was done in an
-     older version of this database, we introduce it by "proving" a special
-     case of set theory's more general ~ wsbc .  This lets us avoid overloading
-     its connectives, thus preventing ambiguity that would complicate some
-     Metamath parsers.  Note:  To see the proof steps of this syntax proof,
-     type "show proof wsb /all" in the Metamath program.)  (Contributed by NM,
-     24-Jan-2006.) $)
-  wsb $p wff [ y / x ] ph $=
-    ( cv wsbc ) ABCDE $.
-  $( --- End of patch to prevent connective overloading $)
-
-  $( --- Start of old code before overloading prevention patch. $)
-  $(
-  @( Extend wff definition to include proper substitution (read "the wff that
-     results when ` y ` is properly substituted for ` x ` in wff ` ph ` ").
-
-     After we introduce ~ cv and ~ wsbc in set theory, this syntax construction
-     becomes redundant, since it can be derived with the proof
-     "wph vx vy cv wsbc". @)
-  wsb @a wff [ y / x ] ph @.
-  $)
-  $( --- End of old code before overloading prevention patch. $)
+     (Contributed by NM, 24-Jan-2006.) $)
+  wsb $a wff [ y / x ] ph $.
 
   $( Define proper substitution.  Remark 9.1 in [Megill] p. 447 (p. 15 of the
      preprint).  For our notation, we use ` [ y / x ] ph ` to mean "the wff
@@ -12122,9 +12313,9 @@ $)
      When ` x ` and ` y ` are distinct, we can express proper substitution with
      the simpler expressions of ~ sb5 and ~ sb6 .
 
-     In classical logic, we have additional equivalent definitions ~ dfsb2 and
-     ~ dfsb3 , but we do not have intuitionistic proofs that those are
-     equivalent.
+     In classical logic, another possible definition is
+     ` ( x = y /\ ph ) \/ A. x ( x = y -> ph ) ` but we do not have an
+     intuitionistic proof that this is equivalent.
 
      There are no restrictions on any of the variables, including what
      variables may occur in wff ` ph ` .  (Contributed by NM, 5-Aug-1993.) $)
@@ -12234,8 +12425,8 @@ $)
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        12-Aug-2011.) $)
     sb6x $p |- ( [ y / x ] ph <-> A. x ( x = y -> ph ) ) $=
-      ( cv wsbc wceq wi wal sbh biidd equsal bitr4i ) ABCEZFABENGZAHBIABCDJAABC
-      DOAKLM $.
+      ( wsb weq wi wal sbh biidd equsal bitr4i ) ABCEABCFZAGBHABCDIAABCDMAJKL
+      $.
   $}
 
   ${
@@ -12338,7 +12529,7 @@ $)
   $( A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) $)
   equs5a $p |- ( E. x ( x = y /\ A. y ph ) -> A. x ( x = y -> ph ) ) $=
-    ( weq wal wa wi hba1 ax-11 imp exlimi ) BCDZACEZFLAGZBEZBNBHLMOABCIJK $.
+    ( weq wal wa wi hba1 ax-11 imp exlimih ) BCDZACEZFLAGZBEZBNBHLMOABCIJK $.
 
   $( A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.)  (Revised by NM,
@@ -12461,18 +12652,15 @@ $)
     $( Version of ~ sbco where ` x ` is not free in ` ph ` .  (Contributed by
        Jim Kingdon, 28-Dec-2017.) $)
     sbcof2 $p |- ( [ y / x ] [ x / y ] ph <-> [ y / x ] ph ) $=
-      ( cv wsbc wceq wi wal sb6f bitri imim1i imim2i syl alimi wex wa
-      jca eximi sb5f hbsb3 imbi2i albii equcomi pm2.43 imim2d pm2.43b
-      ax-11 syl6 sylbi ax-i9 exim mpi ax-ial 19.9h biimpi sb2 3syl sb1
-      ax-ia1 19.8a ax11e anim1i ax-mp imdistani anbi2i exbii sylibr
-      idi impbii ) ACBEZFZBCEZFZABVMFZVNVKVMGZVPAHZBIZHZBIZVRVOVNVPVM
-      VKGZAHZCIZHZBIZVTVNVPVLHZBIWEVLBCACBDUAZJWFWDBVLWCVPACBDJUBUCKW
-      DVSBWDVPVRVPWCVRVPVPWCVPWBHZBIVRWBBCUHWHVQBWHVPVQHVQWBVQVPVPWAA
-      BCUDZLMVPAUENOUIUFUGOUJVTVRBPZVRVTVPBPWJBCUKVPVRBULUMWJVRVRBVQB
-      UNUOUPNABCUQURVOVPWAAQZCPZQZBPZVNVOVPVPAQZBPZQZBPZWNVOWPWRABCUS
-      WOWQBWOVPWPVPAUTZWOBVARSNWQWMBVPWPWLVPWPWLHZHZVPVPWKQZBPZWLHZHX
-      AWKBCVBXDWTVPWPXCWLWOXBBWOVPWKWSVPWAAWIVCRSLMVDVIVESNVNVPVLQZBP
-      WNVLBCWGTXEWMBVLWLVPACBDTVFVGKVHVJ $.
+      ( wsb weq wi wal hbsb3 sb6f imbi2i albii bitri alimi wex 3syl wa jca sb5f
+      eximi ax-11 equcomi imim1i imim2i pm2.43d syl6 a2i sylbi ax-i9 mpi ax-ial
+      exim 19.9h sylib sb2 sb1 ax-ia1 19.8a anim1i ax11e imdistani anbi2i exbii
+      syl5 sylibr impbii ) ACBEZBCEZABCEZVHBCFZVJAGZBHZGZBHZVLVIVHVJCBFZAGZCHZG
+      ZBHZVNVHVJVGGZBHVSVGBCACBDIZJVTVRBVGVQVJACBDJKLMVRVMBVJVQVLVJVQVJVPGZBHVL
+      VPBCUAWBVKBWBVJAVPVKVJVJVOABCUBZUCUDUENUFUGNUHVNVLBOZVLVNVJBOWDBCUIVJVLBU
+      LUJVLBVKBUKUMUNABCUOPVIVJVOAQZCOZQZBOZVHVIVJAQZBOZVJWJQZBOWHABCUPWIWKBWIV
+      JWJVJAUQZWIBURRTWKWGBVJWJWFWJVJWEQZBOVJWFWIWMBWIVJWEWLVJVOAWCUSRTWEBCUTVD
+      VATPVHVJVGQZBOWHVGBCWASWNWGBVGWFVJACBDSVBVCMVEVF $.
   $}
 
 $(
@@ -12489,11 +12677,11 @@ $)
 
   ${
     $d x ps $.
-    a4imv.1 $e |- ( x = y -> ( ph -> ps ) ) $.
-    $( A version of ~ a4im with a distinct variable requirement instead of a
+    spimv.1 $e |- ( x = y -> ( ph -> ps ) ) $.
+    $( A version of ~ spim with a distinct variable requirement instead of a
        bound variable hypothesis.  (Contributed by NM, 5-Aug-1993.) $)
-    a4imv $p |- ( A. x ph -> ps ) $=
-      ( ax-17 a4im ) ABCDBCFEG $.
+    spimv $p |- ( A. x ph -> ps ) $=
+      ( nfv spim ) ABCDBCFEG $.
   $}
 
   ${
@@ -12505,7 +12693,7 @@ $)
        the consequent, proved without using ~ ax-16 .  (Contributed by NM,
        8-Nov-2006.)  (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
     aev $p |- ( A. x x = y -> A. z w = v ) $=
-      ( aev.vf vu weq wal hbae ax-8 a4imv alrimih equcomi alequcoms a5i alequcom
+      ( aev.vf vu weq wal hbae ax-8 spimv alrimih equcomi alequcoms a5i alequcom
       syl6 3syl ) ABHZAIZDEHZCABCJUAFBHZFIZGEHZGIZUBUAUCFABFJTUCAFAFBKLMUDFGHZF
       IZEGHZEIUFUCUGFUGBFBFHZUGBGBGHUJGFHUGBGFKGFNRLOPUHUIEFGEJUGUIFEFEGKLMEGQS
       UEUBGDGDEKLSM $.
@@ -12599,7 +12787,7 @@ $)
     $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-1994.) $)
     exlimdv $p |- ( ph -> ( E. x ps -> ch ) ) $=
-      ( ax-17 exlimd ) ABCDADFCDFEG $.
+      ( ax-17 exlimdh ) ABCDADFCDFEG $.
   $}
 
   ${
@@ -12728,7 +12916,7 @@ $)
      5-Aug-1993.) $)
   equs5 $p |- ( -. A. x x = y ->
              ( E. x ( x = y /\ ph ) -> A. x ( x = y -> ph ) ) ) $=
-    ( weq wal wn wa wi hbnae hba1 ax11o imp3a exlimd ) BCDZBEFZNAGNAHZBEZBBCBIP
+    ( weq wal wn wa wi hbnae hba1 ax11o imp3a exlimdh ) BCDZBEFZNAGNAHZBEZBBCBIP
     BJONAQABCKLM $.
 
   ${
@@ -12836,26 +13024,25 @@ $)
      Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  (Contributed
      by NM, 27-Feb-2005.) $)
   drsb2 $p |- ( A. x x = y -> ( [ x / z ] ph <-> [ y / z ] ph ) ) $=
-    ( cv wceq wsbc wb sbequ sps ) BEZCEZFADKGADLGHBABCDIJ $.
+    ( weq wsb wb sbequ sps ) BCEADBFADCFGBABCDHI $.
 
   $( A specialization theorem, mostly the same as Theorem 19.8 of [Margaris]
      p. 89.  (Contributed by NM, 5-Aug-1993.)  (Proof rewritten by Jim Kingdon,
      29-Dec-2017.) $)
-  a4sbe $p |- ( [ y / x ] ph -> E. x ph ) $=
-    ( cv wsbc wceq wa wex sb1 ax-ia2 eximi syl ) ABCDZEBDMFZAGZBHABHA
-    BCIOABNAJKL $.
+  spsbe $p |- ( [ y / x ] ph -> E. x ph ) $=
+    ( wsb weq wa wex sb1 ax-ia2 eximi syl ) ABCDBCEZAFZBGABGABCHMABLAIJK $.
 
   $( Specialization of implication.  (Contributed by NM, 5-Aug-1993.)  (Proof
      rewritten by Jim Kingdon, 21-Jan-2018.) $)
-  a4sbim $p |- ( A. x ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) ) $=
+  spsbim $p |- ( A. x ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) ) $=
     ( wi wal weq wa wex wsb imim2 sps id anim2d alimi syl anim12d df-sb 3imtr4g
     exim ) ABEZCFZCDGZAEZUCAHZCIZHUCBEZUCBHZCIZHACDJBCDJUBUDUGUFUIUAUDUGECABUCK
     LUBUEUHEZCFUFUIEUAUJCUAABUCUAMNOUEUHCTPQACDRBCDRS $.
 
   $( Specialization of biconditional.  (Contributed by NM, 5-Aug-1993.)  (Proof
      rewritten by Jim Kingdon, 21-Jan-2018.) $)
-  a4sbbi $p |- ( A. x ( ph <-> ps ) -> ( [ y / x ] ph <-> [ y / x ] ps ) ) $=
-    ( wi wal wa wsb wb a4sbim anim12i albiim dfbi2 3imtr4i ) ABECFZBAECFZGACDHZ
+  spsbbi $p |- ( A. x ( ph <-> ps ) -> ( [ y / x ] ph <-> [ y / x ] ps ) ) $=
+    ( wi wal wa wsb wb spsbim anim12i albiim dfbi2 3imtr4i ) ABECFZBAECFZGACDHZ
     BCDHZEZRQEZGABICFQRIOSPTABCDJBACDJKABCLQRMN $.
 
   ${
@@ -12864,7 +13051,7 @@ $)
     $( Deduction substituting both sides of a biconditional.  (Contributed by
        NM, 5-Aug-1993.) $)
     sbbid $p |- ( ph -> ( [ y / x ] ps <-> [ y / x ] ch ) ) $=
-      ( wb wal wsb alrimih a4sbbi syl ) ABCHZDIBDEJCDEJHANDFGKBCDELM $.
+      ( wb wal wsb alrimih spsbbi syl ) ABCHZDIBDEJCDEJHANDFGKBCDELM $.
   $}
 
   $( Elimination of equality from antecedent after substitution.  (Contributed
@@ -12875,16 +13062,23 @@ $)
     KQUDSTSAJSALQMNOTBCRABCRP $.
 
   $( Substitution has no effect on a non-free variable.  (Contributed by NM,
-     30-May-2009.) $)
+     30-May-2009.)  (Revised by Mario Carneiro, 12-Oct-2016.)  (Proof shortened
+     by Wolf Lammen, 3-May-2018.) $)
+  sbft $p |- ( F/ x ph -> ( [ y / x ] ph <-> ph ) ) $=
+    ( wnf wsb wex spsbe 19.9t syl5ib wal nfr stdpc4 syl6 impbid ) ABDZABCEZAPAB
+    FOAABCGABHIOAABJPABKABCLMN $.
+
+  $( Substitution has no effect on a non-free variable.  (Contributed by NM,
+     30-May-2009.)  (New usage is discouraged.) $)
   sbf3t $p |- ( A. x ( ph -> A. x ph ) -> ( [ y / x ] ph <-> ph ) ) $=
-    ( wal wi wsb a4sbim sbf2 ax-4 sylbi syl6 stdpc4 imim2i sps impbid ) AABDZEZ
+    ( wal wi wsb spsbim sbf2 ax-4 sylbi syl6 stdpc4 imim2i sps impbid ) AABDZEZ
     BDZABCFZARSPBCFZAAPBCGTPAABCHABIJKQASEBPSAABCLMNO $.
 
   ${
     sbid2.1 $e |- ( ph -> A. x ph ) $.
     $( An identity law for substitution.  (Contributed by NM, 5-Aug-1993.) $)
     sbid2 $p |- ( [ y / x ] [ x / y ] ph <-> ph ) $=
-      ( cv wsbc sbcof2 sbh bitri ) ACBEFBCEZFABJFAABCDGABCDHI $.
+      ( wsb sbcof2 sbh bitri ) ACBEBCEABCEAABCDFABCDGH $.
   $}
 
   $( An idempotent law for substitution.  (Contributed by NM, 30-Jun-1994.)
@@ -12902,7 +13096,7 @@ $)
     $( Reversed substitution.  (Contributed by NM, 3-Feb-2005.)  (Proof
        shortened by Andrew Salmon, 25-May-2011.) $)
     sb5rf $p |- ( ph <-> E. y ( y = x /\ [ y / x ] ph ) ) $=
-      ( weq wsb wa wex sbid2 sb1 sylbir stdpc7 imp exlimi impbii ) ACBEZABCFZGZ
+      ( weq wsb wa wex sbid2 sb1 sylbir stdpc7 imp exlimih impbii ) ACBEZABCFZGZ
       CHZAQCBFSACBDIQCBJKRACDPQAACBLMNO $.
 
     $( Reversed substitution.  (Contributed by NM, 5-Aug-1993.)  (Proof
@@ -12959,7 +13153,7 @@ $)
        without one or more of these axioms in special cases.  (Contributed by
        NM, 20-May-2008.) $)
     ax16i $p |- ( A. x x = y -> ( ph -> A. x ph ) ) $=
-      ( weq wal wi ax-17 ax-8 cbv3h a4imv equid mpi syl syl5com alimdh mpcom
+      ( weq wal wi ax-17 ax-8 cbv3h spimv equid mpi syl syl5com alimdh mpcom
       alimi biimpcd biimprd syl6com ) CDHZCIZCEHZEIZAACIZJUFEDHZEIZUHUEUJCEUEEK
       ZUJCKCEDLMUKECHZEIZUHUEUKUNUJUEECECDLNUEUJUMEULUEDCHZUJUMUECCHUOCOCDCLPUJ
       DEHZUOUMJUJEEHZUPEOZEDELPDECLQRSTUMUGEUMUQUGURECELPZUAQQAUHBEIUIAUGBEAEKZ
@@ -12976,30 +13170,30 @@ $)
 
   ${
     $d x ps $.
-    a4v.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    spv.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
     $( Specialization, using implicit substitition.  (Contributed by NM,
        30-Aug-1993.) $)
-    a4v $p |- ( A. x ph -> ps ) $=
-      ( weq biimpd a4imv ) ABCDCDFABEGH $.
+    spv $p |- ( A. x ph -> ps ) $=
+      ( weq biimpd spimv ) ABCDCDFABEGH $.
   $}
 
   ${
     $d x ph $.
-    a4imev.1 $e |- ( x = y -> ( ph -> ps ) ) $.
-    $( Distinct-variable version of ~ a4ime .  (Contributed by NM,
+    spimev.1 $e |- ( x = y -> ( ph -> ps ) ) $.
+    $( Distinct-variable version of ~ spime .  (Contributed by NM,
        5-Aug-1993.) $)
-    a4imev $p |- ( ph -> E. x ps ) $=
-      ( ax-17 a4ime ) ABCDACFEG $.
+    spimev $p |- ( ph -> E. x ps ) $=
+      ( nfv spime ) ABCDACFEG $.
   $}
 
   ${
     $d x ps $.
-    a4eiv.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
-    a4eiv.2 $e |- ps $.
+    speiv.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    speiv.2 $e |- ps $.
     $( Inference from existential specialization, using implicit substitition.
        (Contributed by NM, 19-Aug-1993.) $)
-    a4eiv $p |- E. x ph $=
-      ( wex weq biimprd a4imev ax-mp ) BACGFBACDCDHABEIJK $.
+    speiv $p |- E. x ph $=
+      ( wex weq biimprd spimev ax-mp ) BACGFBACDCDHABEIJK $.
   $}
 
   ${
@@ -13007,7 +13201,7 @@ $)
     $( A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109.
        (Contributed by NM, 5-Aug-1993.) $)
     equvin $p |- ( x = y <-> E. z ( x = z /\ z = y ) ) $=
-      ( weq wa wex equvini ax-17 equtr imp exlimi impbii ) ABDZACDZCBDZEZCFABCG
+      ( weq wa wex equvini ax-17 equtr imp exlimih impbii ) ABDZACDZCBDZEZCFABCG
       PMCMCHNOMACBIJKL $.
   $}
 
@@ -13198,16 +13392,16 @@ $)
     $( Version of ~ sbn where ` x ` and ` y ` are distinct.  (Contributed by
        Jim Kingdon, 18-Dec-2017.) $)
     sbnv $p |- ( [ y / x ] -. ph <-> -. [ y / x ] ph ) $=
-      ( wn cv wsbc wceq wa wex wal sb6 alinexa bitri sb5 notbii bitr4i
-      wi ) ADZBCEZFZBESGZAHBIZDZABSFZDTUARQBJUCRBCKUAABLMUDUBABCNOP $.
+      ( wn wsb weq wa wex wi wal sb6 alinexa bitri sb5 xchbinxr ) ADZBCEZBCFZAG
+      BHZABCEQRPIBJSDPBCKRABLMABCNO $.
 
     $( Version of ~ sban where ` x ` and ` y ` are distinct.  (Contributed by
        Jim Kingdon, 24-Dec-2017.) $)
     sbanv $p |- ( [ y / x ] ( ph /\ ps ) <->
                   ( [ y / x ] ph /\ [ y / x ] ps ) ) $=
-      ( wa cv wsbc wceq wal sb6 anbi12i 19.26 bitr4i pm4.76 albii bitri
-      wi ) ABEZCDFZGCFSHZRQZCIZACSGZBCSGZEZRCDJUETAQZTBQZEZCIZUBUEUFCIZ
-      UGCIZEUIUCUJUDUKACDJBCDJKUFUGCLMUHUACTABNOPM $.
+      ( wa wsb weq wi wal sb6 anbi12i 19.26 pm4.76 albii 3bitr2i bitr4i ) ABEZC
+      DFCDGZQHZCIZACDFZBCDFZEZQCDJUCRAHZCIZRBHZCIZEUDUFEZCITUAUEUBUGACDJBCDJKUD
+      UFCLUHSCRABMNOP $.
 
     $( Version of ~ sbor where ` x ` and ` y ` are distinct.  (Contributed by
        Jim Kingdon, 3-Feb-2018.) $)
@@ -13221,9 +13415,8 @@ $)
        25-Dec-2017.) $)
     sbi1v $p |- ( [ y / x ] ( ph -> ps )
                       -> ( [ y / x ] ph -> [ y / x ] ps ) ) $=
-      ( cv wsbc wceq wi wal sb6 ax-2 al2imi sb2 syl6 sylbi syl5bi ) A
-      CDEZFCEQGZAHZCIZABHZCQFZBCQFZACDJUBRUAHZCIZTUCHUACDJUETRBHZCIUC
-      UDSUFCRABKLBCDMNOP $.
+      ( wsb weq wi wal sb6 ax-2 al2imi sb2 syl6 sylbi syl5bi ) ACDECDFZAGZCHZAB
+      GZCDEZBCDEZACDITPSGZCHZRUAGSCDIUCRPBGZCHUAUBQUDCPABJKBCDLMNO $.
 
     $( Reverse direction of ~ sbimv .  (Contributed by Jim Kingdon,
        18-Jan-2018.) $)
@@ -13296,7 +13489,7 @@ $)
     $( Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
     19.36aiv $p |- ( A. x ph -> ps ) $=
-      ( ax-17 19.36i ) ABCBCEDF $.
+      ( nfv 19.36i ) ABCBCEDF $.
   $}
 
   ${
@@ -13475,7 +13668,7 @@ $)
        2-Jan-2002.)  (Proof rewritten by Jim Kingdon, 30-Dec-2017.) $)
     cbvexdh $p |- ( ph -> ( E. x ps <-> E. y ch ) ) $=
       ( wex ax-17 cv wceq wa wb wi equsexd simpr eximi syl6bir wal
-      hbex equcomi bicom1 imim12i syl exlimd eximdh 19.12 syl6 exlimd2
+      hbex equcomi bicom1 imim12i syl exlimdh eximdh 19.12 syl6 exlimd2
       a1i impbid ) ABDIZCEIZABUNDADJZCDECDJZUAABEKZDKZLZCMZEIUNACBEDF
       GAURUQLZBCNZOUSCBNZOHUSVAVBVCEDUBBCUCUDUEPUTCEUSCQRSUFACUMEFAUM
       BETZDIUMETABVDDUOGUGBDEUHUIACVABMZDIUMABCDEUOCCDTOAUPUKHPVEBDVA
@@ -13581,7 +13774,7 @@ $)
     $( Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
        by NM, 20-Apr-1994.) $)
     chvarv $p |- ps $=
-      ( a4v mpg ) ABCABCDEGFH $.
+      ( spv mpg ) ABCABCDEGFH $.
   $}
 
   ${
@@ -13609,10 +13802,9 @@ $( The theorems in this section make use of the $d statement. $)
     $d x y $.
     $( ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by NM, 5-Aug-1993.)  (Proof by Jim Kingdon,
-       16-Dec-2017.) $)
+       16-Dec-2017.)  (New usage is discouraged.) $)
     hbs1 $p |- ( [ y / x ] ph -> A. x [ y / x ] ph ) $=
-      ( cv wsbc wceq wi wal sb6 ax-ial sylbi albii sylibr ) ABCDZEZBDNF
-      AGZBHZBHZOBHOQRABCIZPBJKOQBSLM $.
+      ( wsb weq wi wal sb6 ax-ial hbxfrbi ) ABCDBCEAFZBGBABCHKBIJ $.
 
     $( ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
@@ -13630,28 +13822,13 @@ $( The theorems in this section make use of the $d statement. $)
   $}
 
   ${
-    $d x y z $.  $d y z ph $.
-    $( Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
-       (Contributed by G&eacute;rard Lang, 14-Nov-2013.) $)
-    sbhb2 $p |- ( A. x ( ph -> A. x ph )
-           <-> A. y A. z ( [ y / x ] ph <-> [ z / x ] ph ) ) $=
-      ( wsb wb wal wi wa 2albiim sbhb albii alcom bitri ax-17 sb8h sblimv 3bitri
-      hbs1 anbi12i anidm 3bitr2ri ) ABCEZABDEZFDGCGUCUDHZDGCGZUDUCHZDGZCGZIAABG
-      HZBGZUKIUKUCUDCDJUKUFUKUIUKAUDHZBGZDGZUECGZDGUFUKULDGZBGUNUJUPBABDKLULBDM
-      NUMUODUMULBCEZCGUOULBCULCOPUQUECAUDBCABDSQLNLUEDCMRUKAUCHZCGZBGURBGZCGUIU
-      JUSBABCKLURBCMUTUHCUTURBDEZDGUHURBDURDOPVAUGDAUCBDABCSQLNLRTUKUAUB $.
-  $}
-
-  ${
     $d x z $.  $d y z $.
     hbsbv.1 $e |- ( ph -> A. z ph ) $.
     $( This is a version of ~ hbsb with an extra distinct variable constraint,
        on ` z ` and ` x ` .  (Contributed by Jim Kingdon, 25-Dec-2017.) $)
     hbsbv $p |- ( [ y / x ] ph -> A. z [ y / x ] ph ) $=
-      ( cv wsbc wceq wi wa wex df-sb biimpi ax-17 hbim hban
-      wal eximi 19.12 syl biimpri alimi 3syl ) ABCFZGZBFUDHZAIZUFAJZBKZ
-      JZUJDQUEDQUEUJABCLZMUGUIDUFADUFDNZEOUIUHDQZBKUIDQUHUMBUFADULEPRUH
-      BDSTPUJUEDUEUJUKUAUBUC $.
+      ( wsb weq wi wa wex df-sb ax-17 hbim hban hbex hbxfrbi ) ABCFBCGZAHZQAIZB
+      JZIDABCKRTDQADQDLZEMSDBQADUAENONP $.
   $}
 
   ${
@@ -13763,9 +13940,9 @@ $( The theorems in this section make use of the $d statement. $)
        3-Feb-2018.) $)
     sbor $p |- ( [ y / x ] ( ph \/ ps ) <->
         ( [ y / x ] ph \/ [ y / x ] ps ) ) $=
-      ( vz wo cv wsbc sborv sbbii bitri ax-17 sbco2v orbi12i 3bitr3i ) AB
-      FZCEGZHZEDGZHZACQHZESHZBCQHZESHZFZPCSHACSHZBCSHZFTUAUCFZESHUERUHE
-      DABCEIJUAUCEDIKPCDEPELMUBUFUDUGACDEAELMBCDEBELMNO $.
+      ( vz wo wsb sborv sbbii bitri ax-17 sbco2v orbi12i 3bitr3i ) ABFZCEGZEDGZ
+      ACEGZEDGZBCEGZEDGZFZOCDGACDGZBCDGZFQRTFZEDGUBPUEEDABCEHIRTEDHJOCDEOEKLSUC
+      UAUDACDEAEKLBCDEBEKLMN $.
 
     $( Conjunction inside and outside of a substitution are equivalent.
        (Contributed by NM, 5-Aug-1993.)  (Proof rewritten by Jim Kingdon,
@@ -13786,11 +13963,12 @@ $( The theorems in this section make use of the $d statement. $)
   $}
 
   ${
-    sblim.1 $e |- ( ps -> A. x ps ) $.
+    sblim.1 $e |- F/ x ps $.
     $( Substitution with a variable not free in consequent affects only the
-       antecedent.  (Contributed by NM, 14-Nov-2013.) $)
+       antecedent.  (Contributed by NM, 14-Nov-2013.)  (Revised by Mario
+       Carneiro, 4-Oct-2016.) $)
     sblim $p |- ( [ y / x ] ( ph -> ps ) <-> ( [ y / x ] ph -> ps ) ) $=
-      ( wi wsb sbim sbh imbi2i bitri ) ABFCDGACDGZBCDGZFLBFABCDHMBLBCDEIJK $.
+      ( wi wsb sbim sbf imbi2i bitri ) ABFCDGACDGZBCDGZFLBFABCDHMBLBCDEIJK $.
   $}
 
   $( Conjunction inside and outside of a substitution are equivalent.
@@ -13959,9 +14137,8 @@ $( The theorems in this section make use of the $d statement. $)
     $d w y z $.  $d w ph $.  $d w x $.
     $( Closed form of ~ nfsb .  (Contributed by Jim Kingdon, 9-May-2018.) $)
     nfsbt $p |- ( A. x F/ z ph -> F/ z [ y / x ] ph ) $=
-      ( vw wnf wal wsbc ax-17 nfsbxyt alimi syl nfv sbco2 nfbii sylib
-      cv ) ADFBGZREGZABCQZHZDFZREISABEQHZETHZDFZUBSUCDFZEGUERUFEABEDJKU
-      CECDJLUDUADABCEAEMNOPL $.
+      ( vw wnf wal wsb ax-17 nfsbxyt alimi syl nfv sbco2 nfbii sylib ) ADFBGZQE
+      GZABCHZDFZQEIRABEHZECHZDFZTRUADFZEGUCQUDEABEDJKUAECDJLUBSDABCEAEMNOPL $.
   $}
 
   ${
@@ -13970,8 +14147,7 @@ $( The theorems in this section make use of the $d statement. $)
     nfsbd.2 $e |- ( ph -> F/ z ps ) $.
     $( Deduction version of ~ nfsb .  (Contributed by NM, 15-Feb-2013.) $)
     nfsbd $p |- ( ph -> F/ z [ y / x ] ps ) $=
-      ( wal wnf cv wsbc nfri alimi nfsbt 3syl ) AACHBEIZCHBCDJKEIACFLAP
-      CGMBCDENO $.
+      ( wal wnf wsb nfri alimi nfsbt 3syl ) AACHBEIZCHBCDJEIACFKAOCGLBCDEMN $.
   $}
 
   ${
@@ -14020,6 +14196,21 @@ $( The theorems in this section make use of the $d statement. $)
      NM, 5-Aug-1993.)  (Proof rewritten by Jim Kingdon, 23-Mar-2018.) $)
   sb9i $p |- ( A. x [ x / y ] ph -> A. y [ y / x ] ph ) $=
     ( wsb wal sb9 biimpi ) ACBDBEABCDCEABCFG $.
+
+  ${
+    $d x y z $.  $d y z ph $.
+    $( Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
+       (Contributed by G&eacute;rard Lang, 14-Nov-2013.)  (Revised by Mario
+       Carneiro, 6-Oct-2016.) $)
+    sbnf2 $p |- ( F/ x ph
+       <-> A. y A. z ( [ y / x ] ph <-> [ z / x ] ph ) ) $=
+      ( wsb wb wal wi wnf 2albiim sbhb albii alcom 3bitri nfv nfs1v sblim bitri
+      wa sb8 df-nf anbi12i anidm 3bitr2ri ) ABCEZABDEZFDGCGUEUFHZDGCGZUFUEHZDGZ
+      CGZSABIZULSULUEUFCDJULUHULUKULAUFHZBGZDGZUGCGZDGUHULAABGHZBGZUMDGZBGUOABU
+      AZUQUSBABDKLUMBDMNUNUPDUNUMBCEZCGUPUMBCUMCOTVAUGCAUFBCABDPQLRLUGDCMNULAUE
+      HZBGZCGZUKULURVBCGZBGVDUTUQVEBABCKLVBBCMNVCUJCVCVBBDEZDGUJVBBDVBDOTVFUIDA
+      UEBDABCPQLRLRUBULUCUD $.
+  $}
 
   ${
     $d y z $.
@@ -14083,17 +14274,6 @@ $( The theorems in this section make use of the $d statement. $)
     sbcom2 $p |- ( [ w / z ] [ y / x ] ph <-> [ y / x ] [ w / z ] ph ) $=
       ( vv wsb sbcom2v2 sbbii bitri ax-17 sbco2v 3bitr3i ) ABCGZDFGZFEGZADFGZFE
       GZBCGZNDEGADEGZBCGPQBCGZFEGSOUAFEABCDFHIQBCFEHJNDEFNFKLRTBCADEFAFKLIM $.
-  $}
-
-  ${
-    $d ph x y z $.  $d w x z $.
-    $( Theorem *11.07 in [WhiteheadRussell] p. 159.  (Contributed by Andrew
-       Salmon, 17-Jun-2011.) $)
-    pm11.07 $p |- ( [ w / x ] [ y / z ] ph <-> [ y / x ] [ w / z ] ph ) $=
-      ( cv wceq wa wex wsbc a9e pm3.2i 2th eeanv 3bitr4i anbi1i 19.41vv 2sb5 )
-      BFZEFZGZDFZCFZGZHZAHDIBIZSUCGZUBTGZHZAHDIBIZADUCJBTJADTJBUCJUEDIBIZAHUIDI
-      BIZAHUFUJUKULAUABIZUDDIZHZUGBIZUHDIZHZUKULUOURUMUNBEKDCKLUPUQBCKDEKLMUAUD
-      BDNUGUHBDNOPUEABDQUIABDQOABDECRABDCERO $.
   $}
 
   ${
@@ -14168,9 +14348,8 @@ $( The theorems in this section make use of the $d statement. $)
                       <-> A. z
                              ( z = y
                              -> A. x ( x = z -> ph ) ) ) $=
-      ( cv wsbc wceq wi wal nfri sbco2v sb6 sbbii bitri bitr3i )
-      ABCFZGABDFZGZDQGZRQHBFRHAIBJZIDJZABCDADEKLTUADQGUBSUADCABDMNUADCM
-      OP $.
+      ( wsb weq wi wal sb6 sbbii sbco2 3bitr3i ) ABDFZDCFBDGAHBIZDCFABCFDCGOHDI
+      NODCABDJKABCDELODCJM $.
   $}
 
   ${
@@ -14212,8 +14391,7 @@ $( The theorems in this section make use of the $d statement. $)
     $d x y $.  $d x ph $.
     $( Elimination of substitution.  (Contributed by NM, 5-Aug-1993.) $)
     sbelx $p |- ( ph <-> E. x ( x = y /\ [ x / y ] ph ) ) $=
-      ( cv wsbc wceq wa wex ax-17 sbid2 sb5 bitr3i ) AACBDZEZBCDZEM
-      OFNGBHABCABIJNBCKL $.
+      ( ax-17 sb5rf ) ACBABDE $.
   $}
 
   ${
@@ -14235,11 +14413,10 @@ $( The theorems in this section make use of the $d statement. $)
        ~ sbal except that it has an additional distinct variable constraint on
        ` y ` and ` z ` .  (Contributed by Jim Kingdon, 29-Dec-2017.) $)
     sbalyz $p |- ( [ z / y ] A. x ph <-> A. x [ z / y ] ph ) $=
-      ( wal cv wsbc ax-ial hbsbv ax-4 sbimi alimi syl wceq wi sb6 albii
-      alcom bitri ax-17 alim syl5 sb2 sylbi impbii ) ABEZCDFZGZACUGGZBE
-      ZUHUHBEUJUFCDBABHIUHUIBUFACDABJKLMUJCFUGNZAOZBEZCEZUHUJULCEZBEUNU
-      IUOBACDPQULBCRSUNUKUFOZCEUHUMUPCUKUKBEUMUFUKBTUKABUAUBLUFCDUCMUDU
-      E $.
+      ( wal wsb nfa1 nfsbxy ax-4 sbimi alrimi weq wi sb6 albii alcom nfv stdpc5
+      bitri alimi sb2 syl sylbi impbii ) ABEZCDFZACDFZBEZUFUGBUECDBABGHUEACDABI
+      JKUHCDLZAMZBEZCEZUFUHUJCEZBEULUGUMBACDNOUJBCPSULUIUEMZCEUFUKUNCUIABUIBQRT
+      UECDUAUBUCUD $.
   $}
 
   ${
@@ -14287,9 +14464,8 @@ $( The theorems in this section make use of the $d statement. $)
        ~ sbex except that it has an additional distinct variable constraint on
        ` y ` and ` z ` .  (Contributed by Jim Kingdon, 29-Dec-2017.) $)
     sbexyz $p |- ( [ z / y ] E. x ph <-> E. x [ z / y ] ph ) $=
-      ( wex cv wsbc wceq wa sb5 ax-17 19.42h exbii excom 3bitr2i bitr4i
-      ) ABEZCDFZGZCFRHZAIZCEZBEZACRGZBESTQIZCEUABEZCEUCQCDJUFUECTABTBKL
-      MUACBNOUDUBBACDJMP $.
+      ( wex wsb weq wa sb5 exdistr excom 3bitr2i exbii bitr4i ) ABEZCDFZCDGZAHZ
+      CEZBEZACDFZBEPQOHCERBECETOCDIQACBJRCBKLUASBACDIMN $.
   $}
 
   ${
@@ -14378,7 +14554,7 @@ $( The theorems in this section make use of the $d statement. $)
      shortened by Andrew Salmon, 25-May-2011.) $)
   hbsb4t $p |- ( A. x A. z ( ph -> A. z ph ) ->
                ( -. A. z z = y -> ( [ y / x ] ph -> A. z [ y / x ] ph ) ) ) $=
-    ( weq wal wn wsb wi hba1 hbsb4 a4sbim sps ax-4 sbimi alimi a1i imim12d syl5
+    ( weq wal wn wsb wi hba1 hbsb4 spsbim sps ax-4 sbimi alimi a1i imim12d syl5
     a7s ) DCEDFGADFZBCHZUBDFZIZAUAIZDFBFABCHZUFDFZIZUABCDADJKUEUDUHIDBUEBFZDFZU
     FUBUCUGUIUFUBIDAUABCLMUCUGIUJUBUFDUAABCADNOPQRTS $.
 
@@ -14388,9 +14564,9 @@ $( The theorems in this section make use of the $d statement. $)
      9-May-2018.) $)
   nfsb4t $p |- ( A. x F/ z ph ->
                  ( -. A. z z = y -> F/ z [ y / x ] ph ) ) $=
-    ( wnf wal cv wceq wn wsbc wa nfnf1 nfal nfnae nfan wi df-nf albii
-    hbsb4t sylbi imp nfd ex ) ADEZBFZDGCGZHDFIZABUFJZDEUEUGKUHDUEUGDU
-    DDBADLMDCDNOUEUGUHUHDFPZUEAADFPDFZBFUGUIPUDUJBADQRABCDSTUAUBUC $.
+    ( wnf wal weq wn wsb wa nfnf1 nfal nfnae nfan df-nf albii hbsb4t sylbi imp
+    wi nfd ex ) ADEZBFZDCGDFHZABCIZDEUDUEJUFDUDUEDUCDBADKLDCDMNUDUEUFUFDFTZUDAA
+    DFTDFZBFUEUGTUCUHBADOPABCDQRSUAUB $.
 
   ${
     dvelimf.1 $e |- ( ph -> A. x ph ) $.
@@ -14552,8 +14728,8 @@ $)
 
   $( Define "there exists at most one ` x ` such that ` ph ` ."  Here we define
      it in terms of existential uniqueness.  Notation of [BellMachover] p. 460,
-     whose definition we show as ~ mo3 .  For other possible definitions see
-     ~ mo2 and ~ mo4 .  (Contributed by NM, 5-Aug-1993.) $)
+     whose definition we show as ~ mo3 .  For another possible definition see
+     ~ mo4 .  (Contributed by NM, 5-Aug-1993.) $)
   df-mo $a |- ( E* x ph <-> ( E. x ph -> E! x ph ) ) $.
 
   ${
@@ -14672,8 +14848,8 @@ $)
        (Revised by Mario Carneiro, 7-Oct-2016.)  (Proof rewritten by Jim
        Kingdon, 25-May-2018.) $)
     nfeud $p |- ( ph -> F/ x E! y ps ) $=
-      ( vz weu cv wsbc nfv sb8eu nfsbd nfeudv nfxfrd ) BDHBDGIJZGHACB
-      DGBGKLAPCGAGKABDGCEFMNO $.
+      ( vz weu wsb nfv sb8eu nfsbd nfeudv nfxfrd ) BDHBDGIZGHACBDGBGJKAOCGAGJAB
+      DGCEFLMN $.
   $}
 
   ${
@@ -14695,8 +14871,8 @@ $)
        (Revised by Mario Carneiro, 7-Oct-2016.)  (Proof rewritten by Jim
        Kingdon, 23-May-2018.) $)
     nfeu $p |- F/ x E! y ph $=
-      ( vz weu cv wsbc nfv sb8eu nfsb nfeuv nfxfr ) ACFACEGHZEFBACEAE
-      IJNBEACEBDKLM $.
+      ( vz weu wsb nfv sb8eu nfsb nfeuv nfxfr ) ACFACEGZEFBACEAEHIMBEACEBDJKL
+      $.
   $}
 
   ${
@@ -14726,11 +14902,11 @@ $)
     $( Variable substitution in uniqueness quantifier.  (Contributed by NM,
        7-Aug-1994.)  (Revised by Andrew Salmon, 9-Jul-2011.) $)
     sb8euh $p |- ( E! x ph <-> E! y [ y / x ] ph ) $=
-      ( vz vw cv wceq wal wex wsbc weu ax-17 sb8h sbbi hbsb equsb3 hbxfrbi df-eu
-      wb hbbi sbequ cbvalh sblbis albii 3bitri exbii 3bitr4i ) ABGEGZHZTZBIZEJAB
-      CGZKZUMUIHZTZCIZEJABLUNCLULUQEULUKBFGZKZFIUKBUMKZCIUQUKBFUKFMNUSUTFCUSABU
-      RKZUJBURKZTCAUJBFOVAVBCABFCDPVBURUIHZCFBEQVCCMRUARUTFMUKFCBUBUCUTUPCUJUOA
-      BCCBEQUDUEUFUGABESUNCESUH $.
+      ( vz vw weq wb wal wex wsb ax-17 sb8h sbbi hbsb equsb3 hbxfrbi hbbi df-eu
+      weu sbequ cbvalh sblbis albii 3bitri exbii 3bitr4i ) ABEGZHZBIZEJABCKZCEG
+      ZHZCIZEJABTUKCTUJUNEUJUIBFKZFIUIBCKZCIUNUIBFUIFLMUOUPFCUOABFKZUHBFKZHCAUH
+      BFNUQURCABFCDOURFEGZCFBEPUSCLQRQUPFLUIFCBUAUBUPUMCUHULABCCBEPUCUDUEUFABES
+      UKCESUG $.
   $}
 
   ${
@@ -14771,6 +14947,26 @@ $)
        23-Mar-1995.) $)
     euorv $p |- ( ( -. ph /\ E! x ps ) -> E! x ( ph \/ ps ) ) $=
       ( ax-17 euor ) ABCACDE $.
+  $}
+
+  ${
+    $d x y $.
+    mon.1 $e |- F/ y ph $.
+    $( There is at most one of something which does not exist.  (Contributed by
+       Jim Kingdon, 2-Jul-2018.) $)
+    mo2n $p |- ( -. E. x ph -> E. y A. x ( ph -> x = y ) ) $=
+      ( wex wsb weq wi wal sb8e wn alnex nfs1v sbequ1 equcoms con3d cbv3 pm2.21
+      nfn alimi 19.8a 3syl sylbir sylnbi ) ABEABCFZCEZABCGZHZBIZCEZABCDJUFKUEKZ
+      CIZUJUECLULAKZBIUIUJUKUMCBUEBABCMSACDSCBGAUEAUEHBCABCNOPQUMUHBAUGRTUICUAU
+      BUCUD $.
+  $}
+
+  ${
+    $( There is at most one of something which does not exist.  (Contributed by
+       Jim Kingdon, 5-Jul-2018.) $)
+    mon $p |- ( -. E. x ph -> E* x ph ) $=
+      ( wex wn weu wi wmo ax-in2 df-mo sylibr ) ABCZDKABEZFABGKLHABIJ
+      $.
   $}
 
   ${
@@ -14871,12 +15067,514 @@ $)
   $}
 
   ${
+    $d x y z $.  $d ph z $.
+    mo23.1 $e |- F/ y ph $.
+    $( An implication between two definitions of "there exists at most one."
+       (Contributed by Jim Kingdon, 25-Jun-2018.) $)
+    mo23 $p |- ( E. y A. x ( ph -> x = y ) ->
+               A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+      ( vz weq wi wal wex wsb wa nfv nfim nfal equequ2 imbi2d albidv cbvex nfri
+      nfs1v sbequ2 ax-8 imim12d cbv3 ancli aaan sylibr prth equtr2 syl6 exlimiv
+      2alimi syl sylbir ) ABCFZGZBHZCIABEFZGZBHZEIAABCJZKZUOGZCHBHZUTUQECUSCBAU
+      RCDURCLMZNUQELECFZUSUPBVFURUOAECBOPQRUTVDEUTUSVACEFZGZKZCHBHZVDUTUTVHCHZK
+      VJUTVKUSVHBCVEVAVGBABCTVGBLMZUOVAAURVGABCUABCEUBUCUDUEUSVHBCUSCVESVHBVLSU
+      FUGVIVCBCVIVBURVGKUOAURVAVGUHBCEUIUJULUMUKUN $.
+  $}
+
+  ${
+    $d x y z $.  $d ph z $.
+    mor.1 $e |- F/ y ph $.
+    $( Converse of ~ mo23 with an additional ` E. x ph ` condition.
+       (Contributed by Jim Kingdon, 25-Jun-2018.) $)
+    mor $p |- ( E. x ph ->
+        ( A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ->
+          E. y A. x ( ph -> x = y ) ) ) $=
+      ( wex wsb wa weq wi sb8e impexp bi2.04 bitri 2albii nfs1v nfri eximi alim
+      wal alimi a7s exim syl syl5com syl5bi sylbi ) ABEABCFZCEZAUGGBCHZIZCSBSZA
+      UIIZBSZCEZIABCDJUKUGULIZCSBSZUHUNUJUOBCUJAUGUIIIUOAUGUIKAUGUILMNUHUGBSZCE
+      ZUPUNUGUQCUGBABCOPQUPUQUMIZCSZURUNIUOUTCBUOBSUSCUGULBRTUAUQUMCUBUCUDUEUF
+      $.
+  $}
+
+  ${
+    $d x y $.
+    modc.1 $e |- F/ y ph $.
+    $( Equivalent definitions of "there exists at most one," given decidable
+       existence.  (Contributed by Jim Kingdon, 1-Jul-2018.) $)
+    modc $p |- ( DECID E. x ph ->
+        ( E. y A. x ( ph -> x = y ) <->
+          A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) ) $=
+      ( wex wdc weq wi wal wsb wa mo23 wn wo exmiddc mor mo2n a1d jaoi syl
+      impbid2 ) ABEZFZABCGZHBICEZAABCJKUDHCIBIZABCDLUCUBUBMZNUFUEHZUBOUBUHUGABC
+      DPUGUEUFABCDQRSTUA $.
+  $}
+
+  ${
+    $d x y $.
+    eu2.1 $e |- F/ y ph $.
+    $( An alternate way of defining existential uniqueness.  Definition 6.10 of
+       [TakeutiZaring] p. 26.  (Contributed by NM, 8-Jul-1994.) $)
+    eu2 $p |- ( E! x ph <->
+        ( E. x ph /\ A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) ) $=
+      ( weu wex wsb wa weq wal euex nfri eumo0 mo23 syl jca 19.29r impexp albii
+      wi 19.21 bitri anbi2i abai bitr4i exbii sylib eu1 sylibr impbii ) ABEZABF
+      ZAABCGZHBCIZTZCJZBJZHZUKULUQABKUKAUNTBJCFUQABCACDLZMABCDNOPURAUMUNTZCJZHZ
+      BFZUKURAUPHZBFVCAUPBQVDVBBVDAAVATZHVBUPVEAUPAUTTZCJVEUOVFCAUMUNRSAUTCDUAU
+      BUCAVAUDUEUFUGABCUSUHUIUJ $.
+  $}
+
+  ${
+    $d x y $.
+    eu3h.1 $e |- ( ph -> A. y ph ) $.
+    $( An alternate way to express existential uniqueness.  (Contributed by NM,
+       8-Jul-1994.)  (New usage is discouraged.) $)
+    eu3h $p |- ( E! x ph <->
+                ( E. x ph /\ E. y A. x ( ph -> x = y ) ) ) $=
+      ( weu wex weq wi wal euex eumo0 jca wsb nfi mo23 anim2i eu2 sylibr impbii
+      wa ) ABEZABFZABCGZHBICFZTZUAUBUDABJABCDKLUEUBAABCMTUCHCIBIZTUAUDUFUBABCAC
+      DNZOPABCUGQRS $.
+  $}
+
+  ${
+    $d x y $.
+    eu3.1 $e |- F/ y ph $.
+    $( An alternate way to express existential uniqueness.  (Contributed by NM,
+       8-Jul-1994.) $)
+    eu3 $p |- ( E! x ph <->
+                ( E. x ph /\ E. y A. x ( ph -> x = y ) ) ) $=
+      ( nfri eu3h ) ABCACDEF $.
+  $}
+
+  ${
     $d x y $.  $d y ph $.
     $( Uniqueness in terms of "at most one."  (Contributed by NM,
        23-Mar-1995.)  (Proof rewritten by Jim Kingdon, 27-May-2018.) $)
     eu5 $p |- ( E! x ph <-> ( E. x ph /\ E* x ph ) ) $=
       ( weu wex wmo wa euex eumo jca df-mo biimpi imp ancoms impbii
       wi ) ABCZABDZABEZFPQRABGABHIRQPRQPRQPOABJKLMN $.
+  $}
+
+  $( Existence implies "at most one" is equivalent to uniqueness.  (Contributed
+     by NM, 5-Apr-2004.) $)
+  exmoeu2 $p |- ( E. x ph -> ( E* x ph <-> E! x ph ) ) $=
+    ( weu wex wmo eu5 baibr ) ABCABDABEABFG $.
+
+  $( Absorption of existence condition by "at most one."  (Contributed by NM,
+     4-Nov-2002.) $)
+  moabs $p |- ( E* x ph <-> ( E. x ph -> E* x ph ) ) $=
+    ( wex weu wi wmo pm5.4 df-mo imbi2i 3bitr4ri ) ABCZKABDZEZEMKABFZENKLGNMKAB
+    HZIOJ $.
+
+  $( If existence is decidable, something exists or at most one exists.
+     (Contributed by Jim Kingdon, 30-Jun-2018.) $)
+  exmodc $p |- ( DECID E. x ph -> ( E. x ph \/ E* x ph ) ) $=
+    ( wex wdc wn wo wmo df-dc weu wi pm2.21 df-mo sylibr orim2i sylbi
+    ) ABCZDPPEZFPABGZFPHQRPQPABIZJRPSKABLMNO $.
+
+  ${
+    $d x y $.
+    mo2r.1 $e |- F/ y ph $.
+    $( A condition which implies "at most one."  (Contributed by Jim Kingdon,
+       2-Jul-2018.) $)
+    mo2r $p |- ( E. y A. x ( ph -> x = y ) -> E* x ph ) $=
+      ( weq wi wal wex weu wmo nfri eu3h simplbi2com df-mo sylibr ) ABCEFBGCHZAB
+      HZABIZFABJRQPABCACDKLMABNO $.
+  $}
+
+  ${
+    $d x y $.
+    mo3h.1 $e |- ( ph -> A. y ph ) $.
+    $( Alternate definition of "at most one."  Definition of [BellMachover]
+       p. 460, except that definition has the side condition that ` y ` not
+       occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
+       8-Mar-1995.)  (New usage is discouraged.) $)
+    mo3h $p |- ( E* x ph <->
+               A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+      ( wmo wsb wa weq wi wal wex weu nfi eu2 imbi2i df-mo anclb 3bitr4i sylibr
+      19.38 19.21 albii anabs5 pm3.31 syl5bir 2alimi sylbi simplbi2com impbii
+      syl ) ABEZAABCFZGZBCHZIZCJZBJZUKABKZUQIZUQURABLZIZURURUQGZIUKUSUTVBURABCA
+      CDMZNZOABPZURUQQRUSAUOIZCJZBJZUQUSAUPIZBJVHAUPBTVGVIBAUOCVCUAUBSVFUOBCUMA
+      UMGVFUNAULUCAUMUNUDUEUFUJUGUQVAUKUTURUQVDUHVESUI $.
+  $}
+
+  ${
+    $d x y $.
+    mo3.1 $e |- F/ y ph $.
+    $( Alternate definition of "at most one."  Definition of [BellMachover]
+       p. 460, except that definition has the side condition that ` y ` not
+       occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
+       8-Mar-1995.) $)
+    mo3 $p |- ( E* x ph <->
+               A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+      ( nfri mo3h ) ABCACDEF $.
+  $}
+
+  ${
+    $d x y $.
+    mo2dc.1 $e |- F/ y ph $.
+    $( Alternate definition of "at most one" where existence is decidable.
+       (Contributed by Jim Kingdon, 2-Jul-2018.) $)
+    mo2dc $p |- ( DECID E. x ph ->
+        ( E* x ph <-> E. y A. x ( ph -> x = y ) ) ) $=
+      ( wex wdc weq wi wal wsb wa wmo modc nfri mo3h syl6rbbr ) ABEFABCGZHBICEAA
+      BCJKQHCIBIABLABCDMABCACDNOP $.
+  $}
+
+  ${
+    euan.1 $e |- ( ph -> A. x ph ) $.
+    $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+       NM, 19-Feb-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+    euan $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
+      ( wa weu wex wmo simpl exlimih adantr simpr eximi hbe1 ancrd impbid2 mobidh
+      a1d biimpa eu5 jca32 anbi2i 3imtr4i ibar eubidh impbii ) ABEZCFZABCFZEZUGC
+      GZUGCHZEZABCGZBCHZEZEUHUJUMAUNUOUKAULUGACDABIJZKUKUNULUGBCABLZMKUKULUOUKU
+      GBCUGCNUKUGBURUKBAUKABUQROPQSUAUGCTUIUPABCTUBUCAUIUHABUGCDABUDUESUF $.
+  $}
+
+  ${
+    $d x ph $.
+    $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+       NM, 23-Mar-1995.) $)
+    euanv $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
+      ( ax-17 euan ) ABCACDE $.
+  $}
+
+  $( Introduce or eliminate a disjunct in a uniqueness quantifier.
+     (Contributed by NM, 21-Oct-2005.)  (Proof shortened by Andrew Salmon,
+     9-Jul-2011.) $)
+  euor2 $p |- ( -. E. x ph -> ( E! x ( ph \/ ps ) <-> E! x ps ) ) $=
+    ( wex wn wo hbe1 hbn wb 19.8a con3i orel1 olc impbid1 syl eubidh ) ACDZEZABF
+    ZBCQCACGHRAEZSBIAQACJKTSBABLBAMNOP $.
+
+  ${
+    $d w x z $.  $d w y z $.  $d w ph $.
+    $( Substitution into "at most one".  (Contributed by Jeff Madsen,
+       2-Sep-2009.) $)
+    sbmo $p |- ( [ y / x ] E* z ph <-> E* z [ y / x ] ph ) $=
+      ( vw wsb wa cv wceq wal wmo nfv sblim sban imbi1i sbcom2 anbi2i
+      wi sbalv mo3 3bitri sbbii 3bitr4i ) AADEFZGZDHEHIZRZEJZDJZBCFAB
+      CFZUJDEFZGZUFRZEJZDJADKZBCFUJDKUHUNBCDUGUMBCEUGBCFUEBCFZUFRUJUD
+      BCFZGZUFRUMUEUFBCUFBLMUPURUFAUDBCNOURULUFUQUKUJADEBCPQOUASSUOUI
+      BCADEAELTUBUJDEUJELTUC $.
+  $}
+
+  ${
+    $d x y $.  $d y ph $.
+    mo4f.1 $e |- F/ x ps $.
+    mo4f.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( "At most one" expressed using implicit substitution.  (Contributed by
+       NM, 10-Apr-2004.) $)
+    mo4f $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
+      ( wmo wsb wa weq wi wal ax-17 mo3h sbie anbi2i imbi1i 2albii bitri ) ACGAA
+      CDHZIZCDJZKZDLCLABIZUBKZDLCLACDADMNUCUECDUAUDUBTBAABCDEFOPQRS $.
+  $}
+
+  ${
+    $d x y $.  $d y ph $.  $d x ps $.
+    mo4.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( "At most one" expressed using implicit substitution.  (Contributed by
+       NM, 26-Jul-1995.) $)
+    mo4 $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
+      ( nfv mo4f ) ABCDBCFEG $.
+  $}
+
+  ${
+    $d x y $.  $d y ph $.  $d x ps $.
+    eu4.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( Uniqueness using implicit substitution.  (Contributed by NM,
+       26-Jul-1995.) $)
+    eu4 $p |- ( E! x ph <-> ( E. x ph /\
+             A. x A. y ( ( ph /\ ps ) -> x = y ) ) ) $=
+      ( weu wex wmo wa weq wi wal eu5 mo4 anbi2i bitri ) ACFACGZACHZIQABICDJKDL
+      CLZIACMRSQABCDENOP $.
+  $}
+
+  $( Existence in terms of "at most one" and uniqueness.  (Contributed by Jim
+     Kingdon, 3-Jul-2018.) $)
+  exmoeudc $p |- ( DECID E. x ph -> ( E. x ph <-> ( E* x ph -> E! x ph ) ) ) $=
+    ( wex wdc wmo wi df-mo biimpi com12 biimpri euex imim12i peircedc
+    weu syl5 impbid2 ) ABCZDZQABEZABNZFZSQTSQTFZABGZHIUAUBQFRQUBSTQSU
+    BUCJABKLQTMOP $.
+
+  ${
+    $d x y $.  $d y ph $.  $d y ps $.
+    $( "At most one" is preserved through implication (notice wff reversal).
+       (Contributed by NM, 22-Apr-1995.) $)
+    moim $p |- ( A. x ( ph -> ps ) -> ( E* x ps -> E* x ph ) ) $=
+      ( vy wi wal wsb wa weq nfa1 ax-4 spsbim anim12d imim1d alimdv alimd ax-17
+      wmo mo3h 3imtr4g ) ABEZCFZBBCDGZHZCDIZEZDFZCFAACDGZHZUEEZDFZCFBCRACRUBUGUK
+      CUACJUBUFUJDUBUIUDUEUBABUHUCUACKABCDLMNOPBCDBDQSACDADQST $.
+  $}
+
+  ${
+    moimi.1 $e |- ( ph -> ps ) $.
+    $( "At most one" is preserved through implication (notice wff reversal).
+       (Contributed by NM, 15-Feb-2006.) $)
+    moimi $p |- ( E* x ps -> E* x ph ) $=
+      ( wi wmo moim mpg ) ABEBCFACFECABCGDH $.
+  $}
+
+  ${
+    $d x y $.  $d x y ph $.  $d y ps $.
+    $( Move antecedent outside of "at most one."  (Contributed by NM,
+       28-Jul-1995.) $)
+    moimv $p |- ( E* x ( ph -> ps ) -> ( ph -> E* x ps ) ) $=
+      ( vy wi wmo wsb weq wal ax-1 a1i sbimi nfv sbf sbim 3imtr3i anim12d ax-17
+      wa mo3h imim1d 2alimdv 3imtr4g com12 ) AABEZCFZBCFZAUEUECDGZSZCDHZEZDICIBB
+      CDGZSZUJEZDICIUFUGAUKUNCDAUMUIUJABUEULUHBUEEZABAJKZACDGUOCDGAULUHEAUOCDUP
+      LACDACMNBUECDOPQUAUBUECDUEDRTBCDBDRTUCUD $.
+  $}
+
+  $( Uniqueness implies "at most one" through implication.  (Contributed by NM,
+     22-Apr-1995.) $)
+  euimmo $p |- ( A. x ( ph -> ps ) -> ( E! x ps -> E* x ph ) ) $=
+    ( weu wmo wi wal eumo moim syl5 ) BCDBCEABFCGACEBCHABCIJ $.
+
+  $( Add existential uniqueness quantifiers to an implication.  Note the
+     reversed implication in the antecedent.  (Contributed by NM,
+     19-Oct-2005.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
+  euim $p |- ( ( E. x ph /\ A. x ( ph -> ps ) ) -> ( E! x ps -> E! x ph ) ) $=
+    ( wex wi wal wa weu wmo ax-1 euimmo anim12ii eu5 syl6ibr ) ACDZABECFZGBCHZO
+    ACIZGACHOQOPROQJABCKLACMN $.
+
+  $( "At most one" is still the case when a conjunct is added.  (Contributed by
+     NM, 22-Apr-1995.) $)
+  moan $p |- ( E* x ph -> E* x ( ps /\ ph ) ) $=
+    ( wa simpr moimi ) BADACBAEF $.
+
+  ${
+    moani.1 $e |- E* x ph $.
+    $( "At most one" is still true when a conjunct is added.  (Contributed by
+       NM, 9-Mar-1995.) $)
+    moani $p |- E* x ( ps /\ ph ) $=
+      ( wmo wa moan ax-mp ) ACEBAFCEDABCGH $.
+  $}
+
+  $( "At most one" is still the case when a disjunct is removed.  (Contributed
+     by NM, 5-Apr-2004.) $)
+  moor $p |- ( E* x ( ph \/ ps ) -> E* x ph ) $=
+    ( wo orc moimi ) AABDCABEF $.
+
+  $( "At most one" imports disjunction to conjunction.  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+  mooran1 $p |- ( ( E* x ph \/ E* x ps ) -> E* x ( ph /\ ps ) ) $=
+    ( wmo wa simpl moimi moan jaoi ) ACDABEZCDBCDJACABFGBACHI $.
+
+  $( "At most one" exports disjunction to conjunction.  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+  mooran2 $p |- ( E* x ( ph \/ ps ) -> ( E* x ph /\ E* x ps ) ) $=
+    ( wo wmo moor olc moimi jca ) ABDZCEACEBCEABCFBJCBAGHI $.
+
+  ${
+    $d x y $.  $d y ph $.  $d y ps $.
+    moanim.1 $e |- F/ x ph $.
+    $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
+       by NM, 3-Dec-2001.) $)
+    moanim $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
+      ( vy wsb wa weq wi wal wmo anandi imbi1i impexp sban sbf anbi1i ax-17 mo3h
+      3bitr4ri bitr2i anbi2i 3bitr3i 2albii 19.21 19.21v albii imbi2i ) ABBCEFZ
+      GZCEHZIZIZEJZCJZABGZUPCEFZGZUKIZEJCJABCKZIZUPCKUMUSCEAUJGZUKIUPAUIGZGZUKI
+      UMUSVBVDUKABUILMAUJUKNVDURUKVCUQUPUQACEFZUIGVCABCEOVEAUIACEDPQUAUBMUCUDAU
+      LEJZIZCJAVFCJZIUOVAAVFCDUEUNVGCAULEUFUGUTVHABCEBERSUHTUPCEUPERST $.
+  $}
+
+  ${
+    $d x y $.  $d y ph $.  $d y ps $.
+    moanimh.1 $e |- ( ph -> A. x ph ) $.
+    $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
+       by NM, 3-Dec-2001.)  (New usage is discouraged.) $)
+    moanimh $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
+      ( nfi moanim ) ABCACDEF $.
+  $}
+
+  ${
+    $d x y ph $.  $d y ps $.
+    $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
+       by NM, 23-Mar-1995.) $)
+    moanimv $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
+      ( nfv moanim ) ABCACDE $.
+  $}
+
+  $( Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
+     25-Jan-2006.) $)
+  moaneu $p |- E* x ( ph /\ E! x ph ) $=
+    ( weu wa wmo wi eumo nfeu1 moanim mpbir ancom mobii ) AABCZDZBEMADZBEZPMABE
+    FABGMABABHIJNOBAMKLJ $.
+
+  $( Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) $)
+  moanmo $p |- E* x ( ph /\ E* x ph ) $=
+    ( wmo wa wi id nfmo1 moanim mpbir ancom mobii ) AABCZDZBCLADZBCZOLLELFLABAB
+    GHIMNBALJKI $.
+
+  ${
+    $d x y $.  $d y ph $.  $d y ps $.
+    $( "At most one" picks a variable value, eliminating an existential
+       quantifier.  (Contributed by NM, 27-Jan-1997.) $)
+    mopick $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
+      ( vy wa wex wmo wi wsb ax-17 hbs1 hban weq sbequ12 anbi12d cbvexh wal ax-4
+      mo3h sylbi sps sbequ2 imim2i exp3a com4t imp syl5 exlimiv impcom ) ABEZCFZ
+      ACGZABHZUKACDIZBCDIZEZDFULUMHZUJUPCDUJDJUNUOCACDKBCDKLCDMZAUNBUOACDNBCDNO
+      PUPUQDULAUNEZURHZUPUMULUTDQZCQUTACDADJSVAUTCUTDRUATUNUOUTUMHUTAUNUOBUTAUN
+      UOBHZURVBUSBCDUBUCUDUEUFUGUHTUI $.
+  $}
+
+  $( Existential uniqueness "picks" a variable value for which another wff is
+     true.  If there is only one thing ` x ` such that ` ph ` is true, and
+     there is also an ` x ` (actually the same one) such that ` ph ` and ` ps `
+     are both true, then ` ph ` implies ` ps ` regardless of ` x ` .  This
+     theorem can be useful for eliminating existential quantifiers in a
+     hypothesis.  Compare Theorem *14.26 in [WhiteheadRussell] p. 192.
+     (Contributed by NM, 10-Jul-1994.) $)
+  eupick $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
+    ( weu wmo wa wex wi eumo mopick sylan ) ACDACEABFCGABHACIABCJK $.
+
+  $( Version of ~ eupick with closed formulas.  (Contributed by NM,
+     6-Sep-2008.) $)
+  eupicka $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> A. x ( ph -> ps ) ) $=
+    ( weu wa wex wi hbeu1 hbe1 hban eupick alrimih ) ACDZABEZCFZEABGCMOCACHNCIJA
+    BCKL $.
+
+  $( Existential uniqueness "pick" showing wff equivalence.  (Contributed by
+     NM, 25-Nov-1994.) $)
+  eupickb $p |- ( ( E! x ph /\ E! x ps /\ E. x ( ph /\ ps ) ) ->
+               ( ph <-> ps ) ) $=
+    ( weu wa wex w3a wi eupick 3adant2 3simpc pm3.22 eximi anim2i 3syl impbid )
+    ACDZBCDZABEZCFZGZABQTABHRABCIJUARTERBAEZCFZEBAHQRTKTUCRSUBCABLMNBACIOP $.
+
+  $( Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
+     Salmon, 11-Jul-2011.) $)
+  eupickbi $p |- ( E! x ph -> ( E. x ( ph /\ ps ) <-> A. x ( ph -> ps ) ) ) $=
+    ( weu wa wex wi wal eupicka ex hba1 wb ancl simpl impbid1 eubidh euex syl6bi
+    sps com12 impbid ) ACDZABEZCFZABGZCHZUBUDUFABCIJUFUBUDUFUBUCCDUDUFAUCCUECKU
+    EAUCLCUEAUCABMABNOSPUCCQRTUA $.
+
+  $( "At most one" can show the existence of a common value.  In this case we
+     can infer existence of conjunction from a conjunction of existence, and it
+     is one way to achieve the converse of ~ 19.40 .  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+  mopick2 $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) /\ E. x ( ph /\ ch ) ) ->
+                E. x ( ph /\ ps /\ ch ) ) $=
+    ( wmo wa wex w3a hbmo1 hbe1 mopick ancld anim1d df-3an syl6ibr eximdh 3impia
+    hban ) ADEZABFZDGZACFZDGABCHZDGSUAFZUBUCDSUADADITDJRUDUBTCFUCUDATCUDABABDKL
+    MABCNOPQ $.
+
+  ${
+    moexexdc.1 $e |- F/ y ph $.
+    $( "At most one" double quantification.  (Contributed by Jim Kingdon,
+       5-Jul-2018.) $)
+    moexexdc $p |- ( DECID E. x ph ->
+        ( ( E* x ph /\ A. x E* y ps ) -> E* y E. x ( ph /\ ps ) ) ) $=
+      ( wex wdc wn wo wmo wal wa wi df-dc hbmo1 hba1 exlimih
+      hbmo hbim a1d hbe1 nfri mopick ex com3r alrimdh moim spsd exsimpl
+      syl6 hbex con3i mon syl jaoi imp3a sylbi ) ACFZGURURHZIZACJZBDJZC
+      KZLABLZCFZDJZMURNUTVAVCVFURVAVCVFMZMZUSAVHCVAVGCACOVCVFCVBCPVECDV
+      DCUARSSAVAVEBMZDKZVGAVAVIDADEUBZADCVKRVAVEABVAVEABMABCUCUDUEUFVJV
+      BVFCVEBDUGUHUJQUSVGVAUSVFVCUSVEDFZHVFVLURVEURDADCVKUKABCUIQULVEDU
+      MUNTTUOUPUQ $.
+  $}
+
+  $( Double quantification with "at most one."  (Contributed by NM,
+     3-Dec-2001.) $)
+  2moex $p |- ( E* x E. y ph -> A. y E* x ph ) $=
+    ( wex wmo hbe1 hbmo 19.8a moimi alrimih ) ACDZBEABECKCBACFGAKBACHIJ $.
+
+  $( Double quantification with existential uniqueness.  (Contributed by NM,
+     3-Dec-2001.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+  2euex $p |- ( E! x E. y ph -> E. y E! x ph ) $=
+    ( wex weu wmo wa eu5 excom hbe1 19.8a moimi df-mo sylib eximdh syl5bi impcom
+    hbmo wi sylbi ) ACDZBEUABDZUABFZGABEZCDZUABHUCUBUEUBABDZCDUCUEABCIUCUFUDCUA
+    CBACJRUCABFUFUDSAUABACKLABMNOPQT $.
+
+  $( Double quantification with existential uniqueness and "at most one."
+     (Contributed by NM, 3-Dec-2001.) $)
+  2eumo $p |- ( E! x E* y ph -> E* x E! y ph ) $=
+    ( weu wmo wi euimmo eumo mpg ) ACDZACEZFKBDJBEFBJKBGACHI $.
+
+  $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
+  2eu2ex $p |- ( E! x E! y ph -> E. x E. y ph ) $=
+    ( weu wex euex eximi syl ) ACDZBDIBEACEZBEIBFIJBACFGH $.
+
+  $( A condition allowing swap of "at most one" and existential quantifiers.
+     (Contributed by Jim Kingdon, 6-Jul-2018.) $)
+  2moswapdc $p |- ( DECID E. x E. y ph -> ( A. x E* y ph ->
+      ( E* x E. y ph -> E* y E. x ph ) ) ) $=
+    ( wex wdc wmo wa wi nfe1 moexexdc exp3acom23 19.8a pm4.71ri exbii
+    wal mobii imbi2i syl6ibr ) ACDZBDEZACFBOZSBFZSAGZBDZCFZHUBABDZCFZ
+    HTUBUAUESABCACIJKUGUEUBUFUDCAUCBASACLMNPQR $.
+
+  $( A condition allowing swap of uniqueness and existential quantifiers.
+     (Contributed by Jim Kingdon, 7-Jul-2018.) $)
+  2euswapdc $p |- ( DECID E. x E. y ph -> ( A. x E* y ph ->
+      ( E! x E. y ph -> E! y E. x ph ) ) ) $=
+    ( wex wdc wmo wal weu wi wa excomim a1i 2moswapdc imp anim12d eu5 3imtr4g
+    ex ) ACDZBDZEZACFBGZSBHZABDZCHZIUAUBJZTSBFZJUDCDZUDCFZJUCUEUFTUHUGUITUHIUFA
+    BCKLUAUBUGUIIABCMNOSBPUDCPQR $.
+
+  $( Double existential uniqueness implies double uniqueness quantification.
+     (Contributed by NM, 3-Dec-2001.) $)
+  2exeu $p |- ( ( E! x E. y ph /\ E! y E. x ph ) -> E! x E! y ph ) $=
+    ( wex wmo weu excom hbe1 19.41h 19.8a moimi anim2i eximi sylbir sylanb simpl
+    wa hbmo eu5 anbi12i adantl anim12i ancoms exbii mobii bitri 3imtr4i ) ACDZB
+    DZUHBEZQZABDZCDZULCEZQZQUHACEZQZBDZUQBEZQZUHBFZULCFZQACFZBFZUOUKUTUOURUKUSU
+    MUIUNURACBGUIUNQUHUNQZBDURUHUNBULBCABHRIVEUQBUNUPUHAULCABJKLMNOUJUSUIUQUHBU
+    HUPPKUAUBUCVAUKVBUOUHBSULCSTVDVCBDZVCBEZQUTVCBSVFURVGUSVCUQBACSZUDVCUQBVHUE
+    TUFUG $.
+
+  ${
+    $d x y z w $.  $d z w ph $.
+    $( This theorem provides us with a definition of double existential
+       uniqueness ("exactly one ` x ` and exactly one ` y ` ").  Naively one
+       might think (incorrectly) that it could be defined by
+       ` E! x E! y ph ` .  See ~ 2exeu for a one-way implication.  (Contributed
+       by NM, 3-Dec-2001.) $)
+    2eu4 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <->
+      ( E. x E. y ph /\ E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) ) ) $=
+      ( wex weu wa weq wal ax-17 eu3h anbi12i anbi2i bitri hba1 19.3h 19.26 albii
+      wi an4 excom anidm jcab 3bitr4ri alcom bitr4i 19.23v 2albii 3bitri 2exbii
+      hbe1 hbim aaan eeanv bitr2i ) ACFZBGZABFZCGZHUQBFZUQBDIZTZBJZDFZHZUSCFZUS
+      CEIZTZCJZEFZHZHVAVGHZVEVKHZHVAAVBVHHTZCJZBJZEFDFZHURVFUTVLUQBDUQDKLUSCEUS
+      EKLMVAVEVGVKUAVMVAVNVRVMVAVAHVAVGVAVAACBUBNVAUCOVRVDVJHZEFDFVNVQVSDEVQAVB
+      TZCJZAVHTZBJZHZCJZBJZVCVIHZCJBJVSVQWAWBCJZBJZHZBJZWFWABJZWIBJZHWLWIHZWKVQ
+      WMWIWLWIBWHBPQNWAWIBRVQWAWHHZBJWNVPWOBVPVTWBHZCJWOVOWPCAVBVHUDSVTWBCROSWA
+      WHBROUEWEWJBWEWACJZWCCJZHWJWAWCCRWQWAWRWIWACVTCPQWBCBUFMOSUGWDWGBCWAVCWCV
+      IAVBCUHAVHBUHMUIVCVIBCUQVBCACULVBCKUMUSVHBABULVHBKUMUNUJUKVDVJDEUOUPMUJ
+      $.
+  $}
+
+  $( Two equivalent expressions for double existential uniqueness.
+     (Contributed by NM, 19-Feb-2005.) $)
+  2eu7 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <->
+             E! x E! y ( E. x ph /\ E. y ph ) ) $=
+    ( wex weu wa hbe1 hbeu euan ancom eubii 3bitri 3bitr4ri ) ABDZCEZACDZFZBEOP
+    BEZFNPFZCEZBEROFOPBNBCABGHITQBTPNFZCEPOFQSUACNPJKPNCACGIPOJLKROJM $.
+
+  ${
+    $d x y z $.
+    $( Equality has existential uniqueness.  (Contributed by Stefan Allan,
+       4-Dec-2008.) $)
+    euequ1 $p |- E! x x = y $=
+      ( vz weq weu wex wa wi wal a9e equtr2 gen2 equequ1 eu4 mpbir2an ) ABDZAEP
+      AFPCBDZGACDHZCIAIABJRACACBKLPQACACBMNO $.
+  $}
+
+  ${
+    $d x y $.
+    $( Two ways to express "only one thing exists."  The left-hand side
+       requires only one variable to express this.  Both sides are false in set
+       theory.  (Contributed by NM, 5-Apr-2004.) $)
+    exists1 $p |- ( E! x x = x <-> A. x x = y ) $=
+      ( weq weu wb wal wex df-eu equid tbt bicom bitri albii exbii hbae 3bitr2i
+      19.9h ) AACZADRABCZEZAFZBGSAFZBGUBRABHUBUABSTASSRETRSAIJSRKLMNUBBABBOQP $.
+  $}
+
+  ${
+    $d x y $.
+    $( A condition implying that at least two things exist.  (Contributed by
+       NM, 10-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+    exists2 $p |- ( ( E. x ph /\ E. x -. ph ) -> -. E! x x = x ) $=
+      ( vy wex wn cv wceq weu wal hbeu1 hba1 wi exists1 sylbi exlimdh
+      ax16 com12 alexim syl6 con2d imp ) ABDZAEBDZBFZUDGZBHZEUBUFUCUB
+      UFABIZUCEUFUBUGUFAUGBUEBJABKUFUDCFGBIAUGLBCMABCPNOQABRSTUA $.
   $}
 
 $(
@@ -16808,8 +17506,8 @@ $)
     $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 8-Oct-2016.) $)
     nfabd $p |- ( ph -> F/_ x { y | ps } ) $=
-      ( vz cab nfv cv wcel wsbc df-clab nfsbd nfxfrd nfcd ) ACGBDHZAG
-      IGJZQKBDRLACBGDMABDGCEFNOP $.
+      ( vz cab nfv cv wcel wsb df-clab nfsbd nfxfrd nfcd ) ACGBDHZAGIGJQKBDGLAC
+      BGDMABDGCEFNOP $.
   $}
 
   ${
@@ -17979,21 +18677,19 @@ $)
        are distinct.  See ~ nfraldxy for a version with ` x ` and ` y `
        distinct instead.  (Contributed by Jim Kingdon, 30-May-2018.) $)
     nfraldya $p |- ( ph -> F/ x A. y e. A ps ) $=
-      ( vz wral cv wcel wi wal df-ral wsbc wnf nfv nfsbd bitri imbi1i
-      nfraldxy sb8 sbim clelsb3 albii bitr4i nfbii sylibr nfxfrd ) BDE
-      JDKELZBMZDNZACBDEOABDIKZPZIEJZCQUMCQAUOCIEAIRGABDICFHSUBUMUPCUM
-      ULDUNPZINZUPULDIULIRUCURUNELZUOMZINUPUQUTIUQUKDUNPZUOMUTUKBDIUD
-      VAUSUOIDEUEUATUFUOIEOUGTUHUIUJ $.
+      ( vz wral cv wcel wi wal df-ral wsb sbim clelsb3 nfv nfxfrd bitri 3bitr4i
+      imbi1i albii sb8 nfsbd nfraldxy ) BDEJDKELZBMZDNZACBDEOUJBDIPZIEJZACUIDIP
+      ZINIKELZUKMZINUJULUMUOIUMUHDIPZUKMUOUHBDIQUPUNUKIDERUCUAUDUIDIUIISUEUKIEO
+      UBAUKCIEAISGABDICFHUFUGTT $.
 
     $( Not-free for restricted existential quantification where ` y ` and ` A `
        are distinct.  See ~ nfrexdxy for a version with ` x ` and ` y `
        distinct instead.  (Contributed by Jim Kingdon, 30-May-2018.) $)
     nfrexdya $p |- ( ph -> F/ x E. y e. A ps ) $=
-      ( vz wrex cv wcel wa wex df-rex wsbc wnf nfv nfsbd bitri nfrexdxy
-      sb8e sban clelsb3 anbi1i exbii bitr4i nfbii sylibr nfxfrd ) BDEJD
-      KELZBMZDNZACBDEOABDIKZPZIEJZCQUMCQAUOCIEAIRGABDICFHSUAUMUPCUMULDU
-      NPZINZUPULDIULIRUBURUNELZUOMZINUPUQUTIUQUKDUNPZUOMUTUKBDIUCVAUSUO
-      IDEUDUETUFUOIEOUGTUHUIUJ $.
+      ( vz wrex cv wcel wa wex df-rex wsb sban clelsb3 nfv nfxfrd bitri 3bitr4i
+      anbi1i exbii sb8e nfsbd nfrexdxy ) BDEJDKELZBMZDNZACBDEOUJBDIPZIEJZACUIDI
+      PZINIKELZUKMZINUJULUMUOIUMUHDIPZUKMUOUHBDIQUPUNUKIDERUCUAUDUIDIUIISUEUKIE
+      OUBAUKCIEAISGABDICFHUFUGTT $.
   $}
 
   ${
@@ -19117,6 +19813,17 @@ $)
   $}
 
   ${
+    $d x y z $.  $d z A $.
+    nfrabxy.1 $e |- F/ x ph $.
+    nfrabxy.2 $e |- F/_ x A $.
+    $( A variable not free in a wff remains so in a restricted class
+       abstraction.  (Contributed by Jim Kingdon, 19-Jul-2018.) $)
+    nfrabxy $p |- F/_ x { y e. A | ph } $=
+      ( crab cv wcel wa cab df-rab nfcri nfan nfab nfcxfr ) BACDGCHDI
+      ZAJZCKACDLRBCQABBCDFMENOP $.
+  $}
+
+  ${
     reubida.1 $e |- F/ x ph $.
     reubida.2 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
     $( Formula-building rule for restricted existential quantifier (deduction
@@ -19347,6 +20054,11 @@ $)
       ( wrex rexbidva rexeqdv bitrd ) ABDEICDEICDFIABCDEHJACDEFGKL $.
   $}
 
+  $( Unrestricted "at most one" implies restricted "at most one".  (Contributed
+     by NM, 16-Jun-2017.) $)
+  mormo $p |- ( E* x ph -> E* x e. A ph ) $=
+    ( wmo cv wcel wa wrmo moan df-rmo sylibr ) ABDBECFZAGBDABCHALBIABCJK $.
+
   $( Restricted uniqueness in terms of "at most one."  (Contributed by NM,
      23-May-1999.)  (Revised by NM, 16-Jun-2017.) $)
   reu5 $p |- ( E! x e. A ph <-> ( E. x e. A ph /\ E* x e. A ph ) ) $=
@@ -19395,12 +20107,11 @@ $)
        (Contributed by FL, 27-Apr-2008.)  (Revised by Mario Carneiro,
        9-Oct-2016.)  (Proof rewritten by Jim Kingdon, 10-Jun-2018.) $)
     cbvrexf $p |- ( E. x e. A ph <-> E. y e. A ps ) $=
-      ( vz cv wcel wa wex wrex wsbc nfv nfcri nfan nfs1v wceq sbequ12
-      eleq1 anbi12d cbvex nfsb sbequ sbie syl6bb bitri df-rex 3bitr4i
-      ) CLZEMZANZCOZDLZEMZBNZDOZACEPBDEPUQKLZEMZACVBQZNZKOVAUPVECKUPK
-      RVCVDCCKEFSACKUATUNVBUBUOVCAVDUNVBEUDACKUCUEUFVEUTKDVCVDDDKEGSA
-      CKDHUGTUTKRVBURUBZVCUSVDBVBUREUDVFVDACURQBAKDCUHABCDIJUIUJUEUFU
-      KACEULBDEULUM $.
+      ( vz cv wcel wa wex wrex wsb nfv nfcri nfan nfs1v weq eleq1 sbequ12 cbvex
+      anbi12d nfsb sbequ sbie syl6bb bitri df-rex 3bitr4i ) CLZEMZANZCOZDLZEMZB
+      NZDOZACEPBDEPUQKLZEMZACKQZNZKOVAUPVECKUPKRVCVDCCKEFSACKUATCKUBUOVCAVDUNVB
+      EUCACKUDUFUEVEUTKDVCVDDDKEGSACKDHUGTUTKRKDUBZVCUSVDBVBUREUCVFVDACDQBAKDCU
+      HABCDIJUIUJUFUEUKACEULBDEULUM $.
   $}
 
   ${
@@ -19673,6 +20384,5276 @@ $)
   $}
 
 $(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The universal class
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  $( Declare the symbol for the universal class. $)
+  $c _V $. $( Letter V (for the universal class) $)
+
+  $( Extend class notation to include the universal class symbol. $)
+  cvv $a class _V $.
+
+  ${
+    $d z x $.  $d z y $.
+    $( Soundness justification theorem for ~ df-v .  (Contributed by Rodolfo
+       Medina, 27-Apr-2010.) $)
+    vjust $p |- { x | x = x } = { y | y = y } $=
+      ( vz weq cab wsb cv wcel equid sbt 2th df-clab 3bitr4i eqriv ) CAADZAEZBB
+      DZBEZOACFZQBCFZCGZPHUARHSTOACAIJQBCBIJKOCALQCBLMN $.
+  $}
+
+  $( Define the universal class.  Definition 5.20 of [TakeutiZaring] p. 21.
+     Also Definition 2.9 of [Quine] p. 19.  (Contributed by NM, 5-Aug-1993.) $)
+  df-v $a |- _V = { x | x = x } $.
+
+  $( All set variables are sets (see ~ isset ).  Theorem 6.8 of [Quine] p. 43.
+     (Contributed by NM, 5-Aug-1993.) $)
+  vex $p |- x e. _V $=
+    ( cv cvv wcel weq equid df-v abeq2i mpbir ) ABCDAAEZAFJACAGHI $.
+
+  ${
+    $d x A $.
+    $( Two ways to say " ` A ` is a set":  A class ` A ` is a member of the
+       universal class ` _V ` (see ~ df-v ) if and only if the class ` A `
+       exists (i.e. there exists some set ` x ` equal to class ` A ` ).
+       Theorem 6.9 of [Quine] p. 43. _Notational convention_:  We will use the
+       notational device " ` A e. _V ` " to mean " ` A ` is a set" very
+       frequently, for example in uniex .  Note the when ` A ` is not a set, it
+       is called a proper class.  In some theorems, such as uniexg , in order
+       to shorten certain proofs we use the more general antecedent ` A e. V `
+       instead of ` A e. _V ` to mean " ` A ` is a set."
+
+       Note that a constant is implicitly considered distinct from all
+       variables.  This is why ` _V ` is not included in the distinct variable
+       list, even though ~ df-clel requires that the expression substituted for
+       ` B ` not contain ` x ` .  (Also, the Metamath spec does not allow
+       constants in the distinct variable list.)  (Contributed by NM,
+       5-Aug-1993.) $)
+    isset $p |- ( A e. _V <-> E. x x = A ) $=
+      ( cvv wcel cv wceq wa wex df-clel vex biantru exbii bitr4i ) BCDAEZBFZNCD
+      ZGZAHOAHABCIOQAPOAJKLM $.
+  $}
+
+  ${
+    $d A y $.  $d x y $.
+    issetf.1 $e |- F/_ x A $.
+    $( A version of isset that does not require x and A to be distinct.
+       (Contributed by Andrew Salmon, 6-Jun-2011.)  (Revised by Mario Carneiro,
+       10-Oct-2016.) $)
+    issetf $p |- ( A e. _V <-> E. x x = A ) $=
+      ( vy cvv wcel cv wceq wex isset nfeq2 nfv eqeq1 cbvex bitri ) BEFDGZBHZDI
+      AGZBHZAIDBJQSDAAPBCKSDLPRBMNO $.
+  $}
+
+  ${
+    $d x A $.
+    isseti.1 $e |- A e. _V $.
+    $( A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
+       5-Aug-1993.) $)
+    isseti $p |- E. x x = A $=
+      ( cvv wcel cv wceq wex isset mpbi ) BDEAFBGAHCABIJ $.
+  $}
+
+  ${
+    $d x A $.
+    issetri.1 $e |- E. x x = A $.
+    $( A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
+       5-Aug-1993.) $)
+    issetri $p |- A e. _V $=
+      ( cvv wcel cv wceq wex isset mpbir ) BDEAFBGAHCABIJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( If a class is a member of another class, it is a set.  Theorem 6.12 of
+       [Quine] p. 44.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
+       Andrew Salmon, 8-Jun-2011.) $)
+    elex $p |- ( A e. B -> A e. _V ) $=
+      ( vx cv wceq wcel wa wex cvv exsimpl df-clel isset 3imtr4i ) CDZAEZNBFZGC
+      HOCHABFAIFOPCJCABKCALM $.
+  $}
+
+  ${
+    elisseti.1 $e |- A e. B $.
+    $( If a class is a member of another class, it is a set.  (Contributed by
+       NM, 11-Jun-1994.) $)
+    elexi $p |- A e. _V $=
+      ( wcel cvv elex ax-mp ) ABDAEDCABFG $.
+  $}
+
+  ${
+    $d x A $.
+    $( An element of a class exists.  (Contributed by NM, 1-May-1995.) $)
+    elisset $p |- ( A e. V -> E. x x = A ) $=
+      ( wcel cvv cv wceq wex elex isset sylib ) BCDBEDAFBGAHBCIABJK $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( If two classes each contain another class, then both contain some set.
+       (Contributed by Alan Sare, 24-Oct-2011.) $)
+    elex22 $p |- ( ( A e. B /\ A e. C ) -> E. x ( x e. B /\ x e. C ) ) $=
+      ( wcel wa cv wceq wi wal eleq1a anim12ii alrimiv elisset adantr exim sylc
+      wex ) BCEZBDEZFZAGZBHZUBCEZUBDEZFZIZAJUCARZUFARUAUGASUCUDTUEBCUBKBDUBKLMS
+      UHTABCNOUCUFAPQ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( If a class contains another class, then it contains some set.
+       (Contributed by Alan Sare, 25-Sep-2011.) $)
+    elex2 $p |- ( A e. B -> E. x x e. B ) $=
+      ( wcel cv wceq wi wal wex eleq1a alrimiv elisset exim sylc ) BCDZAEZBFZPC
+      DZGZAHQAIRAIOSABCPJKABCLQRAMN $.
+  $}
+
+  $( A universal quantifier restricted to the universe is unrestricted.
+     (Contributed by NM, 26-Mar-2004.) $)
+  ralv $p |- ( A. x e. _V ph <-> A. x ph ) $=
+    ( cvv wral cv wcel wi wal df-ral vex a1bi albii bitr4i ) ABCDBECFZAGZBHABHA
+    BCIAOBNABJKLM $.
+
+  $( An existential quantifier restricted to the universe is unrestricted.
+     (Contributed by NM, 26-Mar-2004.) $)
+  rexv $p |- ( E. x e. _V ph <-> E. x ph ) $=
+    ( cvv wrex cv wcel wa wex df-rex vex biantrur exbii bitr4i ) ABCDBECFZAGZBH
+    ABHABCIAOBNABJKLM $.
+
+  $( A uniqueness quantifier restricted to the universe is unrestricted.
+     (Contributed by NM, 1-Nov-2010.) $)
+  reuv $p |- ( E! x e. _V ph <-> E! x ph ) $=
+    ( cvv wreu cv wcel wa weu df-reu vex biantrur eubii bitr4i ) ABCDBECFZAGZBH
+    ABHABCIAOBNABJKLM $.
+
+  $( A uniqueness quantifier restricted to the universe is unrestricted.
+     (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
+  rmov $p |- ( E* x e. _V ph <-> E* x ph ) $=
+    ( cvv wrmo cv wcel wa wmo df-rmo vex biantrur mobii bitr4i ) ABCDBECFZAGZBH
+    ABHABCIAOBNABJKLM $.
+
+  $( A class abstraction restricted to the universe is unrestricted.
+     (Contributed by NM, 27-Dec-2004.)  (Proof shortened by Andrew Salmon,
+     8-Jun-2011.) $)
+  rabab $p |- { x e. _V | ph } = { x | ph } $=
+    ( cvv crab cv wcel wa cab df-rab vex biantrur abbii eqtr4i ) ABCDBECFZAGZBH
+    ABHABCIAOBNABJKLM $.
+
+  ${
+    $d x y $.  $d y A $.
+    $( Commutation of restricted and unrestricted universal quantifiers.
+       (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Andrew Salmon,
+       8-Jun-2011.) $)
+    ralcom4 $p |- ( A. x e. A A. y ph <-> A. y A. x e. A ph ) $=
+      ( cvv wral wal ralcom ralv ralbii 3bitr3i ) ACEFZBDFABDFZCEFACGZBDFMCGABC
+      DEHLNBDACIJMCIK $.
+
+    $( Commutation of restricted and unrestricted existential quantifiers.
+       (Contributed by NM, 12-Apr-2004.)  (Proof shortened by Andrew Salmon,
+       8-Jun-2011.) $)
+    rexcom4 $p |- ( E. x e. A E. y ph <-> E. y E. x e. A ph ) $=
+      ( cvv wrex wex rexcom rexv rexbii 3bitr3i ) ACEFZBDFABDFZCEFACGZBDFMCGABC
+      DEHLNBDACIJMCIK $.
+  $}
+
+  ${
+    $d A x $.  $d x y $.  $d ph x $.
+    $( Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
+       1-Jun-2011.) $)
+    rexcom4a $p |- ( E. x E. y e. A ( ph /\ ps )
+                          <-> E. y e. A ( ph /\ E. x ps ) ) $=
+      ( wa wrex wex rexcom4 19.42v rexbii bitr3i ) ABFZDEGCHMCHZDEGABCHFZDEGMDC
+      EINODEABCJKL $.
+
+    $d B x $.
+    rexcom4b.1 $e |- B e. _V $.
+    $( Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
+       1-Jun-2011.) $)
+    rexcom4b $p |- ( E. x E. y e. A ( ph /\ x = B ) <-> E. y e. A ph ) $=
+      ( cv wceq wa wrex wex rexcom4a isseti biantru rexbii bitr4i ) ABGEHZICDJB
+      KAQBKZIZCDJACDJAQBCDLASCDRABEFMNOP $.
+  $}
+
+  ${
+    $d x A $.
+    $( Closed theorem version of ~ ceqsalg .  (Contributed by NM,
+       28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
+    ceqsalt $p |- ( ( F/ x ps /\ A. x ( x = A -> ( ph <-> ps ) ) /\ A e. V )
+         -> ( A. x ( x = A -> ph ) <-> ps ) ) $=
+      ( wnf cv wceq wb wi wal wcel w3a wex elisset 3ad2ant3 bi1 imim3i 3ad2ant2
+      3ad2ant1 al2imi 19.23t sylibd mpid imim2i com23 alimi 19.21t mpbid impbid
+      bi2 ) BCFZCGDHZABIZJZCKZDELZMZUMAJZCKZBURUTUMCNZBUQULVAUPCDEOPURUTUMBJZCK
+      ZVABJZUPULUTVCJUQUOUSVBCUNABUMABQRUASULUPVCVDIUQUMBCUBTUCUDURBUSJZCKZBUTJ
+      ZUPULVFUQUOVECUOUMBAUNBAJUMABUKUEUFUGSULUPVFVGIUQBUSCUHTUIUJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Restricted quantifier version of ~ ceqsalt .  (Contributed by NM,
+       28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
+    ceqsralt $p |- ( ( F/ x ps
+              /\ A. x ( x = A -> ( ph <-> ps ) ) /\ A e. B )
+         -> ( A. x e. B ( x = A -> ph ) <-> ps ) ) $=
+      ( wnf cv wceq wb wi wal wcel w3a wral df-ral eleq1 pm5.32ri imbi1i impexp
+      wa 3bitr3i albii a1i syl5bb 19.21v syl6bb biimt 3ad2ant3 ceqsalt 3bitr2d
+      ) BCFZCGZDHZABIJCKZDELZMZUMAJZCENZUOUQCKZJZUSBUPURUOUQJZCKZUTURULELZUQJZC
+      KZUPVBUQCEOVEVBIUPVDVACVCUMTZAJUOUMTZAJVDVAVFVGAUMVCUOULDEPQRVCUMASUOUMAS
+      UAUBUCUDUOUQCUEUFUOUKUSUTIUNUOUSUGUHABCDEUIUJ $.
+  $}
+
+  ${
+    $d x A $.
+    ceqsalg.1 $e |- F/ x ps $.
+    ceqsalg.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( A representation of explicit substitution of a class for a variable,
+       inferred from an implicit substitution hypothesis.  (Contributed by NM,
+       29-Oct-2003.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    ceqsalg $p |- ( A e. V -> ( A. x ( x = A -> ph ) <-> ps ) ) $=
+      ( wcel cv wceq wi wal wex elisset nfa1 biimpd a2i sps exlimd syl5com
+      biimprcd alrimi impbid1 ) DEHZCIDJZAKZCLZBUDUECMUGBCDENUGUEBCUFCOFUFUEBKC
+      UEABUEABGPQRSTBUFCFUEABGUAUBUC $.
+  $}
+
+  ${
+    $d x A $.
+    ceqsal.1 $e |- F/ x ps $.
+    ceqsal.2 $e |- A e. _V $.
+    ceqsal.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( A representation of explicit substitution of a class for a variable,
+       inferred from an implicit substitution hypothesis.  (Contributed by NM,
+       18-Aug-1993.) $)
+    ceqsal $p |- ( A. x ( x = A -> ph ) <-> ps ) $=
+      ( cvv wcel cv wceq wi wal wb ceqsalg ax-mp ) DHICJDKALCMBNFABCDHEGOP $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    ceqsalv.1 $e |- A e. _V $.
+    ceqsalv.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( A representation of explicit substitution of a class for a variable,
+       inferred from an implicit substitution hypothesis.  (Contributed by NM,
+       18-Aug-1993.) $)
+    ceqsalv $p |- ( A. x ( x = A -> ph ) <-> ps ) $=
+      ( nfv ceqsal ) ABCDBCGEFH $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ps $.
+    ceqsralv.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Restricted quantifier version of ~ ceqsalv .  (Contributed by NM,
+       21-Jun-2013.) $)
+    ceqsralv $p |- ( A e. B -> ( A. x e. B ( x = A -> ph ) <-> ps ) ) $=
+      ( wnf cv wceq wb wi wal wcel wral nfv ax-gen ceqsralt mp3an12 ) BCGCHDIZA
+      BJKZCLDEMSAKCENBJBCOTCFPABCDEQR $.
+  $}
+
+  ${
+    $d x ps $.
+    gencl.1 $e |- ( th <-> E. x ( ch /\ A = B ) ) $.
+    gencl.2 $e |- ( A = B -> ( ph <-> ps ) ) $.
+    gencl.3 $e |- ( ch -> ph ) $.
+    $( Implicit substitution for class with embedded variable.  (Contributed by
+       NM, 17-May-1996.) $)
+    gencl $p |- ( th -> ps ) $=
+      ( wceq wa wex syl5ib impcom exlimiv sylbi ) DCFGKZLZEMBHSBERCBCARBJINOPQ
+      $.
+  $}
+
+  ${
+    $d x y $.  $d x R $.  $d x ps $.  $d y C $.  $d y S $.  $d y ch $.
+    2gencl.1 $e |- ( C e. S <-> E. x e. R A = C ) $.
+    2gencl.2 $e |- ( D e. S <-> E. y e. R B = D ) $.
+    2gencl.3 $e |- ( A = C -> ( ph <-> ps ) ) $.
+    2gencl.4 $e |- ( B = D -> ( ps <-> ch ) ) $.
+    2gencl.5 $e |- ( ( x e. R /\ y e. R ) -> ph ) $.
+    $( Implicit substitution for class with embedded variable.  (Contributed by
+       NM, 17-May-1996.) $)
+    2gencl $p |- ( ( C e. S /\ D e. S ) -> ch ) $=
+      ( wcel wi cv wceq wrex wa wex df-rex bitri imbi2d ex gencl com12 impcom )
+      IKQZHKQZCULBRULCRESJQZUKEGIUKGITZEJUAUMUNUBEUCMUNEJUDUEUNBCULOUFULUMBUMAR
+      UMBRDSJQZULDFHULFHTZDJUAUOUPUBDUCLUPDJUDUEUPABUMNUFUOUMAPUGUHUIUHUJ $.
+  $}
+
+  ${
+    $d x y z $.  $d y z D $.  $d z F $.  $d x y R $.  $d y z S $.  $d x ps $.
+    $d y ch $.  $d z th $.
+    3gencl.1 $e |- ( D e. S <-> E. x e. R A = D ) $.
+    3gencl.2 $e |- ( F e. S <-> E. y e. R B = F ) $.
+    3gencl.3 $e |- ( G e. S <-> E. z e. R C = G ) $.
+    3gencl.4 $e |- ( A = D -> ( ph <-> ps ) ) $.
+    3gencl.5 $e |- ( B = F -> ( ps <-> ch ) ) $.
+    3gencl.6 $e |- ( C = G -> ( ch <-> th ) ) $.
+    3gencl.7 $e |- ( ( x e. R /\ y e. R /\ z e. R ) -> ph ) $.
+    $( Implicit substitution for class with embedded variable.  (Contributed by
+       NM, 17-May-1996.) $)
+    3gencl $p |- ( ( D e. S /\ F e. S /\ G e. S ) -> th ) $=
+      ( wcel wa wi wceq wrex wex df-rex bitri imbi2d 3expia 2gencl com12 3impia
+      cv gencl ) KMUCZNMUCZOMUCZDUTURUSUDZDVACUEVADUEGUPLUCZUTGJOUTJOUFZGLUGVBV
+      CUDGUHRVCGLUIUJVCCDVAUAUKVAVBCVBAUEVBBUEVBCUEEFHIKNLMPQHKUFABVBSUKINUFBCV
+      BTUKEUPLUCFUPLUCVBAUBULUMUNUQUNUO $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    cgsexg.1 $e |- ( x = A -> ch ) $.
+    cgsexg.2 $e |- ( ch -> ( ph <-> ps ) ) $.
+    $( Implicit substitution inference for general classes.  (Contributed by
+       NM, 26-Aug-2007.) $)
+    cgsexg $p |- ( A e. V ->
+                     ( E. x ( ch /\ ph ) <-> ps ) ) $=
+      ( wcel wa wex biimpa exlimiv cv wceq elisset eximi syl biimprcd ancld
+      eximdv syl5com impbid2 ) EFIZCAJZDKZBUEBDCABHLMUDCDKZBUFUDDNEOZDKUGDEFPUH
+      CDGQRBCUEDBCACABHSTUAUBUC $.
+  $}
+
+  ${
+    $d x y ps $.  $d x y A $.  $d x y B $.
+    cgsex2g.1 $e |- ( ( x = A /\ y = B ) -> ch ) $.
+    cgsex2g.2 $e |- ( ch -> ( ph <-> ps ) ) $.
+    $( Implicit substitution inference for general classes.  (Contributed by
+       NM, 26-Jul-1995.) $)
+    cgsex2g $p |- ( ( A e. V /\ B e. W ) ->
+                     ( E. x E. y ( ch /\ ph ) <-> ps ) ) $=
+      ( wcel wa wex biimpa exlimivv cv wceq elisset anim12i eeanv sylibr 2eximi
+      syl biimprcd ancld 2eximdv syl5com impbid2 ) FHLZGILZMZCAMZENDNZBUMBDECAB
+      KOPULCENDNZBUNULDQFRZEQGRZMZENDNZUOULUPDNZUQENZMUSUJUTUKVADFHSEGISTUPUQDE
+      UAUBURCDEJUCUDBCUMDEBCACABKUEUFUGUHUI $.
+  $}
+
+  ${
+    $d x y z w A $.  $d x y z w B $.  $d x y z w C $.  $d x y z w D $.
+    $d x y z w ps $.
+    cgsex4g.1 $e |- ( ( ( x = A /\ y = B ) /\ ( z = C /\ w = D ) ) -> ch ) $.
+    cgsex4g.2 $e |- ( ch -> ( ph <-> ps ) ) $.
+    $( An implicit substitution inference for 4 general classes.  (Contributed
+       by NM, 5-Aug-1995.) $)
+    cgsex4g $p |- ( ( ( A e. R /\ B e. S ) /\ ( C e. R /\ D e. S ) ) ->
+                    ( E. x E. y E. z E. w ( ch /\ ph ) <-> ps ) ) $=
+      ( wcel wa wex cv wceq biimpa exlimivv elisset anim12i eeanv sylibr ee4anv
+      2eximi syl biimprcd ancld 2eximdv syl5com impbid2 ) HLPZIMPZQZJLPZKMPZQZQ
+      ZCAQZGRFRZERDRZBVCBDEVBBFGCABOUAUBUBVACGRFRZERDRZBVDVADSHTZESITZQZFSJTZGS
+      KTZQZQZGRFRZERDRZVFVAVIERDRZVLGRFRZQVOUQVPUTVQUQVGDRZVHERZQVPUOVRUPVSDHLU
+      CEIMUCUDVGVHDEUEUFUTVJFRZVKGRZQVQURVTUSWAFJLUCGKMUCUDVJVKFGUEUFUDVIVLDEFG
+      UGUFVNVEDEVMCFGNUHUHUIBVEVCDEBCVBFGBCACABOUJUKULULUMUN $.
+  $}
+
+  ${
+    $d x A $.
+    ceqsex.1 $e |- F/ x ps $.
+    ceqsex.2 $e |- A e. _V $.
+    ceqsex.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Elimination of an existential quantifier, using implicit substitution.
+       (Contributed by NM, 2-Mar-1995.)  (Revised by Mario Carneiro,
+       10-Oct-2016.) $)
+    ceqsex $p |- ( E. x ( x = A /\ ph ) <-> ps ) $=
+      ( cv wceq wa wex biimpa exlimi wi wal biimprcd alrimi isseti exintr ee10
+      impbii ) CHDIZAJZCKZBUCBCEUBABGLMBUBANZCOUBCKUDBUECEUBABGPQCDFRUBACSTUA
+      $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    ceqsexv.1 $e |- A e. _V $.
+    ceqsexv.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Elimination of an existential quantifier, using implicit substitution.
+       (Contributed by NM, 2-Mar-1995.) $)
+    ceqsexv $p |- ( E. x ( x = A /\ ph ) <-> ps ) $=
+      ( nfv ceqsex ) ABCDBCGEFH $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.
+    ceqsex2.1 $e |- F/ x ps $.
+    ceqsex2.2 $e |- F/ y ch $.
+    ceqsex2.3 $e |- A e. _V $.
+    ceqsex2.4 $e |- B e. _V $.
+    ceqsex2.5 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex2.6 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    $( Elimination of two existential quantifiers, using implicit
+       substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) $)
+    ceqsex2 $p |- ( E. x E. y ( x = A /\ y = B /\ ph ) <-> ch ) $=
+      ( cv wceq w3a wex wa exbii ceqsex 3anass 19.42v nfan anbi2d exbidv 3bitri
+      bitri nfv nfex ) DNFOZENGOZAPZEQZDQUJUKARZEQZRZDQUKBRZEQZCUMUPDUMUJUNRZEQ
+      UPULUSEUJUKAUASUJUNEUBUGSUOURDFUQDEUKBDUKDUHHUCUIJUJUNUQEUJABUKLUDUETBCEG
+      IKMTUF $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x ps $.  $d y ch $.
+    ceqsex2v.1 $e |- A e. _V $.
+    ceqsex2v.2 $e |- B e. _V $.
+    ceqsex2v.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex2v.4 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    $( Elimination of two existential quantifiers, using implicit
+       substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) $)
+    ceqsex2v $p |- ( E. x E. y ( x = A /\ y = B /\ ph ) <-> ch ) $=
+      ( nfv ceqsex2 ) ABCDEFGBDLCELHIJKM $.
+  $}
+
+  ${
+    $d x y z A $.  $d x y z B $.  $d x y z C $.  $d x ps $.  $d y ch $.
+    $d z th $.
+    ceqsex3v.1 $e |- A e. _V $.
+    ceqsex3v.2 $e |- B e. _V $.
+    ceqsex3v.3 $e |- C e. _V $.
+    ceqsex3v.4 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex3v.5 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    ceqsex3v.6 $e |- ( z = C -> ( ch <-> th ) ) $.
+    $( Elimination of three existential quantifiers, using implicit
+       substitution.  (Contributed by NM, 16-Aug-2011.) $)
+    ceqsex3v $p |- ( E. x E. y E. z ( ( x = A /\ y = B /\ z = C ) /\ ph )
+                 <-> th ) $=
+      ( cv wceq wa wex anass 3anass anbi1i df-3an anbi2i 3bitr4i 2exbii 19.42vv
+      w3a bitri exbii 3anbi3d 2exbidv ceqsexv ceqsex2v ) EQHRZFQIRZGQJRZUIZASZG
+      TFTZETUPUQURAUIZGTFTZSZETZDVAVDEVAUPVBSZGTFTVDUTVFFGUPUQURSZSZASUPVGASZSU
+      TVFUPVGAUAUSVHAUPUQURUBUCVBVIUPUQURAUDUEUFUGUPVBFGUHUJUKVEUQURBUIZGTFTZDV
+      CVKEHKUPVBVJFGUPABUQURNULUMUNBCDFGIJLMOPUOUJUJ $.
+  $}
+
+  ${
+    $d x y z w A $.  $d x y z w B $.  $d x y z w C $.  $d x y z w D $.
+    $d x ps $.  $d y ch $.  $d z th $.  $d w ta $.
+    ceqsex4v.1 $e |- A e. _V $.
+    ceqsex4v.2 $e |- B e. _V $.
+    ceqsex4v.3 $e |- C e. _V $.
+    ceqsex4v.4 $e |- D e. _V $.
+    ceqsex4v.7 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex4v.8 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    ceqsex4v.9 $e |- ( z = C -> ( ch <-> th ) ) $.
+    ceqsex4v.10 $e |- ( w = D -> ( th <-> ta ) ) $.
+    $( Elimination of four existential quantifiers, using implicit
+       substitution.  (Contributed by NM, 23-Sep-2011.) $)
+    ceqsex4v $p |- ( E. x E. y E. z E. w
+          ( ( x = A /\ y = B ) /\ ( z = C /\ w = D ) /\ ph ) <-> ta ) $=
+      ( wceq w3a wex 19.42vv 3anass df-3an anbi2i bitr4i 2exbii 3bitr4i 3anbi3d
+      cv wa 2exbidv ceqsex2v 3bitri ) FUMJUBZGUMKUBZUNZHUMLUBZIUMMUBZUNZAUCZIUD
+      HUDZGUDFUDURUSVAVBAUCZIUDHUDZUCZGUDFUDVAVBCUCZIUDHUDZEVEVHFGUTVFUNZIUDHUD
+      UTVGUNVEVHUTVFHIUEVDVKHIVDUTVCAUNZUNVKUTVCAUFVFVLUTVAVBAUGUHUIUJURUSVGUGU
+      KUJVGVAVBBUCZIUDHUDVJFGJKNOURVFVMHIURABVAVBRULUOUSVMVIHIUSBCVAVBSULUOUPCD
+      EHILMPQTUAUPUQ $.
+  $}
+
+  ${
+    $d x y z w v u A $.  $d x y z w v u B $.  $d x y z w v u C $.
+    $d x y z w v u D $.  $d x y z w v u E $.  $d x y z w v u F $.  $d x ps $.
+    $d y ch $.  $d z th $.  $d w ta $.  $d v et $.  $d u ze $.
+    ceqsex6v.1 $e |- A e. _V $.
+    ceqsex6v.2 $e |- B e. _V $.
+    ceqsex6v.3 $e |- C e. _V $.
+    ceqsex6v.4 $e |- D e. _V $.
+    ceqsex6v.5 $e |- E e. _V $.
+    ceqsex6v.6 $e |- F e. _V $.
+    ceqsex6v.7 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex6v.8 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    ceqsex6v.9 $e |- ( z = C -> ( ch <-> th ) ) $.
+    ceqsex6v.10 $e |- ( w = D -> ( th <-> ta ) ) $.
+    ceqsex6v.11 $e |- ( v = E -> ( ta <-> et ) ) $.
+    ceqsex6v.12 $e |- ( u = F -> ( et <-> ze ) ) $.
+    $( Elimination of six existential quantifiers, using implicit
+       substitution.  (Contributed by NM, 21-Sep-2011.) $)
+    ceqsex6v $p |- ( E. x E. y E. z E. w E. v E. u
+          ( ( x = A /\ y = B /\ z = C ) /\ ( w = D /\ v = E /\ u = F ) /\ ph )
+                 <-> ze ) $=
+      ( cv wceq w3a wex wa 3anass 3exbii 19.42vvv bitri anbi2d 3exbidv ceqsex3v
+      ) HULNUMZIULOUMZJULPUMZUNZKULQUMLULRUMMULSUMUNZAUNZMUOLUOKUOZJUOIUOHUOVGV
+      HAUPZMUOLUOKUOZUPZJUOIUOHUOZGVJVMHIJVJVGVKUPZMUOLUOKUOVMVIVOKLMVGVHAUQURV
+      GVKKLMUSUTURVNVHDUPZMUOLUOKUOZGVLVHBUPZMUOLUOKUOVHCUPZMUOLUOKUOVQHIJNOPTU
+      AUBVDVKVRKLMVDABVHUFVAVBVEVRVSKLMVEBCVHUGVAVBVFVSVPKLMVFCDVHUHVAVBVCDEFGK
+      LMQRSUCUDUEUIUJUKVCUTUT $.
+  $}
+
+  ${
+    $d x y z w v u t s A $.  $d x y z w v u t s B $.  $d x y z w v u t s C $.
+    $d x y z w v u t s D $.  $d x y z w v u t s E $.  $d x y z w v u t s F $.
+    $d x y z w v u t s G $.  $d x y z w v u t s H $.  $d x ps $.  $d y ch $.
+    $d z th $.  $d w ta $.  $d v et $.  $d u ze $.  $d t si $.  $d s rh $.
+    ceqsex8v.1 $e |- A e. _V $.
+    ceqsex8v.2 $e |- B e. _V $.
+    ceqsex8v.3 $e |- C e. _V $.
+    ceqsex8v.4 $e |- D e. _V $.
+    ceqsex8v.5 $e |- E e. _V $.
+    ceqsex8v.6 $e |- F e. _V $.
+    ceqsex8v.7 $e |- G e. _V $.
+    ceqsex8v.8 $e |- H e. _V $.
+    ceqsex8v.9 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsex8v.10 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    ceqsex8v.11 $e |- ( z = C -> ( ch <-> th ) ) $.
+    ceqsex8v.12 $e |- ( w = D -> ( th <-> ta ) ) $.
+    ceqsex8v.13 $e |- ( v = E -> ( ta <-> et ) ) $.
+    ceqsex8v.14 $e |- ( u = F -> ( et <-> ze ) ) $.
+    ceqsex8v.15 $e |- ( t = G -> ( ze <-> si ) ) $.
+    ceqsex8v.16 $e |- ( s = H -> ( si <-> rh ) ) $.
+    $( Elimination of eight existential quantifiers, using implicit
+       substitution.  (Contributed by NM, 23-Sep-2011.) $)
+    ceqsex8v $p |- ( E. x E. y E. z E. w E. v E. u E. t E. s
+              ( ( ( x = A /\ y = B ) /\ ( z = C /\ w = D ) )
+         /\ ( ( v = E /\ u = F ) /\ ( t = G /\ s = H ) ) /\ ph ) <-> rh ) $=
+      ( cv wceq wa w3a 19.42vv 2exbii bitri 3anass df-3an anbi2i bitr4i 3bitr4i
+      wex 3anbi3d 4exbidv ceqsex4v ) JVBQVCZKVBRVCZVDZLVBSVCZMVBTVCZVDZVDZNVBUA
+      VCOVBUBVCVDZPVBUCVCUEVBUDVCVDZVDZAVEZUEVNPVNZOVNNVNZMVNLVNZKVNJVNVTWCWEWF
+      AVEZUEVNPVNZOVNNVNZVEZMVNLVNZKVNJVNZIWKWPJKWJWOLMWDWLVDZUEVNPVNZOVNNVNZWD
+      WNVDZWJWOWTWDWMVDZOVNNVNXAWSXBNOWDWLPUEVFVGWDWMNOVFVHWIWSNOWHWRPUEWHWDWGA
+      VDZVDWRWDWGAVIWLXCWDWEWFAVJVKVLVGVGVTWCWNVJVMVGVGWQWEWFEVEZUEVNPVNOVNNVNZ
+      IWNWEWFBVEZUEVNPVNOVNNVNWEWFCVEZUEVNPVNOVNNVNWEWFDVEZUEVNPVNOVNNVNXEJKLMQ
+      RSTUFUGUHUIVRWLXFNOPUEVRABWEWFUNVOVPVSXFXGNOPUEVSBCWEWFUOVOVPWAXGXHNOPUEW
+      ACDWEWFUPVOVPWBXHXDNOPUEWBDEWEWFUQVOVPVQEFGHINOPUEUAUBUCUDUJUKULUMURUSUTV
+      AVQVHVH $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x th $.  $d y ch $.  $d y A $.
+    gencbvex.1 $e |- A e. _V $.
+    gencbvex.2 $e |- ( A = y -> ( ph <-> ps ) ) $.
+    gencbvex.3 $e |- ( A = y -> ( ch <-> th ) ) $.
+    gencbvex.4 $e |- ( th <-> E. x ( ch /\ A = y ) ) $.
+    $( Change of bound variable using implicit substitution.  (Contributed by
+       NM, 17-May-1996.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    gencbvex $p |- ( E. x ( ch /\ ph ) <-> E. y ( th /\ ps ) ) $=
+      ( cv wceq wa wex excom wb anbi12d bicomd exbii eqcoms ceqsexv simpr eqcom
+      19.41v biimpi adantl eximi sylbi adantr ancri impbii bitri 3bitr3i ) FLZG
+      MZDBNZNZFOZEOUREOZFOCANZEOUQFOUREFPUSVAEUQVAFGHUQVAQGUOGUOMZVAUQVBCDABJIR
+      SUAUBTUTUQFUTUPEOZUQNZUQUPUQEUEVDUQVCUQUCUQVCDVCBDCVBNZEOVCKVEUPEVBUPCVBU
+      PGUOUDUFUGUHUIUJUKULUMTUN $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x th $.  $d y ch $.  $d y A $.
+    gencbvex2.1 $e |- A e. _V $.
+    gencbvex2.2 $e |- ( A = y -> ( ph <-> ps ) ) $.
+    gencbvex2.3 $e |- ( A = y -> ( ch <-> th ) ) $.
+    gencbvex2.4 $e |- ( th -> E. x ( ch /\ A = y ) ) $.
+    $( Restatement of ~ gencbvex with weaker hypotheses.  (Contributed by
+       Jeffrey Hankins, 6-Dec-2006.) $)
+    gencbvex2 $p |- ( E. x ( ch /\ ph ) <-> E. y ( th /\ ps ) ) $=
+      ( cv wceq wa wex biimpac exlimiv impbii gencbvex ) ABCDEFGHIJDCGFLMZNZEOK
+      UADETCDJPQRS $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x th $.  $d y ch $.  $d y A $.
+    gencbval.1 $e |- A e. _V $.
+    gencbval.2 $e |- ( A = y -> ( ph <-> ps ) ) $.
+    gencbval.3 $e |- ( A = y -> ( ch <-> th ) ) $.
+    gencbval.4 $e |- ( th <-> E. x ( ch /\ A = y ) ) $.
+    $( Change of bound variable using implicit substitution.  (Contributed by
+       NM, 17-May-1996.)  (Proof rewritten by Jim Kingdon, 20-Jun-2018.) $)
+    gencbval $p |- ( A. x ( ch -> ph ) <-> A. y ( th -> ps ) ) $=
+      ( cv wceq wi wal alcom wb imbi12d albii wex bicomd eqcoms 19.23v wa eqcom
+      ceqsalv biimpi adantl eximi sylbi pm2.04 mpdi ax-1 impbii bitri 3bitr3i )
+      FLZGMZDBNZNZFOZEOUTEOZFOCANZEOUSFOUTEFPVAVCEUSVCFGHUSVCQGUQGUQMZVCUSVDCDA
+      BJIRUAUBUFSVBUSFVBURETZUSNZUSURUSEUCVFUSVFDVEBDCVDUDZETVEKVGUREVDURCVDURG
+      UQUEUGUHUIUJVEDBUKULUSVEUMUNUOSUP $.
+  $}
+
+  ${
+    $d A x $.  $d x y $.
+    sbhypf.1 $e |- F/ x ps $.
+    sbhypf.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Introduce an explicit substitution into an implicit substitution
+       hypothesis.  See also csbhypf .  (Contributed by Raph Levien,
+       10-Apr-2004.) $)
+    sbhypf $p |- ( y = A -> ( [ y / x ] ph <-> ps ) ) $=
+      ( cv wceq wa wex wsb wb vex eqeq1 ceqsexv nfs1v nfbi sbequ12 bicomd
+      sylan9bb exlimi sylbir ) DHZEIZCHZUDIZUFEIZJZCKACDLZBMZUHUECUDDNUFUDEOPUI
+      UKCUJBCACDQFRUGUJAUHBUGAUJACDSTGUAUBUC $.
+  $}
+
+  ${
+    $d y z A $.  $d x z $.  $d y z $.
+    $( Closed theorem form of ~ vtoclgf .  (Contributed by NM, 17-Feb-2013.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    vtoclgft $p |- ( ( ( F/_ x A /\ F/ x ps )
+                  /\ ( A. x ( x = A -> ( ph <-> ps ) )
+                     /\ A. x ph ) /\ A e. V ) -> ps ) $=
+      ( vz wcel wnfc wnf wa cv wceq wb wi wal cvv elex w3a wex mpbid elisset id
+      3ad2ant3 nfnfc1 nfcvd nfeqd eqeq1 a1i cbvexd 3adant3 bi1 imim2i com23 imp
+      ad2antrr alanimi 3ad2ant2 simp1r 19.23t syl mpd syl3an3 ) DEGCDHZBCIZJZCK
+      ZDLZABMZNZCOACOJZDPGZBDEQVEVJVKRZVGCSZBVLFKZDLZFSZVMVKVEVPVJFDPUAUCVEVJVP
+      VMMZVKVCVQVDVJVCVOVGFCCDUDVCCVNDVCCVNUEVCUBUFVNVFLVOVGMNVCVNVFDUGUHUIUOUJ
+      TVLVGBNZCOZVMBNZVJVEVSVKVIAVRCVIAVRVIVGABVHABNVGABUKULUMUNUPUQVLVDVSVTMVC
+      VDVJVKURVGBCUSUTTVAVB $.
+  $}
+
+  ${
+    vtocld.1 $e |- ( ph -> A e. V ) $.
+    vtocld.2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+    vtocld.3 $e |- ( ph -> ps ) $.
+    ${
+      vtocldf.4 $e |- F/ x ph $.
+      vtocldf.5 $e |- ( ph -> F/_ x A ) $.
+      vtocldf.6 $e |- ( ph -> F/ x ch ) $.
+      $( Implicit substitution of a class for a set variable.  (Contributed by
+         Mario Carneiro, 15-Oct-2016.) $)
+      vtocldf $p |- ( ph -> ch ) $=
+        ( wnfc wnf cv wceq wb wi wal alrimi wcel ex vtoclgft syl221anc ) ADEMCD
+        NDOEPZBCQZRZDSBDSEFUACKLAUGDJAUEUFHUBTABDJITGBCDEFUCUD $.
+    $}
+
+    $d x A $.  $d x ph $.  $d x ch $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       Mario Carneiro, 15-Oct-2016.) $)
+    vtocld $p |- ( ph -> ch ) $=
+      ( nfv nfcvd nfvd vtocldf ) ABCDEFGHIADJADEKACDLM $.
+  $}
+
+  ${
+    $d x A $.
+    vtoclf.1 $e |- F/ x ps $.
+    vtoclf.2 $e |- A e. _V $.
+    vtoclf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclf.4 $e |- ph $.
+    $( Implicit substitution of a class for a set variable.  This is a
+       generalization of ~ chvar .  (Contributed by NM, 30-Aug-1993.) $)
+    vtoclf $p |- ps $=
+      ( cv wceq wi isseti biimpd eximii 19.36i mpg ) ABCABCECIDJZABKCCDFLQABGMN
+      OHP $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    vtocl.1 $e |- A e. _V $.
+    vtocl.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl.3 $e |- ph $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 30-Aug-1993.) $)
+    vtocl $p |- ps $=
+      ( nfv vtoclf ) ABCDBCHEFGI $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x y ps $.
+    vtocl2.1 $e |- A e. _V $.
+    vtocl2.2 $e |- B e. _V $.
+    vtocl2.3 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+    vtocl2.4 $e |- ph $.
+    $( Implicit substitution of classes for set variables.  (Contributed by NM,
+       26-Jul-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    vtocl2 $p |- ps $=
+      ( wal wi wex cv wceq isseti wa eeanv biimpd 2eximi mp2an 19.36-1 19.36aiv
+      sylbir nfv eximii ax-gen mpg ) ADKZBCUIBCABLZDMZUIBLCCNEOZCMZDNFOZDMZUKCM
+      ZCEGPDFHPUMUOQULUNQZDMCMUPULUNCDRUQUJCDUQABISTUDUAABDBDUEUBUFUCADJUGUH $.
+  $}
+
+  ${
+    $d x y z A $.  $d x y z B $.  $d x y z C $.  $d x y z ps $.
+    vtocl3.1 $e |- A e. _V $.
+    vtocl3.2 $e |- B e. _V $.
+    vtocl3.3 $e |- C e. _V $.
+    vtocl3.4 $e |- ( ( x = A /\ y = B /\ z = C ) -> ( ph <-> ps ) ) $.
+    vtocl3.5 $e |- ph $.
+    $( Implicit substitution of classes for set variables.  (Contributed by NM,
+       3-Jun-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    vtocl3 $p |- ps $=
+      ( wal wi wex cv wceq isseti w3a eeeanv biimpd 2eximi sylbir nfv
+      eximi mp3an 19.36-1 ax-mp eximii 19.36aiv gen2 mpg ) AENZDNZBCU
+      OBCUNBOZDPZUOBOCABOZEPZDPCPZUQCPCQFRZCPZDQGRZDPZEQHRZEPZUTCFISD
+      GJSEHKSVBVDVFTVAVCVETZEPZDPCPUTVAVCVECDEUAVHUSCDVGUREVGABLUBUFU
+      CUDUGUSUPCDABEBEUEUHUCUIUNBDBDUEUHUJUKADEMULUM $.
+  $}
+
+  ${
+    $d x A $.  $d x ch $.  $d x th $.
+    vtoclb.1 $e |- A e. _V $.
+    vtoclb.2 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    vtoclb.3 $e |- ( x = A -> ( ps <-> th ) ) $.
+    vtoclb.4 $e |- ( ph <-> ps ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 23-Dec-1993.) $)
+    vtoclb $p |- ( ch <-> th ) $=
+      ( wb cv wceq bibi12d vtocl ) ABKCDKEFGELFMACBDHINJO $.
+  $}
+
+  ${
+    vtoclgf.1 $e |- F/_ x A $.
+    vtoclgf.2 $e |- F/ x ps $.
+    vtoclgf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclgf.4 $e |- ph $.
+    $( Implicit substitution of a class for a set variable, with bound-variable
+       hypotheses in place of distinct variable restrictions.  (Contributed by
+       NM, 21-Sep-2003.)  (Proof shortened by Mario Carneiro, 10-Oct-2016.) $)
+    vtoclgf $p |- ( A e. V -> ps ) $=
+      ( wcel cvv elex cv wceq wex issetf mpbii exlimi sylbi syl ) DEJDKJZBDELUA
+      CMDNZCOBCDFPUBBCGUBABIHQRST $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    vtoclg.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclg.2 $e |- ph $.
+    $( Implicit substitution of a class expression for a set variable.
+       (Contributed by NM, 17-Apr-1995.) $)
+    vtoclg $p |- ( A e. V -> ps ) $=
+      ( nfcv nfv vtoclgf ) ABCDECDHBCIFGJ $.
+  $}
+
+  ${
+    $d x A $.  $d x ch $.  $d x th $.
+    vtoclbg.1 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    vtoclbg.2 $e |- ( x = A -> ( ps <-> th ) ) $.
+    vtoclbg.3 $e |- ( ph <-> ps ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 29-Apr-1994.) $)
+    vtoclbg $p |- ( A e. V -> ( ch <-> th ) ) $=
+      ( wb cv wceq bibi12d vtoclg ) ABKCDKEFGELFMACBDHINJO $.
+  $}
+
+  ${
+    vtocl2gf.1 $e |- F/_ x A $.
+    vtocl2gf.2 $e |- F/_ y A $.
+    vtocl2gf.3 $e |- F/_ y B $.
+    vtocl2gf.4 $e |- F/ x ps $.
+    vtocl2gf.5 $e |- F/ y ch $.
+    vtocl2gf.6 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl2gf.7 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl2gf.8 $e |- ph $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 25-Apr-1995.) $)
+    vtocl2gf $p |- ( ( A e. V /\ B e. W ) -> ch ) $=
+      ( wcel cvv wi elex nfel1 nfim cv wceq imbi2d vtoclgf mpan9 ) FHRFSRZGIRCF
+      HUAUIBTUICTEGILUICEEFSKUBNUCEUDGUEBCUIPUFABDFSJMOQUGUGUH $.
+  $}
+
+  ${
+    $d w A $.  $d w B $.  $d w C $.  $d w y $.  $d w z $.
+    vtocl3gf.a $e |- F/_ x A $.
+    vtocl3gf.b $e |- F/_ y A $.
+    vtocl3gf.c $e |- F/_ z A $.
+    vtocl3gf.d $e |- F/_ y B $.
+    vtocl3gf.e $e |- F/_ z B $.
+    vtocl3gf.f $e |- F/_ z C $.
+    vtocl3gf.1 $e |- F/ x ps $.
+    vtocl3gf.2 $e |- F/ y ch $.
+    vtocl3gf.3 $e |- F/ z th $.
+    vtocl3gf.4 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl3gf.5 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl3gf.6 $e |- ( z = C -> ( ch <-> th ) ) $.
+    vtocl3gf.7 $e |- ph $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
+    vtocl3gf $p |- ( ( A e. V /\ B e. W /\ C e. X ) -> th ) $=
+      ( wcel cvv wa elex wi nfel1 nfim wceq imbi2d vtoclgf vtocl2gf mpan9 3impb
+      cv ) HKUGZILUGZJMUGZDVAHUHUGZVBVCUIDHKUJVDBUKVDCUKVDDUKFGIJLMQRSVDCFFHUHO
+      ULUAUMVDDGGHUHPULUBUMFUTIUNBCVDUDUOGUTJUNCDVDUEUOABEHUHNTUCUFUPUQURUS $.
+  $}
+
+  ${
+    $d w x A $.  $d y A $.  $d w y B $.  $d x ps $.  $d y ch $.
+    vtocl2g.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl2g.2 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl2g.3 $e |- ph $.
+    $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+       NM, 25-Apr-1995.) $)
+    vtocl2g $p |- ( ( A e. V /\ B e. W ) -> ch ) $=
+      ( nfcv nfv vtocl2gf ) ABCDEFGHIDFMEFMEGMBDNCENJKLO $.
+  $}
+
+  ${
+    $d y A $.  $d x B z $.
+    vtoclgaf.1 $e |- F/_ x A $.
+    vtoclgaf.2 $e |- F/ x ps $.
+    vtoclgaf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclgaf.4 $e |- ( x e. B -> ph ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 17-Feb-2006.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
+    vtoclgaf $p |- ( A e. B -> ps ) $=
+      ( wcel cv wi nfel1 nfim wceq eleq1 imbi12d vtoclgf pm2.43i ) DEJZBCKZEJZA
+      LTBLCDEFTBCCDEFMGNUADOUBTABUADEPHQIRS $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x ps $.
+    vtoclga.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclga.2 $e |- ( x e. B -> ph ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 20-Aug-1995.) $)
+    vtoclga $p |- ( A e. B -> ps ) $=
+      ( nfcv nfv vtoclgaf ) ABCDECDHBCIFGJ $.
+  $}
+
+  ${
+    $d x y C $.  $d x y D $.
+    vtocl2gaf.a $e |- F/_ x A $.
+    vtocl2gaf.b $e |- F/_ y A $.
+    vtocl2gaf.c $e |- F/_ y B $.
+    vtocl2gaf.1 $e |- F/ x ps $.
+    vtocl2gaf.2 $e |- F/ y ch $.
+    vtocl2gaf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl2gaf.4 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl2gaf.5 $e |- ( ( x e. C /\ y e. D ) -> ph ) $.
+    $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+       NM, 10-Aug-2013.) $)
+    vtocl2gaf $p |- ( ( A e. C /\ B e. D ) -> ch ) $=
+      ( wcel wa wi cv nfel1 nfan nfim wceq eleq1 anbi1d imbi12d anbi2d vtocl2gf
+      nfv pm2.43i ) FHRZGIRZSZCDUAZHRZEUAZIRZSZATUMUSSZBTUOCTDEFGHIJKLVABDUMUSD
+      DFHJUBUSDUKUCMUDUOCEUMUNEEFHKUBEGILUBUCNUDUPFUEZUTVAABVBUQUMUSUPFHUFUGOUH
+      URGUEZVAUOBCVCUSUNUMURGIUFUIPUHQUJUL $.
+  $}
+
+  ${
+    $d w x y A $.  $d w y B $.  $d w x y C $.  $d w x y D $.  $d x ps $.
+    $d y ch $.
+    vtocl2ga.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl2ga.2 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl2ga.3 $e |- ( ( x e. C /\ y e. D ) -> ph ) $.
+    $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+       NM, 20-Aug-1995.) $)
+    vtocl2ga $p |- ( ( A e. C /\ B e. D ) -> ch ) $=
+      ( nfcv nfv vtocl2gaf ) ABCDEFGHIDFMEFMEGMBDNCENJKLO $.
+  $}
+
+  ${
+    $d w A $.  $d w B $.  $d w C $.  $d w x y z R $.  $d w x y z S $.
+    $d w x y z T $.
+    vtocl3gaf.a $e |- F/_ x A $.
+    vtocl3gaf.b $e |- F/_ y A $.
+    vtocl3gaf.c $e |- F/_ z A $.
+    vtocl3gaf.d $e |- F/_ y B $.
+    vtocl3gaf.e $e |- F/_ z B $.
+    vtocl3gaf.f $e |- F/_ z C $.
+    vtocl3gaf.1 $e |- F/ x ps $.
+    vtocl3gaf.2 $e |- F/ y ch $.
+    vtocl3gaf.3 $e |- F/ z th $.
+    vtocl3gaf.4 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl3gaf.5 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl3gaf.6 $e |- ( z = C -> ( ch <-> th ) ) $.
+    vtocl3gaf.7 $e |- ( ( x e. R /\ y e. S /\ z e. T ) -> ph ) $.
+    $( Implicit substitution of 3 classes for 3 set variables.  (Contributed by
+       NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 11-Oct-2016.) $)
+    vtocl3gaf $p |- ( ( A e. R /\ B e. S /\ C e. T ) -> th ) $=
+      ( wcel w3a cv nfel1 nf3an nfim wceq eleq1 3anbi1d imbi12d 3anbi2d 3anbi3d
+      wi nfv vtocl3gf pm2.43i ) HKUGZILUGZJMUGZUHZDEUIZKUGZFUIZLUGZGUIZMUGZUHZA
+      USVCVJVLUHZBUSVCVDVLUHZCUSVFDUSEFGHIJKLMNOPQRSVNBEVCVJVLEEHKNUJVJEUTVLEUT
+      UKTULVOCFVCVDVLFFHKOUJFILQUJVLFUTUKUAULVFDGVCVDVEGGHKPUJGILRUJGJMSUJUKUBU
+      LVGHUMZVMVNABVPVHVCVJVLVGHKUNUOUCUPVIIUMZVNVOBCVQVJVDVCVLVIILUNUQUDUPVKJU
+      MZVOVFCDVRVLVEVCVDVKJMUNURUEUPUFVAVB $.
+  $}
+
+  ${
+    $d w x y z A $.  $d w y z B $.  $d w z C $.  $d w x y z D $.
+    $d w x y z R $.  $d w x y z S $.  $d x ps $.  $d y ch $.  $d z th $.
+    vtocl3ga.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtocl3ga.2 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    vtocl3ga.3 $e |- ( z = C -> ( ch <-> th ) ) $.
+    vtocl3ga.4 $e |- ( ( x e. D /\ y e. R /\ z e. S ) -> ph ) $.
+    $( Implicit substitution of 3 classes for 3 set variables.  (Contributed by
+       NM, 20-Aug-1995.) $)
+    vtocl3ga $p |- ( ( A e. D /\ B e. R /\ C e. S ) -> th ) $=
+      ( nfcv nfv vtocl3gaf ) ABCDEFGHIJKLMEHRFHRGHRFIRGIRGJRBESCFSDGSNOPQT $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.
+    vtocleg.1 $e |- ( x = A -> ph ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 10-Jan-2004.) $)
+    vtocleg $p |- ( A e. V -> ph ) $=
+      ( wcel cv wceq wex elisset exlimiv syl ) CDFBGCHZBIABCDJMABEKL $.
+  $}
+
+  ${
+    $d x A $.
+    $( Implicit substitution of a class for a set variable.  (Closed theorem
+       version of ~ vtoclef .)  (Contributed by NM, 7-Nov-2005.)  (Revised by
+       Mario Carneiro, 11-Oct-2016.) $)
+    vtoclegft $p |- ( ( A e. B /\ F/ x ph /\
+                   A. x ( x = A -> ph ) ) -> ph ) $=
+      ( wcel wnf cv wceq wi wal w3a wex elisset mpan9 3adant2 wb 19.9t 3ad2ant2
+      exim mpbid ) CDEZABFZBGCHZAIBJZKABLZAUAUDUEUBUAUCBLUDUEBCDMUCABSNOUBUAUEA
+      PUDABQRT $.
+  $}
+
+  ${
+    $d x A $.
+    vtoclef.1 $e |- F/ x ph $.
+    vtoclef.2 $e |- A e. _V $.
+    vtoclef.3 $e |- ( x = A -> ph ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 18-Aug-1993.) $)
+    vtoclef $p |- ph $=
+      ( cv wceq wex isseti exlimi ax-mp ) BGCHZBIABCEJMABDFKL $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.
+    vtocle.1 $e |- A e. _V $.
+    vtocle.2 $e |- ( x = A -> ph ) $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 9-Sep-1993.) $)
+    vtocle $p |- ph $=
+      ( cvv wcel vtocleg ax-mp ) CFGADABCFEHI $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ps $.
+    vtoclri.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    vtoclri.2 $e |- A. x e. B ph $.
+    $( Implicit substitution of a class for a set variable.  (Contributed by
+       NM, 21-Nov-1994.) $)
+    vtoclri $p |- ( A e. B -> ps ) $=
+      ( rspec vtoclga ) ABCDEFACEGHI $.
+  $}
+
+  ${
+    spcimgft.1 $e |- F/ x ps $.
+    spcimgft.2 $e |- F/_ x A $.
+    $( A closed version of ~ spcimgf .  (Contributed by Mario Carneiro,
+       4-Jan-2017.) $)
+    spcimgft $p |- ( A. x ( x = A -> ( ph -> ps ) ) -> ( A e. B ->
+                      ( A. x ph -> ps ) ) ) $=
+      ( wcel cvv cv wceq wal elex wex issetf exim syl5bi 19.36-1 syl6
+      wi syl5 ) DEHDIHZCJDKZABTZTCLZACLBTZDEMUEUBUDCNZUFUBUCCNUEUGCDG
+      OUCUDCPQABCFRSUA $.
+
+    $( A closed version of ~ spcgf .  (Contributed by Andrew Salmon,
+       6-Jun-2011.)  (Revised by Mario Carneiro, 4-Jan-2017.) $)
+    spcgft $p |- ( A. x ( x = A -> ( ph <-> ps ) ) -> ( A e. B ->
+                      ( A. x ph -> ps ) ) ) $=
+      ( cv wceq wb wi wal wcel bi1 imim2i alimi spcimgft syl ) CHDIZABJZKZCLSAB
+      KZKZCLDEMACLBKKUAUCCTUBSABNOPABCDEFGQR $.
+
+    $( A closed version of ~ spcimegf .  (Contributed by Mario Carneiro,
+       4-Jan-2017.) $)
+    spcimegft $p |- ( A. x ( x = A -> ( ps -> ph ) ) -> ( A e. B ->
+                      ( ps -> E. x ph ) ) ) $=
+      ( wcel cvv cv wceq wal wex elex issetf exim syl5bi 19.37-1 syl6
+      wi syl5 ) DEHDIHZCJDKZBATZTCLZBACMTZDENUEUBUDCMZUFUBUCCMUEUGCDGOU
+      CUDCPQBACFRSUA $.
+
+    $( A closed version of ~ spcegf .  (Contributed by Jim Kingdon,
+       22-Jun-2018.) $)
+    spcegft $p |- ( A. x ( x = A -> ( ph <-> ps ) ) -> ( A e. B ->
+                      ( ps -> E. x ph ) ) ) $=
+      ( cv wceq wb wi wal wcel wex bi2 imim2i alimi spcimegft syl ) CHD
+      IZABJZKZCLTBAKZKZCLDEMBACNKKUBUDCUAUCTABOPQABCDEFGRS $.
+  $}
+
+  ${
+    spcimgf.1 $e |- F/_ x A $.
+    spcimgf.2 $e |- F/ x ps $.
+    ${
+      spcimgf.3 $e |- ( x = A -> ( ph -> ps ) ) $.
+      $( Rule of specialization, using implicit substitution.  Compare Theorem
+         7.3 of [Quine] p. 44.  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
+      spcimgf $p |- ( A e. V -> ( A. x ph -> ps ) ) $=
+        ( cv wceq wi wcel wal spcimgft mpg ) CIDJABKKDELACMBKKCABCDEGFNHO $.
+    $}
+
+    spcimegf.3 $e |- ( x = A -> ( ps -> ph ) ) $.
+    $( Existential specialization, using implicit substitution.  (Contributed
+       by Mario Carneiro, 4-Jan-2017.) $)
+    spcimegf $p |- ( A e. V -> ( ps -> E. x ph ) ) $=
+      ( cv wceq wi wcel wex spcimegft mpg ) CIDJBAKKDELBACMKKCABCDEGF
+      NHO $.
+  $}
+
+  ${
+    $d y A z $.  $d x z $.
+    spcgf.1 $e |- F/_ x A $.
+    spcgf.2 $e |- F/ x ps $.
+    spcgf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Rule of specialization, using implicit substitution.  Compare Theorem
+       7.3 of [Quine] p. 44.  (Contributed by NM, 2-Feb-1997.)  (Revised by
+       Andrew Salmon, 12-Aug-2011.) $)
+    spcgf $p |- ( A e. V -> ( A. x ph -> ps ) ) $=
+      ( cv wceq wb wi wcel wal spcgft mpg ) CIDJABKLDEMACNBLLCABCDEGFOHP $.
+
+    $( Existential specialization, using implicit substitution.  (Contributed
+       by NM, 2-Feb-1997.) $)
+    spcegf $p |- ( A e. V -> ( ps -> E. x ph ) ) $=
+      ( cv wceq wb wi wcel wex spcegft mpg ) CIDJABKLDEMBACNLLCABCDEG
+      FOHP $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.  $d x ch $.
+    spcimdv.1 $e |- ( ph -> A e. B ) $.
+    ${
+      spcimdv.2 $e |- ( ( ph /\ x = A ) -> ( ps -> ch ) ) $.
+      $( Restricted specialization, using implicit substitution.  (Contributed
+         by Mario Carneiro, 4-Jan-2017.) $)
+      spcimdv $p |- ( ph -> ( A. x ps -> ch ) ) $=
+        ( cv wceq wi wal wcel ex alrimiv nfv nfcv spcimgft sylc ) ADIEJZBCKZKZD
+        LEFMBDLCKAUBDATUAHNOGBCDEFCDPDEQRS $.
+    $}
+
+    ${
+      spcdv.2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+      $( Rule of specialization, using implicit substitution.  Analogous to
+         ~ rspcdv .  (Contributed by David Moews, 1-May-2017.) $)
+      spcdv $p |- ( ph -> ( A. x ps -> ch ) ) $=
+        ( cv wceq wa biimpd spcimdv ) ABCDEFGADIEJKBCHLM $.
+    $}
+
+    spcimedv.2 $e |- ( ( ph /\ x = A ) -> ( ch -> ps ) ) $.
+    $( Restricted existential specialization, using implicit substitution.
+       (Contributed by Mario Carneiro, 4-Jan-2017.) $)
+    spcimedv $p |- ( ph -> ( ch -> E. x ps ) ) $=
+      ( cv wceq wi wal wcel wex ex alrimiv nfv nfcv spcimegft sylc )
+      ADIEJZCBKZKZDLEFMCBDNKAUCDAUAUBHOPGBCDEFCDQDERST $.
+  $}
+
+  ${
+    $d x ps $.  $d x y A $.
+    spcgv.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Rule of specialization, using implicit substitution.  Compare Theorem
+       7.3 of [Quine] p. 44.  (Contributed by NM, 22-Jun-1994.) $)
+    spcgv $p |- ( A e. V -> ( A. x ph -> ps ) ) $=
+      ( nfcv nfv spcgf ) ABCDECDGBCHFI $.
+
+    $( Existential specialization, using implicit substitution.  (Contributed
+       by NM, 14-Aug-1994.) $)
+    spcegv $p |- ( A e. V -> ( ps -> E. x ph ) ) $=
+      ( nfcv nfv spcegf ) ABCDECDGBCHFI $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x y ps $.
+    spc2egv.1 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+    $( Existential specialization with 2 quantifiers, using implicit
+       substitution.  (Contributed by NM, 3-Aug-1995.) $)
+    spc2egv $p |- ( ( A e. V /\ B e. W ) -> ( ps -> E. x E. y ph ) ) $=
+      ( wcel wa cv wceq wex elisset anim12i eeanv sylibr biimprcd 2eximdv
+      syl5com ) EGJZFHJZKZCLEMZDLFMZKZDNCNZBADNCNUDUECNZUFDNZKUHUBUIUCUJCEGODFH
+      OPUEUFCDQRBUGACDUGABISTUA $.
+
+    $( Specialization with 2 quantifiers, using implicit substitution.
+       (Contributed by NM, 27-Apr-2004.) $)
+    spc2gv $p |- ( ( A e. V /\ B e. W ) -> ( A. x A. y ph -> ps ) ) $=
+      ( wcel wa cv wceq wex wal elisset anim12i wi exim 19.9v biimpcd
+      eeanv sylibr 2alimi alimi 3syl bitri syl6ib syl5com ) EGJZFHJZK
+      ZCLEMZDLFMZKZDNZCNZADOCOZBULUMCNZUNDNZKUQUJUSUKUTCEGPDFHPQUMUNC
+      DUBUCURUQBDNZCNZBURUOBRZDOZCOUPVARZCOUQVBRAVCCDUOABIUAUDVDVECUO
+      BDSUEUPVACSUFVBVABVACTBDTUGUHUI $.
+  $}
+
+  ${
+    $d x y z A $.  $d x y z B $.  $d x y z C $.  $d x y z ps $.
+    spc3egv.1 $e |- ( ( x = A /\ y = B /\ z = C ) -> ( ph <-> ps ) ) $.
+    $( Existential specialization with 3 quantifiers, using implicit
+       substitution.  (Contributed by NM, 12-May-2008.) $)
+    spc3egv $p |- ( ( A e. V /\ B e. W /\ C e. X ) ->
+               ( ps -> E. x E. y E. z ph ) ) $=
+      ( wcel w3a cv wceq wex elisset 3anim123i eeeanv biimprcd 2eximdv syl5com
+      sylibr eximdv ) FIMZGJMZHKMZNZCOFPZDOGPZEOHPZNZEQZDQCQZBAEQZDQCQUIUJCQZUK
+      DQZULEQZNUOUFUQUGURUHUSCFIRDGJREHKRSUJUKULCDETUDBUNUPCDBUMAEUMABLUAUEUBUC
+      $.
+
+    $( Specialization with 3 quantifiers, using implicit substitution.
+       (Contributed by NM, 12-May-2008.) $)
+    spc3gv $p |- ( ( A e. V /\ B e. W /\ C e. X ) ->
+               ( A. x A. y A. z ph -> ps ) ) $=
+      ( wcel w3a cv wceq wex wal elisset wi 3anim123i eeeanv sylibr 2alimi exim
+      biimpcd alimi syl 3syl 19.9v 3bitri syl6ib syl5com ) FIMZGJMZHKMZNZCOFPZD
+      OGPZEOHPZNZEQZDQZCQZAERDRZCRZBUQURCQZUSDQZUTEQZNVDUNVGUOVHUPVICFISDGJSEHK
+      SUAURUSUTCDEUBUCVFVDBEQZDQZCQZBVFVBVJTZDRZCRZVCVKTZCRVDVLTVFVABTZERZDRZCR
+      VOVEVSCAVQDEVAABLUFUDUGVRVMCDVABEUEUDUHVNVPCVBVJDUEUGVCVKCUEUIVLVKVJBVKCU
+      JVJDUJBEUJUKULUM $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    spcv.1 $e |- A e. _V $.
+    spcv.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Rule of specialization, using implicit substitution.  (Contributed by
+       NM, 22-Jun-1994.) $)
+    spcv $p |- ( A. x ph -> ps ) $=
+      ( cvv wcel wal wi spcgv ax-mp ) DGHACIBJEABCDGFKL $.
+
+    $( Existential specialization, using implicit substitution.  (Contributed
+       by NM, 31-Dec-1993.)  (Proof shortened by Eric Schmidt, 22-Dec-2006.) $)
+    spcev $p |- ( ps -> E. x ph ) $=
+      ( cvv wcel wex wi spcegv ax-mp ) DGHBACIJEABCDGFKL $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x y ps $.
+    spc2ev.1 $e |- A e. _V $.
+    spc2ev.2 $e |- B e. _V $.
+    spc2ev.3 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+    $( Existential specialization, using implicit substitution.  (Contributed
+       by NM, 3-Aug-1995.) $)
+    spc2ev $p |- ( ps -> E. x E. y ph ) $=
+      ( cvv wcel wex wi spc2egv mp2an ) EJKFJKBADLCLMGHABCDEFJJINO $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    rspct.1 $e |- F/ x ps $.
+    $( A closed version of ~ rspc .  (Contributed by Andrew Salmon,
+       6-Jun-2011.) $)
+    rspct $p |- ( A. x ( x = A -> ( ph <-> ps ) ) -> ( A e. B ->
+                   ( A. x e. B ph -> ps ) ) ) $=
+      ( cv wceq wb wi wal wcel wral df-ral wa eleq1 adantr simpr imbi12d ex a2i
+      alimi nfv nfim nfcv spcgft syl syl7bi com34 pm2.43d ) CGZDHZABIZJZCKZDELZ
+      ACEMZBJUOUPUQUPBUQUKELZAJZCKZUOUPUPBJZACENUOULUSVAIZJZCKUPUTVAJJUNVCCULUM
+      VBULUMVBULUMOURUPABULURUPIUMUKDEPQULUMRSTUAUBUSVACDEUPBCUPCUCFUDCDUEUFUGU
+      HUIUJ $.
+  $}
+
+  ${
+    $d x y A $.  $d x B $.
+    rspc.1 $e |- F/ x ps $.
+    rspc.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 19-Apr-2005.)  (Revised by Mario Carneiro, 11-Oct-2016.) $)
+    rspc $p |- ( A e. B -> ( A. x e. B ph -> ps ) ) $=
+      ( wral cv wcel wi wal df-ral nfcv nfv nfim wceq eleq1 imbi12d spcgf
+      pm2.43a syl5bi ) ACEHCIZEJZAKZCLZDEJZBACEMUFUGBUEUGBKCDECDNUGBCUGCOFPUCDQ
+      UDUGABUCDERGSTUAUB $.
+
+    $( Restricted existential specialization, using implicit substitution.
+       (Contributed by NM, 26-May-1998.)  (Revised by Mario Carneiro,
+       11-Oct-2016.) $)
+    rspce $p |- ( ( A e. B /\ ps ) -> E. x e. B ph ) $=
+      ( wcel wa cv wex wrex nfcv nfv nfan wceq eleq1 anbi12d spcegf anabsi5
+      df-rex sylibr ) DEHZBIZCJZEHZAIZCKZACELUCBUHUGUDCDECDMUCBCUCCNFOUEDPUFUCA
+      BUEDEQGRSTACEUAUB $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ps $.
+    rspcv.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 26-May-1998.) $)
+    rspcv $p |- ( A e. B -> ( A. x e. B ph -> ps ) ) $=
+      ( nfv rspc ) ABCDEBCGFH $.
+
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 2-Feb-2006.) $)
+    rspccv $p |- ( A. x e. B ph -> ( A e. B -> ps ) ) $=
+      ( wcel wral rspcv com12 ) DEGACEHBABCDEFIJ $.
+
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 13-Sep-2005.) $)
+    rspcva $p |- ( ( A e. B /\ A. x e. B ph ) -> ps ) $=
+      ( wcel wral rspcv imp ) DEGACEHBABCDEFIJ $.
+
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 26-Jul-2006.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    rspccva $p |- ( ( A. x e. B ph /\ A e. B ) -> ps ) $=
+      ( wcel wral rspcv impcom ) DEGACEHBABCDEFIJ $.
+
+    $( Restricted existential specialization, using implicit substitution.
+       (Contributed by NM, 26-May-1998.) $)
+    rspcev $p |- ( ( A e. B /\ ps ) -> E. x e. B ph ) $=
+      ( nfv rspce ) ABCDEBCGFH $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ph $.  $d x ch $.
+    rspcimdv.1 $e |- ( ph -> A e. B ) $.
+    ${
+      rspcimdv.2 $e |- ( ( ph /\ x = A ) -> ( ps -> ch ) ) $.
+      $( Restricted specialization, using implicit substitution.  (Contributed
+         by Mario Carneiro, 4-Jan-2017.) $)
+      rspcimdv $p |- ( ph -> ( A. x e. B ps -> ch ) ) $=
+        ( wral cv wcel wi wal df-ral wceq wa simpr eleq1d biimprd imim12d mpid
+        spcimdv syl5bi ) BDFIDJZFKZBLZDMZACBDFNAUGEFKZCGAUFUHCLDEFGAUDEOZPZUHUE
+        BCUJUEUHUJUDEFAUIQRSHTUBUAUC $.
+    $}
+
+    rspcimedv.2 $e |- ( ( ph /\ x = A ) -> ( ch -> ps ) ) $.
+    $( Restricted existential specialization, using implicit substitution.
+       (Contributed by Mario Carneiro, 4-Jan-2017.) $)
+    rspcimedv $p |- ( ph -> ( ch -> E. x e. B ps ) ) $=
+      ( cv wcel wa wex wrex wceq simpr biimprd anim12d spcimedv mpand
+      eleq1d df-rex syl6ibr ) ACDIZFJZBKZDLZBDFMAEFJZCUFGAUEUGCKDEFGA
+      UCENZKZUGUDCBUIUDUGUIUCEFAUHOTPHQRSBDFUAUB $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ph $.  $d x ch $.
+    rspcdv.1 $e |- ( ph -> A e. B ) $.
+    rspcdv.2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+    $( Restricted specialization, using implicit substitution.  (Contributed by
+       NM, 17-Feb-2007.)  (Revised by Mario Carneiro, 4-Jan-2017.) $)
+    rspcdv $p |- ( ph -> ( A. x e. B ps -> ch ) ) $=
+      ( cv wceq wa biimpd rspcimdv ) ABCDEFGADIEJKBCHLM $.
+
+    $( Restricted existential specialization, using implicit substitution.
+       (Contributed by FL, 17-Apr-2007.)  (Revised by Mario Carneiro,
+       4-Jan-2017.) $)
+    rspcedv $p |- ( ph -> ( ch -> E. x e. B ps ) ) $=
+      ( cv wceq wa biimprd rspcimedv ) ABCDEFGADIEJKBCHLM $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x C $.  $d x y D $.
+    rspc2.1 $e |- F/ x ch $.
+    rspc2.2 $e |- F/ y ps $.
+    rspc2.3 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    rspc2.4 $e |- ( y = B -> ( ch <-> ps ) ) $.
+    $( 2-variable restricted specialization, using implicit substitution.
+       (Contributed by NM, 9-Nov-2012.) $)
+    rspc2 $p |- ( ( A e. C /\ B e. D ) -> ( A. x e. C A. y e. D ph ->
+                  ps ) ) $=
+      ( wcel wral nfcv nfralxy cv wceq rspc ralbidv sylan9 ) FHNAEIOZDHOCEIOZGINB
+      UCUDDFHCDEIDIPJQDRFSACEILUATCBEGIKMTUB $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x C $.  $d x y D $.  $d x ch $.  $d y ps $.
+    rspc2v.1 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    rspc2v.2 $e |- ( y = B -> ( ch <-> ps ) ) $.
+    $( 2-variable restricted specialization, using implicit substitution.
+       (Contributed by NM, 13-Sep-1999.) $)
+    rspc2v $p |- ( ( A e. C /\ B e. D ) -> ( A. x e. C A. y e. D ph ->
+                  ps ) ) $=
+      ( nfv rspc2 ) ABCDEFGHICDLBELJKM $.
+
+    $( 2-variable restricted specialization, using implicit substitution.
+       (Contributed by NM, 18-Jun-2014.) $)
+    rspc2va $p |- ( ( ( A e. C /\ B e. D ) /\ A. x e. C A. y e. D ph ) ->
+                  ps ) $=
+      ( wcel wa wral rspc2v imp ) FHLGILMAEINDHNBABCDEFGHIJKOP $.
+
+    $( 2-variable restricted existential specialization, using implicit
+       substitution.  (Contributed by NM, 16-Oct-1999.) $)
+    rspc2ev $p |- ( ( A e. C /\ B e. D /\ ps ) -> E. x e. C E. y e. D ph ) $=
+      ( wcel w3a wrex wa rspcev anim2i 3impb cv wceq rexbidv syl ) FHLZGILZBMUC
+      CEINZOZAEINZDHNUCUDBUFUDBOUEUCCBEGIKPQRUGUEDFHDSFTACEIJUAPUB $.
+  $}
+
+  ${
+    $d z ps $.  $d x ch $.  $d y th $.  $d x y z A $.  $d y z B $.  $d z C $.
+    $d x R $.  $d x y S $.  $d x y z T $.
+    rspc3v.1 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    rspc3v.2 $e |- ( y = B -> ( ch <-> th ) ) $.
+    rspc3v.3 $e |- ( z = C -> ( th <-> ps ) ) $.
+    $( 3-variable restricted specialization, using implicit substitution.
+       (Contributed by NM, 10-May-2005.) $)
+    rspc3v $p |- ( ( A e. R /\ B e. S /\ C e. T ) ->
+                  ( A. x e. R A. y e. S A. z e. T ph -> ps ) ) $=
+      ( wcel wral cv wceq wi wa ralbidv rspc2v rspcv sylan9 3impa ) HKQZILQZJMQ
+      ZAGMRZFLREKRZBUAUHUIUBULDGMRZUJBUKUMCGMREFHIKLESHTACGMNUCFSITCDGMOUCUDDBG
+      JMPUEUFUG $.
+
+    $( 3-variable restricted existentional specialization, using implicit
+       substitution.  (Contributed by NM, 25-Jul-2012.) $)
+    rspc3ev $p |- ( ( ( A e. R /\ B e. S /\ C e. T ) /\ ps ) ->
+                  E. x e. R E. y e. S E. z e. T ph ) $=
+      ( wcel wrex cv wceq w3a wa simpl1 simpl2 rspcev 3ad2antl3 rexbidv rspc2ev
+      syl3anc ) HKQZILQZJMQZUABUBUJUKDGMRZAGMRZFLREKRUJUKULBUCUJUKULBUDULUJBUMU
+      KDBGJMPUEUFUNUMCGMREFHIKLESHTACGMNUGFSITCDGMOUGUHUI $.
+  $}
+
+  ${
+    $d x A y z $.  $d x B y z $.
+    eqvinc.1 $e |- A e. _V $.
+    $( A variable introduction law for class equality.  (Contributed by NM,
+       14-Apr-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    eqvinc $p |- ( A = B <-> E. x ( x = A /\ x = B ) ) $=
+      ( wceq cv wa wex wi isseti ax-1 eqtr jca eximi pm3.43 mp2b 19.37aiv eqtr2
+      ex exlimiv impbii ) BCEZAFZBEZUCCEZGZAHUBUFAUDAHUBUDIZUBUEIZGZAHUBUFIZAHA
+      BDJUDUIAUDUGUHUDUBKUDUBUEUCBCLSMNUIUJAUBUDUEONPQUFUBAUCBCRTUA $.
+  $}
+
+  ${
+    $d A y $.  $d B y $.  $d x y $.
+    eqvincf.1 $e |- F/_ x A $.
+    eqvincf.2 $e |- F/_ x B $.
+    eqvincf.3 $e |- A e. _V $.
+    $( A variable introduction law for class equality, using bound-variable
+       hypotheses instead of distinct variable conditions.  (Contributed by NM,
+       14-Sep-2003.) $)
+    eqvincf $p |- ( A = B <-> E. x ( x = A /\ x = B ) ) $=
+      ( vy wceq cv wa wex eqvinc nfeq2 nfan nfv eqeq1 anbi12d cbvex bitri ) BCH
+      GIZBHZTCHZJZGKAIZBHZUDCHZJZAKGBCFLUCUGGAUAUBAATBDMATCEMNUGGOTUDHUAUEUBUFT
+      UDBPTUDCPQRS $.
+  $}
+
+  ${
+    $d x A y $.  $d ph y $.
+    alexeq.1 $e |- A e. _V $.
+    $( Two ways to express substitution of ` A ` for ` x ` in ` ph ` .
+       (Contributed by NM, 2-Mar-1995.) $)
+    alexeq $p |- ( A. x ( x = A -> ph ) <-> E. x ( x = A /\ ph ) ) $=
+      ( vy cv wceq wa wex wi wal anbi1d exbidv imbi1d albidv sb56 vtoclb bicomi
+      eqeq2 ) BFZCGZAHZBIZUAAJZBKZTEFZGZAHZBIUGAJZBKUCUEECDUFCGZUHUBBUJUGUAAUFC
+      TSZLMUJUIUDBUJUGUAAUKNOABEPQR $.
+  $}
+
+  ${
+    $d x A y $.  $d ph y $.
+    $( Equality implies equivalence with substitution.  (Contributed by NM,
+       2-Mar-1995.) $)
+    ceqex $p |- ( x = A -> ( ph <-> E. x ( x = A /\ ph ) ) ) $=
+      ( vy cvv wcel cv wceq wa wex wb 19.8a isset sylibr wi eqeq2 anbi1d exbidv
+      bibi2d imbi12d ex wal vex alexeq sp com12 syl5bir impbid vtoclg mpcom ) C
+      EFZBGZCHZAUMAIZBJZKZUMUMBJUKUMBLBCMNULDGZHZAURAIZBJZKZOUMUPODCEUQCHZURUMV
+      AUPUQCULPZVBUTUOAVBUSUNBVBURUMAVCQRSTURAUTURAUTUSBLUAUTURAOZBUBZURAABUQDU
+      CUDVEURAVDBUEUFUGUHUIUJ $.
+  $}
+
+  ${
+    $d x y A $.
+    ceqsexg.1 $e |- F/ x ps $.
+    ceqsexg.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( A representation of explicit substitution of a class for a variable,
+       inferred from an implicit substitution hypothesis.  (Contributed by NM,
+       11-Oct-2004.) $)
+    ceqsexg $p |- ( A e. V -> ( E. x ( x = A /\ ph ) <-> ps ) ) $=
+      ( wb cv wceq wa wex nfcv nfe1 nfbi ceqex bibi12d biid vtoclgf ) AAHCIDJZA
+      KZCLZBHCDECDMUBBCUACNFOTAUBABACDPGQARS $.
+  $}
+
+  ${
+    $d x y A $.  $d x ps $.
+    ceqsexgv.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Elimination of an existential quantifier, using implicit substitution.
+       (Contributed by NM, 29-Dec-1996.) $)
+    ceqsexgv $p |- ( A e. V -> ( E. x ( x = A /\ ph ) <-> ps ) ) $=
+      ( nfv ceqsexg ) ABCDEBCGFH $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ps $.
+    ceqsrexv.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Elimination of a restricted existential quantifier, using implicit
+       substitution.  (Contributed by NM, 30-Apr-2004.) $)
+    ceqsrexv $p |- ( A e. B -> ( E. x e. B ( x = A /\ ph ) <-> ps ) ) $=
+      ( cv wceq wa wrex wcel wex df-rex an12 exbii bitr4i eleq1 anbi12d bianabs
+      ceqsexgv syl5bb ) CGZDHZAIZCEJZUCUBEKZAIZIZCLZDEKZBUEUFUDIZCLUIUDCEMUHUKC
+      UCUFANOPUJUIBUGUJBICDEUCUFUJABUBDEQFRTSUA $.
+
+    $( Elimination of a restricted existential quantifier, using implicit
+       substitution.  (Contributed by Mario Carneiro, 14-Mar-2014.) $)
+    ceqsrexbv $p |- ( E. x e. B ( x = A /\ ph ) <-> ( A e. B /\ ps ) ) $=
+      ( wcel cv wceq wa wrex r19.42v eleq1 adantr pm5.32ri bicomi baib ceqsrexv
+      wb rexbiia pm5.32i 3bitr3i ) DEGZCHZDIZAJZJZCEKUCUFCEKZJUHUCBJUCUFCELUGUF
+      CEUGUDEGZUFUIUFJUGUFUIUCUEUIUCSAUDDEMNOPQTUCUHBABCDEFRUAUB $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x C $.  $d x y D $.  $d x ps $.  $d y ch $.
+    ceqsrex2v.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    ceqsrex2v.2 $e |- ( y = B -> ( ps <-> ch ) ) $.
+    $( Elimination of a restricted existential quantifier, using implicit
+       substitution.  (Contributed by NM, 29-Oct-2005.) $)
+    ceqsrex2v $p |- ( ( A e. C /\ B e. D ) ->
+      ( E. x e. C E. y e. D ( ( x = A /\ y = B ) /\ ph ) <-> ch ) ) $=
+      ( wcel cv wceq wa wrex anass rexbii r19.42v ceqsrexv bitri anbi2d rexbidv
+      syl5bb sylan9bb ) FHLZDMFNZEMGNZOAOZEIPZDHPZUHBOZEIPZGILCUKUGUHAOZEIPZOZD
+      HPUFUMUJUPDHUJUGUNOZEIPUPUIUQEIUGUHAQRUGUNEISUARUOUMDFHUGUNULEIUGABUHJUBU
+      CTUDBCEGIKTUE $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    clel2.1 $e |- A e. _V $.
+    $( An alternate definition of class membership when the class is a set.
+       (Contributed by NM, 18-Aug-1993.) $)
+    clel2 $p |- ( A e. B <-> A. x ( x = A -> x e. B ) ) $=
+      ( cv wceq wcel wi wal eleq1 ceqsalv bicomi ) AEZBFMCGZHAIBCGZNOABDMBCJKL
+      $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( An alternate definition of class membership when the class is a set.
+       (Contributed by NM, 13-Aug-2005.) $)
+    clel3g $p |- ( B e. V -> ( A e. B <-> E. x ( x = B /\ A e. x ) ) ) $=
+      ( wcel cv wceq wa wex eleq2 ceqsexgv bicomd ) CDEAFZCGBMEZHAIBCEZNOACDMCB
+      JKL $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    clel3.1 $e |- B e. _V $.
+    $( An alternate definition of class membership when the class is a set.
+       (Contributed by NM, 18-Aug-1993.) $)
+    clel3 $p |- ( A e. B <-> E. x ( x = B /\ A e. x ) ) $=
+      ( cvv wcel cv wceq wa wex wb clel3g ax-mp ) CEFBCFAGZCHBNFIAJKDABCELM $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    clel4.1 $e |- B e. _V $.
+    $( An alternate definition of class membership when the class is a set.
+       (Contributed by NM, 18-Aug-1993.) $)
+    clel4 $p |- ( A e. B <-> A. x ( x = B -> A e. x ) ) $=
+      ( cv wceq wcel wi wal eleq2 ceqsalv bicomi ) AEZCFBMGZHAIBCGZNOACDMCBJKL
+      $.
+  $}
+
+  ${
+    $d y A z $.  $d y B z $.
+    $( Compare theorem *13.183 in [WhiteheadRussell] p. 178.  Only ` A ` is
+       required to be a set.  (Contributed by Andrew Salmon, 3-Jun-2011.) $)
+    pm13.183 $p |- ( A e. V -> ( A = B <-> A. z ( z = A <-> z = B ) ) ) $=
+      ( vy cv wceq wal eqeq1 eqeq2 bibi1d albidv alrimiv wsb stdpc4 sbbi bibi2i
+      wb eqsb3 sylbi equsb1 bi1 mpi syl impbii vtoclbg ) EFZCGZAFZUGGZUICGZRZAH
+      ZBCGUIBGZUKRZAHEBDUGBCIUGBGZULUOAUPUJUNUKUGBUIJKLUHUMUHULAUGCUIJMUMULAENZ
+      UHULAEOUQUJAENZUKAENZRZUHUJUKAEPUTURUHRZUHUSUHUREACSQVAURUHAEUAURUHUBUCTT
+      UDUEUF $.
+  $}
+
+  ${
+    $d y A $.  $d x y $.  $d y ph $.
+    $( Restricted quantifier version of Theorem 19.3 of [Margaris] p. 89.
+       (Contributed by NM, 25-Oct-2012.) $)
+    rr19.3v $p |- ( A. x e. A A. y e. A ph <-> A. x e. A ph ) $=
+      ( wral cv weq biidd rspcv ralimia wcel ax-1 ralrimiv ralimi impbii ) ACDE
+      ZBDEABDEPABDAACBFDCBGAHIJAPBDAACDACFDKLMNO $.
+
+    $( Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.
+       (Contributed by NM, 29-Oct-2012.) $)
+    rr19.28v $p |- ( A. x e. A A. y e. A ( ph /\ ps )
+                      <-> A. x e. A ( ph /\ A. y e. A ps ) ) $=
+      ( wa wral cv wcel simpl ralimi weq biidd rspcv syl5 wi simpr jcad ralimia
+      a1i r19.28av impbii ) ABFZDEGZCEGABDEGZFZCEGUDUFCECHZEIZUDAUEUDADEGUHAUCA
+      DEABJKAADUGEDCLAMNOUDUEPUHUCBDEABQKTRSUFUDCEABDEUAKUB $.
+  $}
+
+  ${
+    $d x y A $.  $d y ph $.  $d x ps $.
+    $( Membership in a class abstraction, using implicit substitution.  (Closed
+       theorem version of ~ elabg .)  (Contributed by NM, 7-Nov-2005.)  (Proof
+       shortened by Andrew Salmon, 8-Jun-2011.) $)
+    elabgt $p |- ( ( A e. B /\ A. x ( x = A -> ( ph <-> ps ) ) ) ->
+                 ( A e. { x | ph } <-> ps ) ) $=
+      ( cv wceq wb wal wcel cab abid eleq1 syl5bbr bibi1d biimpd a2i alimi nfcv
+      wi nfab1 nfel2 nfv nfbi pm5.5 spcgf imp sylan2 ) CFZDGZABHZTZCIDEJZUJDACK
+      ZJZBHZTZCIZUPULUQCUJUKUPUJUKUPUJAUOBAUIUNJUJUOACLUIDUNMNOPQRUMURUPUQUPCDE
+      CDSUOBCCDUNACUAUBBCUCUDUJUPUEUFUGUH $.
+  $}
+
+  ${
+    elabgf.1 $e |- F/_ x A $.
+    elabgf.2 $e |- F/ x ps $.
+    elabgf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, using implicit substitution.  Compare
+       Theorem 6.13 of [Quine] p. 44.  This version has bound-variable
+       hypotheses in place of distinct variable restrictions.  (Contributed by
+       NM, 21-Sep-2003.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    elabgf $p |- ( A e. B -> ( A e. { x | ph } <-> ps ) ) $=
+      ( cv cab wcel wb nfab1 nfel nfbi wceq eleq1 bibi12d abid vtoclgf ) CIZACJ
+      ZKZALDUBKZBLCDEFUDBCCDUBFACMNGOUADPUCUDABUADUBQHRACST $.
+  $}
+
+  ${
+    $d ps y $.  $d x A y $.  $d y ph $.
+    elabf.1 $e |- F/ x ps $.
+    elabf.2 $e |- A e. _V $.
+    elabf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, using implicit substitution.
+       (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
+       12-Oct-2016.) $)
+    elabf $p |- ( A e. { x | ph } <-> ps ) $=
+      ( cvv wcel cab wb nfcv elabgf ax-mp ) DHIDACJIBKFABCDHCDLEGMN $.
+  $}
+
+  ${
+    $d x ps $.  $d x A $.
+    elab.1 $e |- A e. _V $.
+    elab.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, using implicit substitution.  Compare
+       Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 1-Aug-1994.) $)
+    elab $p |- ( A e. { x | ph } <-> ps ) $=
+      ( nfv elabf ) ABCDBCGEFH $.
+  $}
+
+  ${
+    $d x ps $.  $d x y A $.
+    elabg.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, using implicit substitution.  Compare
+       Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 14-Apr-1995.) $)
+    elabg $p |- ( A e. V -> ( A e. { x | ph } <-> ps ) ) $=
+      ( nfcv nfv elabgf ) ABCDECDGBCHFI $.
+  $}
+
+  ${
+    $d x ps $.  $d x A $.
+    elab2g.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    elab2g.2 $e |- B = { x | ph } $.
+    $( Membership in a class abstraction, using implicit substitution.
+       (Contributed by NM, 13-Sep-1995.) $)
+    elab2g $p |- ( A e. V -> ( A e. B <-> ps ) ) $=
+      ( wcel cab eleq2i elabg syl5bb ) DEIDACJZIDFIBENDHKABCDFGLM $.
+  $}
+
+  ${
+    $d x ps $.  $d x A $.
+    elab2.1 $e |- A e. _V $.
+    elab2.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    elab2.3 $e |- B = { x | ph } $.
+    $( Membership in a class abstraction, using implicit substitution.
+       (Contributed by NM, 13-Sep-1995.) $)
+    elab2 $p |- ( A e. B <-> ps ) $=
+      ( cvv wcel wb elab2g ax-mp ) DIJDEJBKFABCDEIGHLM $.
+  $}
+
+  ${
+    $d x ps $.  $d x A $.
+    elab4g.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    elab4g.2 $e |- B = { x | ph } $.
+    $( Membership in a class abstraction, using implicit substitution.
+       (Contributed by NM, 17-Oct-2012.) $)
+    elab4g $p |- ( A e. B <-> ( A e. _V /\ ps ) ) $=
+      ( wcel cvv elex elab2g biadan2 ) DEHDIHBDEJABCDEIFGKL $.
+  $}
+
+  ${
+    $d y A $.
+    elab3gf.1 $e |- F/_ x A $.
+    elab3gf.2 $e |- F/ x ps $.
+    elab3gf.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, with a weaker antecedent than
+       ~ elabgf .  (Contributed by NM, 6-Sep-2011.) $)
+    elab3gf $p |- ( ( ps -> A e. B ) -> ( A e. { x | ph } <-> ps ) ) $=
+      ( wcel wi cab elabgf ibi wb imim2i bi2 syli impbid2 ) BDEIZJZDACKZIZBUBBA
+      BCDUAFGHLMBTUBBNZUBSUCBABCDEFGHLOUBBPQR $.
+  $}
+
+  ${
+    $d x ps $.  $d x y A $.
+    elab3g.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction, with a weaker antecedent than
+       ~ elabg .  (Contributed by NM, 29-Aug-2006.) $)
+    elab3g $p |- ( ( ps -> A e. B ) -> ( A e. { x | ph } <-> ps ) ) $=
+      ( nfcv nfv elab3gf ) ABCDECDGBCHFI $.
+  $}
+
+  ${
+    $d x ps $.  $d x A $.
+    elab3.1 $e |- ( ps -> A e. _V ) $.
+    elab3.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a class abstraction using implicit substitution.
+       (Contributed by NM, 10-Nov-2000.) $)
+    elab3 $p |- ( A e. { x | ph } <-> ps ) $=
+      ( cvv wcel wi cab wb elab3g ax-mp ) BDGHIDACJHBKEABCDGFLM $.
+  $}
+
+  ${
+    $d A x $.  $d V x $.
+    $( Implication for the membership in a restricted class abstraction.
+       (Contributed by Alexander van der Vekens, 31-Dec-2017.) $)
+    elrabi $p |- ( A e. { x e. V | ph } -> A e. V ) $=
+      ( wcel cv wa cab crab wceq wex clelab eleq1 anbi1d simprbda exlimiv sylbi
+      df-rab eleq2s ) CDEZCBFZDEZAGZBHZABDICUDEUACJZUCGZBKTUCBCLUFTBUEUCTAUEUBT
+      AUACDMNOPQABDRS $.
+  $}
+
+  ${
+    elrabf.1 $e |- F/_ x A $.
+    elrabf.2 $e |- F/_ x B $.
+    elrabf.3 $e |- F/ x ps $.
+    elrabf.4 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a restricted class abstraction, using implicit
+       substitution.  This version has bound-variable hypotheses in place of
+       distinct variable restrictions.  (Contributed by NM, 21-Sep-2003.) $)
+    elrabf $p |- ( A e. { x e. B | ph } <-> ( A e. B /\ ps ) ) $=
+      ( crab wcel cvv wa elex adantr cv cab df-rab eleq2i nfel nfan wceq elabgf
+      eleq1 anbi12d syl5bb pm5.21nii ) DACEJZKZDLKZDEKZBMZDUHNUKUJBDENOUIDCPZEK
+      ZAMZCQZKUJULUHUPDACERSUOULCDLFUKBCCDEFGTHUAUMDUBUNUKABUMDEUDIUEUCUFUG $.
+  $}
+
+  ${
+    $d x ps $.  $d x y A $.  $d x y B $.
+    elrab.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Membership in a restricted class abstraction, using implicit
+       substitution.  (Contributed by NM, 21-May-1999.) $)
+    elrab $p |- ( A e. { x e. B | ph } <-> ( A e. B /\ ps ) ) $=
+      ( nfcv nfv elrabf ) ABCDECDGCEGBCHFI $.
+
+    $( Membership in a restricted class abstraction, using implicit
+       substitution.  (Contributed by NM, 5-Oct-2006.) $)
+    elrab3 $p |- ( A e. B -> ( A e. { x e. B | ph } <-> ps ) ) $=
+      ( crab wcel elrab baib ) DACEGHDEHBABCDEFIJ $.
+  $}
+
+  ${
+    $d x ps $.  $d x y A $.  $d x y B $.
+    elrab2.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    elrab2.2 $e |- C = { x e. B | ph } $.
+    $( Membership in a class abstraction, using implicit substitution.
+       (Contributed by NM, 2-Nov-2006.) $)
+    elrab2 $p |- ( A e. C <-> ( A e. B /\ ps ) ) $=
+      ( wcel crab wa eleq2i elrab bitri ) DFIDACEJZIDEIBKFODHLABCDEGMN $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y ps $.
+    ralab.1 $e |- ( y = x -> ( ph <-> ps ) ) $.
+    $( Universal quantification over a class abstraction.  (Contributed by Jeff
+       Madsen, 10-Jun-2010.) $)
+    ralab $p |- ( A. x e. { y | ph } ch <-> A. x ( ps -> ch ) ) $=
+      ( cab wral cv wcel wi wal df-ral vex elab imbi1i albii bitri ) CDAEGZHDIZ
+      SJZCKZDLBCKZDLCDSMUBUCDUABCABETDNFOPQR $.
+
+    $( Universal quantification over a restricted class abstraction.
+       (Contributed by Jeff Madsen, 10-Jun-2010.) $)
+    ralrab $p |- ( A. x e. { y e. A | ph } ch <-> A. x e. A ( ps -> ch ) ) $=
+      ( wi crab cv wcel wa elrab imbi1i impexp bitri ralbii2 ) CBCHZDAEFIZFDJZS
+      KZCHTFKZBLZCHUBRHUAUCCABETFGMNUBBCOPQ $.
+
+    $( Existential quantification over a class abstraction.  (Contributed by
+       Mario Carneiro, 23-Jan-2014.)  (Revised by Mario Carneiro,
+       3-Sep-2015.) $)
+    rexab $p |- ( E. x e. { y | ph } ch <-> E. x ( ps /\ ch ) ) $=
+      ( cab wrex cv wcel wa wex df-rex vex elab anbi1i exbii bitri ) CDAEGZHDIZ
+      SJZCKZDLBCKZDLCDSMUBUCDUABCABETDNFOPQR $.
+
+    $( Existential quantification over a class abstraction.  (Contributed by
+       Jeff Madsen, 17-Jun-2011.)  (Revised by Mario Carneiro, 3-Sep-2015.) $)
+    rexrab $p |- ( E. x e. { y e. A | ph } ch <-> E. x e. A ( ps /\ ch ) ) $=
+      ( wa crab cv wcel elrab anbi1i anass bitri rexbii2 ) CBCHZDAEFIZFDJZRKZCH
+      SFKZBHZCHUAQHTUBCABESFGLMUABCNOP $.
+  $}
+
+  ${
+    $d x y $.  $d x A $.  $d x ch $.  $d x ph $.  $d y ps $.
+    ralab2.1 $e |- ( x = y -> ( ps <-> ch ) ) $.
+    $( Universal quantification over a class abstraction.  (Contributed by
+       Mario Carneiro, 3-Sep-2015.) $)
+    ralab2 $p |- ( A. x e. { y | ph } ps <-> A. y ( ph -> ch ) ) $=
+      ( cab wral cv wcel wi wal df-ral nfsab1 nfv nfim weq eleq1 abid syl6bb
+      imbi12d cbval bitri ) BDAEGZHDIZUDJZBKZDLACKZELBDUDMUGUHDEUFBEAEDNBEOPUHD
+      ODEQZUFABCUIUFEIZUDJAUEUJUDRAESTFUAUBUC $.
+
+    $( Universal quantification over a restricted class abstraction.
+       (Contributed by Mario Carneiro, 3-Sep-2015.) $)
+    ralrab2 $p |- ( A. x e. { y e. A | ph } ps <-> A. y e. A ( ph -> ch ) ) $=
+      ( crab wral cv wcel wa cab wi wal df-rab raleqi ralab2 impexp albii
+      df-ral bitr4i 3bitri ) BDAEFHZIBDEJFKZALZEMZIUFCNZEOZACNZEFIZBDUDUGAEFPQU
+      FBCDEGRUIUEUJNZEOUKUHULEUEACSTUJEFUAUBUC $.
+
+    $( Existential quantification over a class abstraction.  (Contributed by
+       Mario Carneiro, 3-Sep-2015.) $)
+    rexab2 $p |- ( E. x e. { y | ph } ps <-> E. y ( ph /\ ch ) ) $=
+      ( cab wrex cv wcel wa wex df-rex nfsab1 nfv nfan weq eleq1 abid syl6bb
+      anbi12d cbvex bitri ) BDAEGZHDIZUDJZBKZDLACKZELBDUDMUGUHDEUFBEAEDNBEOPUHD
+      ODEQZUFABCUIUFEIZUDJAUEUJUDRAESTFUAUBUC $.
+
+    $( Existential quantification over a class abstraction.  (Contributed by
+       Mario Carneiro, 3-Sep-2015.) $)
+    rexrab2 $p |- ( E. x e. { y e. A | ph } ps <-> E. y e. A ( ph /\ ch ) ) $=
+      ( crab wrex cv wcel wa cab wex df-rab rexeqi rexab2 anass exbii df-rex
+      bitr4i 3bitri ) BDAEFHZIBDEJFKZALZEMZIUECLZENZACLZEFIZBDUCUFAEFOPUEBCDEGQ
+      UHUDUILZENUJUGUKEUDACRSUIEFTUAUB $.
+  $}
+
+  ${
+    $d w y A $.  $d w x z $.  $d x y $.  $d A z $.
+    $( Identity used to create closed-form versions of bound-variable
+       hypothesis builders for class expressions.  (Contributed by NM,
+       10-Nov-2005.)  (Proof shortened by Mario Carneiro, 12-Oct-2016.) $)
+    abidnf $p |- ( F/_ x A -> { z | A. x z e. A } = A ) $=
+      ( wnfc cv wcel wal sp nfcr nfrd impbid2 abbi1dv ) ACDZBECFZAGZBCMONNAHMNA
+      ABCIJKL $.
+  $}
+
+  ${
+    $d y A $.  $d x z $.  $d x y $.  $d z A $.
+    dedhb.1 $e |- ( A = { z | A. x z e. A } -> ( ph <-> ps ) ) $.
+    dedhb.2 $e |- ps $.
+    $( A deduction theorem for converting the inference ` |- F/_ x A ` =>
+       ` |- ph ` into a closed theorem.  Use ~ nfa1 and ~ nfab to eliminate the
+       hypothesis of the substitution instance ` ps ` of the inference.  For
+       converting the inference form into a deduction form, ~ abidnf is
+       useful.  (Contributed by NM, 8-Dec-2006.) $)
+    dedhb $p |- ( F/_ x A -> ph ) $=
+      ( wnfc cv wcel wal cab wceq wb abidnf eqcomd syl mpbiri ) CEHZABGSEDIEJCK
+      DLZMABNSTECDEOPFQR $.
+  $}
+
+  ${
+    $d y ph $.  $d x y ps $.  $d x y A $.
+    eqeu.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( A condition which implies existential uniqueness.  (Contributed by Jeff
+       Hankins, 8-Sep-2009.) $)
+    eqeu $p |- ( ( A e. B /\ ps /\ A. x ( ph -> x = A ) ) -> E! x ph ) $=
+      ( vy wcel cv wceq wi wal w3a wex weu spcegv imp 3adant3 eqeq2 imbi2d nfv
+      albidv 3adant2 eu3 sylanbrc ) DEHZBACIZDJZKZCLZMACNZAUGGIZJZKZCLZGNZACOUF
+      BUKUJUFBUKABCDEFPQRUFUJUPBUFUJUPUOUJGDEULDJZUNUICUQUMUHAULDUGSTUBPQUCACGA
+      GUAUDUE $.
+  $}
+
+  ${
+    $d x y A $.
+    $( Equality has existential uniqueness.  (Contributed by NM,
+       25-Nov-1994.) $)
+    eueq $p |- ( A e. _V <-> E! x x = A ) $=
+      ( vy cv wceq wex wa wi wal cvv wcel weu eqtr3 biantru isset eqeq1 3bitr4i
+      gen2 eu4 ) ADZBEZAFZUBUACDZBEZGTUCEHZCIAIZGBJKUAALUFUBUEACTUCBMRNABOUAUDA
+      CTUCBPSQ $.
+  $}
+
+  ${
+    $d x A $.
+    eueq1.1 $e |- A e. _V $.
+    $( Equality has existential uniqueness.  (Contributed by NM,
+       5-Apr-1995.) $)
+    eueq1 $p |- E! x x = A $=
+      ( cvv wcel cv wceq weu eueq mpbi ) BDEAFBGAHCABIJ $.
+  $}
+
+  ${
+    $d x ph $.  $d x A $.  $d x B $.
+    eueq2dc.1 $e |- A e. _V $.
+    eueq2dc.2 $e |- B e. _V $.
+    $( Equality has existential uniqueness (split into 2 cases).  (Contributed
+       by NM, 5-Apr-1995.) $)
+    eueq2dc $p |- ( DECID ph ->
+        E! x ( ( ph /\ x = A ) \/ ( -. ph /\ x = B ) ) ) $=
+      ( wdc wn wo wceq wa eueq1 euanv biimpri mpan2 euorv bianfd eubidv
+      weu mpbid cv df-dc notnot1 syl2anc orcom orbi2d syl5bb mpdan jaoi
+      id orbi1d sylbi ) AGAAHZIABUAZCJZKZUMUNDJZKZIZBSZAUBAUTUMAUMUPIZB
+      SZUTAUMHUPBSZVBAUCZAUOBSZVCBCELVCAVEKAUOBMNOUMUPBPUDAVAUSBVAUPUMI
+      AUSUMUPUEAUMURUPAUMUQVDQUFUGRTUMAURIZBSZUTUMURBSZVGUMUQBSZVHBDFLV
+      HUMVIKUMUQBMNOAURBPUHUMVFUSBUMAUPURUMAUOUMUJQUKRTUIUL $.
+  $}
+
+  ${
+    $d x ph $.  $d x ps $.  $d x A $.  $d x B $.  $d x C $.
+    eueq3dc.1 $e |- A e. _V $.
+    eueq3dc.2 $e |- B e. _V $.
+    eueq3dc.3 $e |- C e. _V $.
+    eueq3dc.4 $e |- -. ( ph /\ ps ) $.
+    $( Equality has existential uniqueness (split into 3 cases).  (Contributed
+       by NM, 5-Apr-1995.)  (Proof shortened by Mario Carneiro,
+       28-Sep-2015.) $)
+    eueq3dc $p |- ( DECID ph -> ( DECID ps ->
+        E! x ( ( ph /\ x = A ) \/ ( -. ( ph \/ ps ) /\ x = B )
+               \/ ( ps /\ x = C ) ) ) ) $=
+      ( wdc wo wceq wa wn w3o weu eueq1 con2i jaoi cv dcor df-dc pm2.45
+      ibar wb imnani bianfd orbi12d mtbid biorf syl bitrd 3orrot df-3or
+      bitri syl6bbr eubidv mpbii adantr pm2.46 simpl orim12i con3i syl6
+      3orcomb sylbi ) AKBKABLZKZACUAZDMZNZVHOZVJEMZNZBVJFMZNZPZCQZABUBV
+      IVHVMLVSVHUCVHVSVMAVSBAVKCQVSCDGRAVKVRCAVKVOVQLZVLLZVRAVKVLWAAVKU
+      EAVTOVLWAUFAVMBLZVTWBAVMAOBABUDZABABJUGZSTSAVMVOBVQAVMVNVMAWCSUHA
+      BVPWDUHUIUJVTVLUKULUMVRVOVQVLPWAVLVOVQUNVOVQVLUOUPUQURUSBVPCQVSCF
+      IRBVPVRCBVPVLVOLZVQLZVRBVPVQWFBVPUEBWEOVQWFUFWEBVLBOZVOAWGVKWDUTV
+      MWGVNABVAUTTSWEVQUKULUMVLVOVQUOUQURUSTVMVNCQVSCEHRVMVNVRCVMVNVLVQ
+      LZVOLZVRVMVNVOWIVMVNUEVMWHOVOWIUFWHVHVLAVQBAVKVBBVPVBVCVDWHVOUKUL
+      UMVRVLVQVOPWIVLVOVQVFVLVQVOUOUPUQURUSTVGVE $.
+  $}
+
+  ${
+    $d x A $.
+    $( There is at most one set equal to a class.  (Contributed by NM,
+       8-Mar-1995.) $)
+    moeq $p |- E* x x = A $=
+      ( cv wceq wmo wex weu wi cvv wcel isset eueq bitr3i biimpi df-mo mpbir )
+      ACBDZAEQAFZQAGZHRSRBIJSABKABLMNQAOP $.
+  $}
+
+  ${
+    $d x y ph $.  $d x y ps $.  $d x y A $.  $d x y B $.  $d x y C $.
+    moeq3dc.1 $e |- A e. _V $.
+    moeq3dc.2 $e |- B e. _V $.
+    moeq3dc.3 $e |- C e. _V $.
+    moeq3dc.4 $e |- -. ( ph /\ ps ) $.
+    $( "At most one" property of equality (split into 3 cases).  (Contributed
+       by Jim Kingdon, 7-Jul-2018.) $)
+    moeq3dc $p |- ( DECID ph -> ( DECID ps ->
+        E* x ( ( ph /\ x = A ) \/ ( -. ( ph \/ ps ) /\ x = B )
+               \/ ( ps /\ x = C ) ) ) ) $=
+      ( wdc cv wceq wa wo wn w3o weu wmo eueq3dc eumo syl6 ) AKBKACLZDM
+      NABOPUCEMNBUCFMNQZCRUDCSABCDEFGHIJTUDCUAUB $.
+  $}
+
+  ${
+    $d x y A $.  $d x z $.  $d y z $.  $d A z $.  $d ph z $.
+    mosubex.1 $e |- A e. _V $.
+    mosubex.2 $e |- E* x ph $.
+    $( "At most one" remains true after substitution.  (Contributed by NM,
+       9-Mar-1995.)  (Modified by Jim Kingdon, 8-Jul-2018.) $)
+    mosubex $p |- E* x E. y ( y = A /\ ph ) $=
+      ( vz cv wceq wa wex wmo eqeq2 anbi1d exbidv mobidv wsb sbt sbmo mpbi sb5
+      mobii vtocl ) CHZGHZIZAJZCKZBLZUDDIZAJZCKZBLGDEUEDIZUHULBUMUGUKCUMUFUJAUE
+      DUDMNOPACGQZBLZUIABLZCGQUOUPCGFRACGBSTUNUHBACGUAUBTUC $.
+  $}
+
+  ${
+    $d x y A $.  $d y ph $.
+    mo2iclex.1 $e |- A e. _V $.
+    $( Theorem for inferring "at most one."  (Contributed by NM, 17-Oct-1996.)
+       (Modified by Jim Kingdon, 8-Jul-2018.) $)
+    mo2iclex $p |- ( A. x ( ph -> x = A ) -> E* x ph ) $=
+      ( vy cv wceq wi wal wmo eqeq2 imbi2d albidv imbi1d nfv mo2r 19.23bi vtocl
+      ) ABFZEFZGZHZBIZABJZHASCGZHZBIZUDHECDTCGZUCUGUDUHUBUFBUHUAUEATCSKLMNUCUDE
+      ABEAEOPQR $.
+  $}
+
+  ${
+    $d x y A $.  $d y ph $.  $d x y ps $.
+    moi2.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Consequence of "at most one."  (Contributed by NM, 2-Jan-2015.) $)
+    mob2 $p |- ( ( A e. B /\ E* x ph /\ ph ) -> ( x = A <-> ps ) ) $=
+      ( vy wcel wmo w3a cv wceq simp3 syl5ibcom wi wa wsb wal nfs1v sbequ12 nfv
+      mo4f sylbi sbhypf anbi2d eqeq2 imbi12d spcgv syl5 imp exp3a 3impia impbid
+      sp ) DEHZACIZAJZCKZDLZBUQAUSBUOUPAMFNUOUPABUSOUOUPPABUSUOUPABPZUSOZUPAACG
+      QZPZURGKZLZOZGRZUOVAUPVGCRVGAVBCGACGSACGTUBVGCUNUCVFVAGDEVDDLZVCUTVEUSVHV
+      BBAABCGDBCUAFUDUEVDDURUFUGUHUIUJUKULUM $.
+
+    $( Consequence of "at most one."  (Contributed by NM, 29-Jun-2008.) $)
+    moi2 $p |- ( ( ( A e. B /\ E* x ph ) /\ ( ph /\ ps ) ) -> x = A ) $=
+      ( wcel wmo wa cv wceq wb mob2 3expa biimprd impr ) DEGZACHZIZABCJDKZSAITB
+      QRATBLABCDEFMNOP $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x y ch $.  $d y ph $.  $d x y ps $.
+    moi.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    moi.2 $e |- ( x = B -> ( ph <-> ch ) ) $.
+    $( Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) $)
+    mob $p |- ( ( ( A e. C /\ B e. D ) /\ E* x ph /\ ps ) ->
+                ( A = B <-> ch ) ) $=
+      ( wcel wa wmo wceq wb wi cvv elex w3a nfv cv nfcv nfmo1 nf3an nfim bibi1d
+      3anbi3d eqeq1 imbi12d mob2 vtoclgf com12 3expib syl com3r imp 3impib ) EG
+      KZFHKZLADMZBEFNZCOZURUSUTBLZVBPUSVCURVBUSFQKZVCURVBPZPFHRVDUTBVEURVDUTBSZ
+      VBVDUTASZDUAZFNZCOZPVFVBPDEGDEUBVFVBDVDUTBDVDDTADUCBDTUDVBDTUEVHENZVGVFVJ
+      VBVKABVDUTIUGVKVIVACVHEFUHUFUIACDFQJUJUKULUMUNUOUPUQ $.
+
+    $( Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) $)
+    moi $p |- ( ( ( A e. C /\ B e. D ) /\ E* x ph /\ ( ps /\ ch ) ) ->
+              A = B ) $=
+      ( wcel wa wmo wceq wi w3a mob biimprd 3expia imp3a 3impia ) EGKFHKLZADMZB
+      CLEFNZUBUCLBCUDUBUCBCUDOUBUCBPUDCABCDEFGHIJQRSTUA $.
+  $}
+
+  ${
+    $d B x y $.  $d A x y $.  $d ph y $.  $d ps x y $.
+    morex.1 $e |- B e. _V $.
+    morex.2 $e |- ( x = B -> ( ph <-> ps ) ) $.
+    $( Derive membership from uniqueness.  (Contributed by Jeff Madsen,
+       2-Sep-2009.) $)
+    morex $p |- ( ( E. x e. A ph /\ E* x ph ) -> ( ps -> B e. A ) ) $=
+      ( wmo wrex wcel wi cv wa wex df-rex exancom bitri wal nfmo1 nfe1 nfan syl
+      mopick alrimi wceq eleq1 imbi12d spcv sylan2b ancoms ) ACHZACDIZBEDJZKZUL
+      UKACLZDJZMZCNZUNULUPAMCNURACDOUPACPQUKURMZAUPKZCRUNUSUTCUKURCACSUQCTUAAUP
+      CUCUDUTUNCEFUOEUEABUPUMGUOEDUFUGUHUBUIUJ $.
+  $}
+
+  ${
+    $d x ph $.  $d x A $.
+    euxfr2dc.1 $e |- A e. _V $.
+    euxfr2dc.2 $e |- E* y x = A $.
+    $( Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       14-Nov-2004.) $)
+    euxfr2dc $p |- ( DECID E. y E. x ( x = A /\ ph ) ->
+        ( E! x E. y ( x = A /\ ph ) <-> E! y ph ) ) $=
+      ( cv wa wex wdc weu wmo wal moani mobii mpbi ax-gen 2euswapdc mpi
+      wi wceq ancom excom dcbii sylbi impbid biidd ceqsexv eubii syl6bb
+      moeq ) BGDUAZAHZBIZCIZJZUMCIZBKZUNCKZACKUPURUSUPUMCLZBMZURUSTZUTB
+      AULHZCLUTULACFNVCUMCAULUBZOPQUPUQBIZJVAVBTUOVEUMCBUCUDUMBCRUESUPU
+      MBLZCMUSURTVFCVCBLVFULABBDUKNVCUMBVDOPQUMCBRSUFUNACAABDEULAUGUHUI
+      UJ $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x A $.
+    euxfrdc.1 $e |- A e. _V $.
+    euxfrdc.2 $e |- E! y x = A $.
+    euxfrdc.3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       14-Nov-2004.) $)
+    euxfrdc $p |- ( DECID E. y E. x ( x = A /\ ps ) ->
+        ( E! x ph <-> E! y ps ) ) $=
+      ( weu cv wceq wa wex wdc euex ax-mp biantrur 19.41v pm5.32i exbii
+      3bitr2i eubii eumoi euxfr2dc syl5bb ) ACICJEKZBLZDMZCIUGCMDMNBDIA
+      UHCAUFDMZALUFALZDMUHUIAUFDIUIGUFDOPQUFADRUJUGDUFABHSTUAUBBCDEFUFD
+      GUCUDUE $.
+  $}
+
+  ${
+    $d y z w ph $.  $d x z ps $.  $d y z w A $.  $d x z B $.  $d x y w $.
+    euind.1 $e |- B e. _V $.
+    euind.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    euind.3 $e |- ( x = y -> A = B ) $.
+    $( Existential uniqueness via an indirect equality.  (Contributed by NM,
+       11-Oct-2010.) $)
+    euind $p |- ( ( A. x A. y ( ( ph /\ ps ) -> A = B ) /\ E. x ph )
+                 -> E! z A. x ( ph -> z = A ) ) $=
+      ( vw wa wceq wi wal wex cv exbii bitri imim2i weu cbvexv biantrur 3bitr2i
+      isseti 19.41v excom eqeq2 bi2 an31 imbi1i impexp 3bitr3i sylib syl 2alimi
+      wb 19.23v albii 19.21v eximdv syl5bi imp pm4.24 biimpi prth eqtr3 alanimi
+      syl56 com12 syl5 alrimivv adantl eqeq1 imbi2d albidv eu4 sylanbrc ) ABLZF
+      GMZNZDOCOZACPZLAEQZFMZNZCOZEPZWGAKQZFMZNZCOZLZWDWIMZNZKOEOZWGEUAWBWCWHWCW
+      DGMZBLZDPZEPZWBWHWCBDPZWTABCDIUBXAWQEPZBLZDPWREPZDPWTBXCDXBBEGHUEUCRXDXCD
+      WQBEUFRWRDEUGUDSWBWSWGEWBWRWFNZDOZCOZWSWGNZWAXECDWAVSWEWQUQZNZXEVTXIVSFGW
+      DUHTXJVSWQWENZNZXEXIXKVSWEWQUITVSWQLZWENWRALZWENXLXEXMXNWEABWQUJUKVSWQWEU
+      LWRAWEULUMUNUOUPXGWSWFNZCOXHXFXOCWRWFDURUSWSWFCUTSUNVAVBVCWCWPWBWCWOEKWMA
+      WNNZCOZWCWNWFWKXPCAAALZWFWKLWEWJLWNAXRAVDVEAWEAWJVFWDWIFVGVIVHXQWCWNXQWCW
+      NNAWNCURVEVJVKVLVMWGWLEKWNWFWKCWNWEWJAWDWIFVNVOVPVQVR $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d y ph $.  $d x ps $.
+    $( A way to express restricted uniqueness.  (Contributed by NM,
+       22-Nov-1994.) $)
+    reu2 $p |- ( E! x e. A ph <-> ( E. x e. A ph /\
+               A. x e. A A. y e. A ( ( ph /\ [ y / x ] ph ) -> x = y ) ) ) $=
+      ( cv wcel wa weu wex wsb weq wi wal wreu wral df-ral impexp albii 3bitr4i
+      nfv wrex eu2 df-reu df-rex 19.21v nfs1v nfan eleq1 sbequ12 anbi12d anbi2i
+      sbie an4 bitri imbi1i 3bitri imbi2i bitr4i anbi12i ) BEZDFZAGZBHVBBIZVBVB
+      BCJZGZBCKZLZCMZBMZGABDNABDUAZAABCJZGZVFLZCDOZBDOZGVBBCVBCTUBABDUCVJVCVOVI
+      ABDUDVOVAVNLZBMVIVNBDPVHVPBVACEZDFZVMLZLZCMVAVSCMZLVHVPVAVSCUEVGVTCVGVAVR
+      GZVLGZVFLWBVMLVTVEWCVFVEVBVRVKGZGWCVDWDVBVBWDBCVRVKBVRBTABCUFUGVFVAVRAVKU
+      TVQDUHABCUIUJULUKVAAVRVKUMUNUOWBVLVFQVAVRVMQUPRVNWAVAVMCDPUQSRURUSS $.
+
+    $( A way to express restricted uniqueness.  (Contributed by NM,
+       20-Oct-2006.) $)
+    reu6 $p |- ( E! x e. A ph <-> E. y e. A A. x e. A ( ph <-> x = y ) ) $=
+      ( cv wcel wa weq wb wal wex wi bi1 bi2 adantr impbid imim2i imp 3bitr4i
+      ex wreu weu wral wrex df-reu 19.28v eleq1 sbequ12 anbi12d equequ1 bibi12d
+      wsb equid tbt simpl sylbir syl6bi spimv expdimp simpr syl6 sps jca adantl
+      a5i imp3a eleq1a com23 jcai alimi impbii df-ral anbi2i exbii df-eu df-rex
+      adantll bitri ) ABDUABEZDFZAGZBUBZABCHZIZBDUCZCDUDZABDUEWAWCIZBJZCKCEZDFZ
+      WEGZCKWBWFWHWKCWJVTWDLZGZBJZWJWLBJZGWHWKWJWLBUFWHWNWGWMBWHWJWLWGWJBCWCWGW
+      JABCULZGZCCHZIZWJWCWAWQWCWRWCVTWJAWPVSWIDUGABCUHUIBCCUJUKWSWQWJWRWQCUMUNW
+      JWPUOUPUQURWGWLBWGVTWDWGVTGAWCWGVTAWCWAWCMUSWGWCALZVTWGWCWAAWAWCNVTAUTVAO
+      PTVBVCVEWMWGBWMWAWCWLWAWCLWJWLVTAWCWDAWCLVTAWCMQVFVDWMWCWAWMWCGVTAWMWCVTW
+      JWCVTLWLWIDVSVGORWLWCVTALZWJWLWCXAWLVTWCAWDWTVTAWCNQVHRVQVITPVJVKWEWOWJWD
+      BDVLVMSVNWABCVOWECDVPSVR $.
+
+    $( A way to express restricted uniqueness.  (Contributed by NM,
+       24-Oct-2006.) $)
+    reu3 $p |- ( E! x e. A ph <->
+               ( E. x e. A ph /\ E. y e. A A. x e. A ( ph -> x = y ) ) ) $=
+      ( wreu wrex weq wi wral wa reurex wb reu6 bi1 ralimi reximi sylbi jca wex
+      wal rexex anim2i cv wcel weu nfv df-reu df-rex df-ral impexp albii bitr4i
+      eu3 exbii anbi12i 3bitr4i sylibr impbii ) ABDEZABDFZABCGZHZBDIZCDFZJZUSUT
+      VDABDKUSAVALZBDIZCDFVDABCDMVGVCCDVFVBBDAVANOPQRVEUTVCCSZJZUSVDVHUTVCCDUAU
+      BBUCDUDZAJZBUEVKBSZVKVAHZBTZCSZJUSVIVKBCVKCUFUMABDUGUTVLVHVOABDUHVCVNCVCV
+      JVBHZBTVNVBBDUIVMVPBVJAVAUJUKULUNUOUPUQUR $.
+
+    $( A condition which implies existential uniqueness.  (Contributed by Mario
+       Carneiro, 2-Oct-2015.) $)
+    reu6i $p |- ( ( B e. A /\ A. x e. A ( ph <-> x = B ) ) -> E! x e. A ph ) $=
+      ( vy wcel cv wceq wb wral wa wrex wreu eqeq2 bibi2d ralbidv rspcev sylibr
+      reu6 ) DCFABGZDHZIZBCJZKATEGZHZIZBCJZECLABCMUGUCEDCUDDHZUFUBBCUHUEUAAUDDT
+      NOPQABECSR $.
+
+    eqreu.1 $e |- ( x = B -> ( ph <-> ps ) ) $.
+    $( A condition which implies existential uniqueness.  (Contributed by Mario
+       Carneiro, 2-Oct-2015.) $)
+    eqreu $p |- ( ( B e. A /\ ps /\ A. x e. A ( ph -> x = B ) ) ->
+      E! x e. A ph ) $=
+      ( wcel cv wceq wi wral wreu wa wb ralbiim ceqsralv anbi2d syl5bb reu6i ex
+      sylbird 3impib 3com23 ) EDGZACHEIZJCDKZBACDLZUDUFBUGUDUFBMZAUENCDKZUGUIUF
+      UEAJCDKZMUDUHAUECDOUDUJBUFABCEDFPQRUDUIUGACDESTUAUBUC $.
+  $}
+
+  ${
+    $d x y z A $.  $d y z ph $.  $d x z ps $.
+    rmo4.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( Restricted "at most one" using implicit substitution.  (Contributed by
+       NM, 24-Oct-2006.)  (Revised by NM, 16-Jun-2017.) $)
+    rmo4 $p |- ( E* x e. A ph <->
+               A. x e. A A. y e. A ( ( ph /\ ps ) -> x = y ) ) $=
+      ( wrmo cv wcel wa wmo weq wi wral df-rmo wal bitri impexp albii df-ral
+      an4 ancom anbi1i imbi1i 3bitri r19.21v 3bitr2i eleq1 anbi12d mo4 3bitr4i
+      ) ACEGCHZEIZAJZCKZABJZCDLZMZDENZCENZACEOUNDHZEIZBJZJZUQMZDPZCPUMUSMZCPUOU
+      TVFVGCVFVBUMURMZMZDPVHDENVGVEVIDVEVBUMJZUPJZUQMVJURMVIVDVKUQVDUMVBJZUPJVK
+      UMAVBBUAVLVJUPUMVBUBUCQUDVJUPUQRVBUMURRUESVHDETUMURDEUFUGSUNVCCDUQUMVBABU
+      LVAEUHFUIUJUSCETUKQ $.
+
+    $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
+       23-Nov-1994.) $)
+    reu4 $p |- ( E! x e. A ph <-> ( E. x e. A ph /\
+             A. x e. A A. y e. A ( ( ph /\ ps ) -> x = y ) ) ) $=
+      ( wreu wrex wrmo wa weq wi wral reu5 rmo4 anbi2i bitri ) ACEGACEHZACEIZJR
+      ABJCDKLDEMCEMZJACENSTRABCDEFOPQ $.
+
+    $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
+       24-Oct-2006.) $)
+    reu7 $p |- ( E! x e. A ph <-> ( E. x e. A ph /\
+             E. x e. A A. y e. A ( ps -> x = y ) ) ) $=
+      ( vz wreu wrex weq wi wral wa equequ1 equcom syl6bb imbi12d cbvralv bitri
+      reu3 rexbii imbi2d ralbidv cbvrexv anbi2i ) ACEHACEIZACGJZKZCELZGEIZMUFBC
+      DJZKZDELZCEIZMACGETUJUNUFUJBGDJZKZDELZGEIUNUIUQGEUHUPCDEUKABUGUOFUKUGDGJU
+      OCDGNDGOPQRUAUQUMGCEGCJZUPULDEURUOUKBGCDNUBUCUDSUES $.
+
+    $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
+       24-Oct-2006.) $)
+    reu8 $p |- ( E! x e. A ph <-> E. x e. A ( ph /\
+                A. y e. A ( ps -> x = y ) ) ) $=
+      ( wreu weq wb wral wrex wi wa cbvreuv reu6 cv wcel ralbii wal syl5bb a1i
+      dfbi2 ancom equcom imbi2i biimt df-ral bi2.04 albii eleq1 imbi12d equcoms
+      vex bicomd ceqsalv 3bitrri syl6bb anbi12d r19.26 syl6rbbr rexbiia 3bitri
+      ) ACEGBDEGBDCHZIZDEJZCEKABCDHZLZDEJZMZCEKABCDEFNBDCEOVEVICEVEBVCLZVCBLZMZ
+      DEJZCPZEQZVIVDVLDEBVCUBRVOVIVJDEJZVKDEJZMZVMVIVHAMVOVRAVHUCVOVHVPAVQVHVPI
+      VOVGVJDEVFVCBCDUDUERUAVOAVOALZVQVOAUFVQDPZEQZVKLZDSVCWABLZLZDSVSVKDEUGWBW
+      DDWAVCBUHUIWCVSDVNCUMWCVSICDVFVSWCVFVOWAABVNVTEUJFUKUNULUOUPUQURTVJVKDEUS
+      UTTVAVB $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Equality has existential uniqueness.  (Contributed by Mario Carneiro,
+       1-Sep-2015.) $)
+    reueq $p |- ( B e. A <-> E! x e. A x = B ) $=
+      ( wcel cv wceq wrex wreu risset wrmo wmo moeq mormo ax-mp mpbiran2 bitr4i
+      reu5 ) CBDAECFZABGZRABHZACBITSRABJZRAKUAACLRABMNRABQOP $.
+  $}
+
+  $( Restricted "at most one" still holds when a conjunct is added.
+     (Contributed by NM, 16-Jun-2017.) $)
+  rmoan $p |- ( E* x e. A ph -> E* x e. A ( ps /\ ph ) ) $=
+    ( cv wcel wa wmo wrmo moan an12 mobii sylib df-rmo 3imtr4i ) CEDFZAGZCHZPBA
+    GZGZCHZACDISCDIRBQGZCHUAQBCJUBTCBPAKLMACDNSCDNO $.
+
+  $( Restricted "at most one" is preserved through implication (note wff
+     reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
+  rmoim $p |- ( A. x e. A ( ph -> ps )
+        -> ( E* x e. A ps -> E* x e. A ph ) ) $=
+    ( wi wral cv wcel wa wal wrmo df-ral imdistan albii wmo moim df-rmo 3imtr4g
+    bitri sylbi ) ABEZCDFZCGDHZAIZUCBIZEZCJZBCDKZACDKZEUBUCUAEZCJUGUACDLUJUFCUC
+    ABMNSUGUECOUDCOUHUIUDUECPBCDQACDQRT $.
+
+  ${
+    rmoimia.1 $e |- ( x e. A -> ( ph -> ps ) ) $.
+    $( Restricted "at most one" is preserved through implication (note wff
+       reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
+    rmoimia $p |- ( E* x e. A ps -> E* x e. A ph ) $=
+      ( wi wrmo rmoim mprg ) ABFBCDGACDGFCDABCDHEI $.
+  $}
+
+  ${
+    rmoimi2.1 $e |- A. x ( ( x e. A /\ ph ) -> ( x e. B /\ ps ) ) $.
+    $( Restricted "at most one" is preserved through implication (note wff
+       reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
+    rmoimi2 $p |- ( E* x e. B ps -> E* x e. A ph ) $=
+      ( cv wcel wa wmo wrmo wi wal moim ax-mp df-rmo 3imtr4i ) CGZEHBIZCJZRDHAI
+      ZCJZBCEKACDKUASLCMTUBLFUASCNOBCEPACDPQ $.
+  $}
+
+  ${
+    $d x y A $.  $d x B $.
+    $( A condition allowing swap of uniqueness and existential quantifiers.
+       (Contributed by Thierry Arnoux, 7-Apr-2017.)  (Revised by NM,
+       16-Jun-2017.) $)
+    2reuswapdc $p |- ( DECID E. x E. y ( x e. A /\ ( y e. B /\ ph ) ) ->
+        ( A. x e. A E* y e. B ph ->
+          ( E! x e. A E. y e. B ph -> E! y e. B E. x e. A ph ) ) ) $=
+      ( wral cv wcel wa wmo wex wrex wreu wal weu df-reu r19.42v df-rex
+      wi bitri wrmo wdc df-rmo ralbii df-ral moanimv bitr4i bitr3i an12
+      albii exbii eubii 2euswapdc syl7bi imbi2i syl6ibr syl5bi ) ACEUAZ
+      BDFCGEHZAIZCJZBDFZBGDHZUTIZCKZBKUBZACELZBDMZABDLZCEMZSZURVABDACEU
+      CUDVBVDCJZBNZVFVKVBVCVASZBNVMVABDUEVLVNBVCUTCUFUJUGVFVMVHVDBKZCOZ
+      SVKVHVEBOZVFVMVPVHVCVGIZBOVQVGBDPVRVEBVRUSVCAIZIZCKZVEVRVSCELWAVC
+      ACEQVSCERUHVTVDCUSVCAUIUKTULTVDBCUMUNVJVPVHVJUSVIIZCOVPVICEPWBVOC
+      WBUTBDLVOUSABDQUTBDRUHULTUOUPUQUQ $.
+  $}
+
+  ${
+    $d w y z A $.  $d x z B $.  $d w x y z C $.  $d w y z ph $.  $d x z ps $.
+    reuind.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    reuind.2 $e |- ( x = y -> A = B ) $.
+    $( Existential uniqueness via an indirect equality.  (Contributed by NM,
+       16-Oct-2010.) $)
+    reuind $p |- ( ( A. x A. y ( ( ( A e. C /\ ph ) /\ ( B e. C /\ ps ) )
+         -> A = B ) /\ E. x ( A e. C /\ ph ) )
+                 -> E! z e. C A. x ( ( A e. C /\ ph ) -> z = A ) ) $=
+      ( vw wcel wa wceq wi wal wex cv wrex bitri wral wreu eleq1d anbi12d exbii
+      cbvexv r19.41v rexcom4 risset anbi1i 3bitr4ri wb eqeq2 imim2i an31 imbi1i
+      bi2 impexp 3bitr3i sylib 2alimi 19.23v an12 adantr pm5.32ri bitr4i 19.42v
+      syl eleq1 albii 19.21v exp3a reximdvai syl5bi imp pm4.24 prth eqtr3 syl56
+      biimpi alanimi com12 syl5 a1d ralrimivv adantl eqeq1 imbi2d reu4 sylanbrc
+      albidv ) FHLZAMZGHLZBMZMZFGNZOZDPCPZWMCQZMWMERZFNZOZCPZEHSZXDWMKRZFNZOZCP
+      ZMZXAXFNZOZKHUAEHUAZXDEHUBWSWTXEWTXAGNZBMZDQZEHSZWSXEWTWODQZXQWMWOCDCRDRN
+      ZWLWNABXSFGHJUCIUDUFXOEHSZDQXNEHSZBMZDQXQXRXTYBDXNBEHUGUEXOEDHUHWOYBDWNYA
+      BEGHUIUJUEUKTWSXPXDEHWSXAHLZXPXDWSXNWOMZXCOZDPZCPZYCXPMZXDOZWRYECDWRWPXBX
+      NULZOZYEWQYJWPFGXAUMUNYKWPXNXBOZOZYEYJYLWPXBXNUQUNWPXNMZXBOYDWMMZXBOYMYEY
+      NYOXBWMWOXNUOUPWPXNXBURYDWMXBURUSUTVHVAYGYHXCOZCPYIYFYPCYFYDDQZXCOYPYDXCD
+      VBYQYHXCYQYCXOMZDQYHYDYRDYDWNXOMYRXNWNBVCXOYCWNXNYCWNULBXAGHVIVDVEVFUEYCX
+      ODVGTUPTVJYHXCCVKTUTVLVMVNVOWTXMWSWTXLEKHHWTXLYCXFHLMXJWMXKOZCPZWTXKXCXHY
+      SCWMWMWMMZXCXHMXBXGMXKWMUUAWMVPVTWMXBWMXGVQXAXFFVRVSWAYTWTXKYTWTXKOWMXKCV
+      BVTWBWCWDWEWFXDXIEKHXKXCXHCXKXBXGWMXAXFFWGWHWKWIWJ $.
+  $}
+
+  ${
+    $d y A $.  $d x B $.  $d x y $.
+    $( Double restricted quantification with "at most one," analogous to
+       ~ 2moex .  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
+    2rmorex $p |- ( E* x e. A E. y e. B ph -> A. y e. B E* x e. A ph ) $=
+      ( wrex wrmo cv wcel wa wmo wal wral wex df-rex mobii df-rmo albii sylib
+      wi anbi2i 19.42v 3bitr4i 2moex sylbi moanimv df-ral imbi2i bitri sylibr
+      an12 ) ACEFZBDGZCHEIZBHDIZAJZBKZTZCLZABDGZCEMZUMUNUPJZBKZCLZUSUMUOUNAJZJZ
+      BKZCLZVDUMVFCNZBKZVHUOULJZBKUOVECNZJZBKUMVJVKVMBULVLUOACEOUAPULBDQVIVMBUO
+      VECUBPUCVFBCUDUEVGVCCVFVBBUOUNAUKPRSVCURCUNUPBUFRSVAUNUTTZCLUSUTCEUGVNURC
+      UTUQUNABDQUHRUIUJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ph $.
+    nelrdva.1 $e |- ( ( ph /\ x e. A ) -> x =/= B ) $.
+    $( Deduce negative membership from an implication.  (Contributed by Thierry
+       Arnoux, 27-Nov-2017.) $)
+    nelrdva $p |- ( ph -> -. B e. A ) $=
+      ( wcel wceq wa eqidd wne cv wi eleq1 anbi2d imbi12d vtoclg anabsi7 neneqd
+      neeq1 pm2.65da ) ADCFZDDGAUAHZDIUBDDAUADDJZABKZCFZHZUDDJZLUBUCLBDCUDDGZUF
+      UBUGUCUHUEUAAUDDCMNUDDDSOEPQRT $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    Conditional equality (experimental)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  This is a very useless definition, which "abbreviates" ` ( x = y -> ph ) ` as
+  ` CondEq ( x = y -> ph ) ` . What this display hides, though, is that the
+  first expression, even though it has a shorter constant string, is actually
+  much more complicated in its parse tree: it is parsed as
+  (wi (wceq (cv vx) (cv vy)) wph), while the ` CondEq ` version is parsed as
+  (wcdeq vx vy wph).  It also allows us to give a name to the specific 3-ary
+  operation ` ( x = y -> ph ) ` .
+
+  This is all used as part of a metatheorem: we want to say that
+  ` |- ( x = y -> ( ph ( x ) <-> ph ( y ) ) ) ` and
+  ` |- ( x = y -> A ( x ) = A ( y ) ) ` are provable, for any expressions
+  ` ph ( x ) ` or ` A ( x ) ` in the language.  The proof is by induction, so
+  the base case is each of the primitives, which is why you will see a theorem
+  for each of the set.mm primitive operations.
+
+  The metatheorem comes with a disjoint variables assumption: every variable in
+  ` ph ( x ) ` is assumed disjoint from ` x ` except ` x ` itself.  For such a
+  proof by induction, we must consider each of the possible forms of
+  ` ph ( x ) ` .  If it is a variable other than ` x ` , then we have
+  ` CondEq ( x = y -> A = A ) ` or ` CondEq ( x = y -> ( ph <-> ph ) ) ` ,
+  which is provable by ~ cdeqth and reflexivity.  Since we are only working
+  with class and wff expressions, it can't be ` x ` itself in set.mm, but if it
+  was we'd have to also prove ` CondEq ( x = y -> x = y ) ` (where _set_
+  equality is being used on the right).
+
+  Otherwise, it is a primitive operation applied to smaller expressions.  In
+  these cases, for each set variable parameter to the operation, we must
+  consider if it is equal to ` x ` or not, which yields 2^n proof obligations.
+  Luckily, all primitive operations in set.mm have either zero or one set
+  variable, so we only need to prove one statement for the non-set constructors
+  (like implication) and two for the constructors taking a set (the forall and
+  the class builder).
+
+  In each of the primitive proofs, we are allowed to assume that ` y ` is
+  disjoint from ` ph ( x ) ` and vice versa, because this is maintained through
+  the induction.  This is how we satisfy the DV assumptions of ~ cdeqab1 and
+  ~ cdeqab .
+
+$)
+
+  $c CondEq $. $( conditional equality $)
+
+  $( Extend wff notation to include conditional equality.  This is a technical
+     device used in the proof that ` F/ ` is the not-free predicate, and that
+     definitions are conservative as a result. $)
+  wcdeq $a wff CondEq ( x = y -> ph ) $.
+
+  $( Define conditional equality.  All the notation to the left of the ` <-> `
+     is fake; the parentheses and arrows are all part of the notation, which
+     could equally well be written ` CondEq x y ph ` .  On the right side is
+     the actual implication arrow.  The reason for this definition is to
+     "flatten" the structure on the right side (whose tree structure is
+     something like (wi (wceq (cv vx) (cv vy)) wph) ) into just (wcdeq vx vy
+     wph).  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+  df-cdeq $a |- ( CondEq ( x = y -> ph ) <-> ( x = y -> ph ) ) $.
+
+  ${
+    cdeqi.1 $e |- ( x = y -> ph ) $.
+    $( Deduce conditional equality.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+    cdeqi $p |- CondEq ( x = y -> ph ) $=
+      ( wcdeq weq wi df-cdeq mpbir ) ABCEBCFAGDABCHI $.
+  $}
+
+  ${
+    cdeqri.1 $e |- CondEq ( x = y -> ph ) $.
+    $( Property of conditional equality.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+    cdeqri $p |- ( x = y -> ph ) $=
+      ( wcdeq weq wi df-cdeq mpbi ) ABCEBCFAGDABCHI $.
+  $}
+
+  ${
+    cdeqth.1 $e |- ph $.
+    $( Deduce conditional equality from a theorem.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+    cdeqth $p |- CondEq ( x = y -> ph ) $=
+      ( weq a1i cdeqi ) ABCABCEDFG $.
+  $}
+
+  ${
+    cdeqnot.1 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+    $( Distribute conditional equality over negation.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+    cdeqnot $p |- CondEq ( x = y -> ( -. ph <-> -. ps ) ) $=
+      ( wn wb weq cdeqri notbid cdeqi ) AFBFGCDCDHABABGCDEIJK $.
+
+    ${
+      $d x z $.  $d y z $.
+      $( Distribute conditional equality over quantification.  (Contributed by
+         Mario Carneiro, 11-Aug-2016.) $)
+      cdeqal $p |- CondEq ( x = y -> ( A. z ph <-> A. z ps ) ) $=
+        ( wal wb weq cdeqri albidv cdeqi ) AEGBEGHCDCDIABEABHCDFJKL $.
+
+      $( Distribute conditional equality over abstraction.  (Contributed by
+         Mario Carneiro, 11-Aug-2016.) $)
+      cdeqab $p |- CondEq ( x = y -> { z | ph } = { z | ps } ) $=
+        ( cab wceq weq wb cdeqri abbidv cdeqi ) AEGBEGHCDCDIABEABJCDFKLM $.
+    $}
+
+    ${
+      $d x ps $.  $d y ph $.
+      $( Distribute conditional equality over quantification.  (Contributed by
+         Mario Carneiro, 11-Aug-2016.) $)
+      cdeqal1 $p |- CondEq ( x = y -> ( A. x ph <-> A. y ps ) ) $=
+        ( wal wb cdeqri cbvalv cdeqth ) ACFBDFGCDABCDABGCDEHIJ $.
+
+      $( Distribute conditional equality over abstraction.  (Contributed by
+         Mario Carneiro, 11-Aug-2016.) $)
+      cdeqab1 $p |- CondEq ( x = y -> { x | ph } = { y | ps } ) $=
+        ( cab wceq wb cdeqri cbvabv cdeqth ) ACFBDFGCDABCDABHCDEIJK $.
+    $}
+
+    cdeqim.1 $e |- CondEq ( x = y -> ( ch <-> th ) ) $.
+    $( Distribute conditional equality over implication.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+    cdeqim $p |- CondEq ( x = y -> ( ( ph -> ch ) <-> ( ps -> th ) ) ) $=
+      ( wi wb weq cdeqri imbi12d cdeqi ) ACIBDIJEFEFKABCDABJEFGLCDJEFHLMN $.
+  $}
+
+  $( Conditional equality for set-to-class promotion.  (Contributed by Mario
+     Carneiro, 11-Aug-2016.) $)
+  cdeqcv $p |- CondEq ( x = y -> x = y ) $=
+    ( weq id cdeqi ) ABCZABFDE $.
+
+  ${
+    cdeqeq.1 $e |- CondEq ( x = y -> A = B ) $.
+    cdeqeq.2 $e |- CondEq ( x = y -> C = D ) $.
+    $( Distribute conditional equality over equality.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+    cdeqeq $p |- CondEq ( x = y -> ( A = C <-> B = D ) ) $=
+      ( wceq wb weq cdeqri eqeq12d cdeqi ) CEIDFIJABABKCDEFCDIABGLEFIABHLMN $.
+
+    $( Distribute conditional equality over elementhood.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+    cdeqel $p |- CondEq ( x = y -> ( A e. C <-> B e. D ) ) $=
+      ( wcel wb weq wceq cdeqri eleq12d cdeqi ) CEIDFIJABABKCDEFCDLABGMEFLABHMN
+      O $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.
+    nfcdeq.1 $e |- F/ x ph $.
+    nfcdeq.2 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+    $( If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
+       and ` ps ` is ` ph ( y ) ` , and ` ph ( x ) ` in fact does not have
+       ` x ` free in it according to ` F/ ` , then ` ph ( x ) <-> ph ( y ) `
+       unconditionally.  This proves that ` F/ x ph ` is actually a not-free
+       predicate.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+    nfcdeq $p |- ( ph <-> ps ) $=
+      ( wsb sbf nfv wb cdeqri sbie bitr3i ) AACDGBACDEHABCDBCIABJCDFKLM $.
+  $}
+
+  ${
+    $d x z B $.  $d y z A $.
+    nfccdeq.1 $e |- F/_ x A $.
+    nfccdeq.2 $e |- CondEq ( x = y -> A = B ) $.
+    $( Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+    nfccdeq $p |- A = B $=
+      ( vz cv wcel nfcri weq equid cdeqth cdeqel nfcdeq eqriv ) GCDGHZCIQDIABAG
+      CEJABQQCDGGKABGLMFNOP $.
+  $}
+
+  $( Let the computer know the theorems to look for to prove the metatheorem $)
+  $( $j
+    condequality 'wcdeq' from 'cdeqth';
+    condcongruence 'cdeqnot' 'cdeqim' 'cdeqal1' 'cdeqal' 'cdeqcv' 'cdeqeq'
+      'cdeqel' 'cdeqab1' 'cdeqab';
+    notfree 'wnf' from 'nfcdeq';
+    notfree 'wnfc' from 'nfccdeq';
+  $)
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    Russell's Paradox
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y $.
+    $( Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
+
+       In the late 1800s, Frege's Axiom of (unrestricted) Comprehension,
+       expressed in our notation as ` A e. _V ` , asserted that any collection
+       of sets ` A ` is a set i.e. belongs to the universe ` _V ` of all sets.
+       In particular, by substituting ` { x | x e/ x } ` (the "Russell class")
+       for ` A ` , it asserted ` { x | x e/ x } e. _V ` , meaning that the
+       "collection of all sets which are not members of themselves" is a set.
+       However, here we prove ` { x | x e/ x } e/ _V ` .  This contradiction
+       was discovered by Russell in 1901 (published in 1903), invalidating the
+       Comprehension Axiom and leading to the collapse of Frege's system.
+
+       In 1908, Zermelo rectified this fatal flaw by replacing Comprehension
+       with a weaker Subset (or Separation) Axiom asserting that ` A ` is a set
+       only when it is smaller than some other set ` B ` .  The intuitionistic
+       set theory IZF includes such a separation axiom, Axiom 6 of [Crosilla]
+       p.  "Axioms of CZF and IZF".  (Contributed by NM, 7-Aug-1994.) $)
+    ru $p |- { x | x e/ x } e/ _V $=
+      ( vy cv wnel cab cvv wcel wn wceq wex wel wal pm5.19 eleq1 df-nel eleq12d
+      wb id notbid mtbir syl5bb bibi12d spv mto abeq2 nex isset mpbir ) ACZUIDZ
+      AEZFDUKFGZHULBCZUKIZBJUNBUNABKZUJQZALZUQBBKZURHZQZURMUPUTABUIUMIZUOURUJUS
+      UIUMUMNUJAAKZHVAUSUIUIOVAVBURVAUIUMUIUMVARZVCPSUAUBUCUDUJAUMUETUFBUKUGTUK
+      FOUH $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Proper substitution of classes for sets
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  $c [. $.
+  $c ]. $.
+
+  $( Extend wff notation to include the proper substitution of a class for a
+     set.  Read this notation as "the proper substitution of class ` A ` for
+     set variable ` x ` in wff ` ph ` ." $)
+  wsbc $a wff [. A / x ]. ph $.
+
+  $( Define the proper substitution of a class for a set.
+
+     When ` A ` is a proper class, our definition evaluates to false.  This is
+     somewhat arbitrary: we could have, instead, chosen the conclusion of
+     ~ sbc6 for our definition, which always evaluates to true for proper
+     classes.
+
+     Our definition also does not produce the same results as discussed in the
+     proof of Theorem 6.6 of [Quine] p. 42 (although Theorem 6.6 itself does
+     hold, as shown by ~ dfsbcq below).  Unfortunately, Quine's definition
+     requires a recursive syntactical breakdown of ` ph ` , and it does not
+     seem possible to express it with a single closed formula.
+
+     If we did not want to commit to any specific proper class behavior, we
+     could use this definition _only_ to prove theorem ~ dfsbcq , which holds
+     for both our definition and Quine's, and from which we can derive a weaker
+     version of ~ df-sbc in the form of ~ sbc8g .  However, the behavior of
+     Quine's definition at proper classes is similarly arbitrary, and for
+     practical reasons (to avoid having to prove sethood of ` A ` in every use
+     of this definition) we allow direct reference to ~ df-sbc and assert that
+     ` [. A / x ]. ph ` is always false when ` A ` is a proper class.
+
+     The related definition df-csb defines proper substitution into a class
+     variable (as opposed to a wff variable).  (Contributed by NM,
+     14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) $)
+  df-sbc $a |- ( [. A / x ]. ph <-> A e. { x | ph } ) $.
+
+  $( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+     under both our definition and Quine's, provides us with a weak definition
+     of the proper substitution of a class for a set.  Since our ~ df-sbc does
+     not result in the same behavior as Quine's for proper classes, if we
+     wished to avoid conflict with Quine's definition we could start with this
+     theorem and ~ dfsbcq2 instead of ~ df-sbc .  ( ~ dfsbcq2 is needed because
+     unlike Quine we do not overload the ~ df-sb syntax.)  As a consequence of
+     these theorems, we can derive ~ sbc8g , which is a weaker version of
+     ~ df-sbc that leaves substitution undefined when ` A ` is a proper class.
+
+     However, it is often a nuisance to have to prove the sethood hypothesis of
+     ~ sbc8g , so we will allow direct use of ~ df-sbc .  Proper substiution
+     with a proper class is rarely needed, and when it is, we can simply use
+     the expansion of Quine's definition.  (Contributed by NM, 14-Apr-1995.) $)
+  dfsbcq $p |- ( A = B -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $=
+    ( wceq cab wcel wsbc eleq1 df-sbc 3bitr4g ) CDECABFZGDLGABCHABDHCDLIABCJABD
+    JK $.
+
+  $( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+     under both our definition and Quine's, relates logic substitution ~ df-sb
+     and substitution for class variables ~ df-sbc .  Unlike Quine, we use a
+     different syntax for each in order to avoid overloading it.  See remarks
+     in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) $)
+  dfsbcq2 $p |- ( y = A -> ( [ y / x ] ph <-> [. A / x ]. ph ) ) $=
+    ( cv wceq cab wcel wsb wsbc eleq1 df-clab df-sbc bicomi 3bitr3g ) CEZDFPABG
+    ZHDQHZABCIABDJZPDQKACBLSRABDMNO $.
+
+  $( Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
+     ~ df-sbc is a set variable.  This theorem lets us reuse theorems based on
+     ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
+     31-Dec-2016.)  (Proof modification is discouraged.) $)
+  sbsbc $p |- ( [ y / x ] ph <-> [. y / x ]. ph ) $=
+    ( weq wsb cv wsbc wb eqid dfsbcq2 ax-mp ) CCDABCEABCFZGHLIABCLJK $.
+
+  ${
+    sbceq1d.1 $e |- ( ph -> A = B ) $.
+    $( Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.)  (Revised by NM, 30-Jun-2018.) $)
+    sbceq1d $p |- ( ph -> ( [. A / x ]. ps <-> [. B / x ]. ps ) ) $=
+      ( wceq wsbc wb dfsbcq syl ) ADEGBCDHBCEHIFBCDEJK $.
+
+    sbceq1dd.2 $e |- ( ph -> [. A / x ]. ps ) $.
+    $( Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.)  (Revised by NM, 30-Jun-2018.) $)
+    sbceq1dd $p |- ( ph -> [. B / x ]. ps ) $=
+      ( wsbc sbceq1d mpbid ) ABCDHBCEHGABCDEFIJ $.
+  $}
+
+  ${
+    $d y A $.  $d y ph $.  $d x y $.
+    $( This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
+       (see its comments) and ~ dfsbcq2 .  (Contributed by NM, 18-Nov-2008.)
+       (Proof shortened by Andrew Salmon, 29-Jun-2011.)
+       (Proof modification is discouraged.) $)
+    sbc8g $p |- ( A e. V -> ( [. A / x ]. ph <-> A e. { x | ph } ) ) $=
+      ( vy cv wsbc cab wcel dfsbcq eleq1 wsb df-clab weq wb equid dfsbcq2 ax-mp
+      bitr2i vtoclbg ) ABEFZGZUAABHZIZABCGCUCIECDABUACJUACUCKUDABELZUBAEBMEENUE
+      UBOEPABEUAQRST $.
+  $}
+
+  $( By our definition of proper substitution, it can only be true if the
+     substituted expression is a set.  (Contributed by Mario Carneiro,
+     13-Oct-2016.) $)
+  sbcex $p |- ( [. A / x ]. ph -> A e. _V ) $=
+    ( wsbc cab wcel cvv df-sbc elex sylbi ) ABCDCABEZFCGFABCHCKIJ $.
+
+  $( Equality theorem for class substitution.  Class version of ~ sbequ12 .
+     (Contributed by NM, 26-Sep-2003.) $)
+  sbceq1a $p |- ( x = A -> ( ph <-> [. A / x ]. ph ) ) $=
+    ( wsb cv wceq wsbc sbid dfsbcq2 syl5bbr ) AABBDBECFABCGABHABBCIJ $.
+
+  $( Equality theorem for class substitution.  Class version of ~ sbequ12r .
+     (Contributed by NM, 4-Jan-2017.) $)
+  sbceq2a $p |- ( A = x -> ( [. A / x ]. ph <-> ph ) ) $=
+    ( cv wceq wsbc wb sbceq1a eqcoms bicomd ) CBDZEAABCFZALGKCABCHIJ $.
+
+  ${
+    $d ph y $.  $d A y $.  $d x y $.
+    $( Specialization: if a formula is true for all sets, it is true for any
+       class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
+       also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) $)
+    spsbc $p |- ( A e. V -> ( A. x ph -> [. A / x ]. ph ) ) $=
+      ( vy wal wsbc wi cv wceq wsb stdpc4 sbsbc sylib dfsbcq syl5ib vtocleg ) A
+      BFZABCGZHECDRABEIZGZTCJSRABEKUAABELABEMNABTCOPQ $.
+
+    spsbcd.1 $e |- ( ph -> A e. V ) $.
+    spsbcd.2 $e |- ( ph -> A. x ps ) $.
+    $( Specialization: if a formula is true for all sets, it is true for any
+       class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
+       also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
+       9-Feb-2017.) $)
+    spsbcd $p |- ( ph -> [. A / x ]. ps ) $=
+      ( wcel wal wsbc spsbc sylc ) ADEHBCIBCDJFGBCDEKL $.
+  $}
+
+  ${
+    sbcth.1 $e |- ph $.
+    $( A substitution into a theorem remains true (when ` A ` is a set).
+       (Contributed by NM, 5-Nov-2005.) $)
+    sbcth $p |- ( A e. V -> [. A / x ]. ph ) $=
+      ( wcel wal wsbc ax-gen spsbc mpi ) CDFABGABCHABEIABCDJK $.
+  $}
+
+  ${
+    $d x ph $.
+    sbcthdv.1 $e |- ( ph -> ps ) $.
+    $( Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
+       (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    sbcthdv $p |- ( ( ph /\ A e. V ) -> [. A / x ]. ps ) $=
+      ( wal wcel wsbc alrimiv spsbc mpan9 ) ABCGDEHBCDIABCFJBCDEKL $.
+  $}
+
+  $( An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
+     Carneiro, 18-Feb-2017.) $)
+  sbcid $p |- ( [. x / x ]. ph <-> ph )
+    $=
+    ( cv wsbc wsb sbsbc sbid bitr3i ) ABBCDABBEAABBFABGH $.
+
+  ${
+    nfsbc1d.2 $e |- ( ph -> F/_ x A ) $.
+    $( Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    nfsbc1d $p |- ( ph -> F/ x [. A / x ]. ps ) $=
+      ( wsbc cab wcel df-sbc wnfc nfab1 a1i nfeld nfxfrd ) BCDFDBCGZHACBCDIACDO
+      ECOJABCKLMN $.
+  $}
+
+  ${
+    nfsbc1.1 $e |- F/_ x A $.
+    $( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) $)
+    nfsbc1 $p |- F/ x [. A / x ]. ph $=
+      ( wsbc wnf wtru wnfc a1i nfsbc1d trud ) ABCEBFGABCBCHGDIJK $.
+  $}
+
+  ${
+    $d x A $.
+    $( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) $)
+    nfsbc1v $p |- F/ x [. A / x ]. ph $=
+      ( nfcv nfsbc1 ) ABCBCDE $.
+  $}
+
+  ${
+    nfsbcd.1 $e |- F/ y ph $.
+    nfsbcd.2 $e |- ( ph -> F/_ x A ) $.
+    nfsbcd.3 $e |- ( ph -> F/ x ps ) $.
+    $( Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    nfsbcd $p |- ( ph -> F/ x [. A / y ]. ps ) $=
+      ( wsbc cab wcel df-sbc nfabd nfeld nfxfrd ) BDEIEBDJZKACBDELACEPGABCDFHMN
+      O $.
+  $}
+
+  ${
+    nfsbc.1 $e |- F/_ x A $.
+    nfsbc.2 $e |- F/ x ph $.
+    $( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    nfsbc $p |- F/ x [. A / y ]. ph $=
+      ( wsbc wnf wtru nftru wnfc a1i nfsbcd trud ) ACDGBHIABCDCJBDKIELABHIFLMN
+      $.
+  $}
+
+  ${
+    $d x z $.  $d z A $.  $d y z ph $.
+    $( A composition law for class substitution.  (Contributed by NM,
+       26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+    sbcco $p |- ( [. A / y ]. [. y / x ]. ph <-> [. A / x ]. ph ) $=
+      ( vz cv wsbc cvv wcel sbcex dfsbcq wsb sbsbc sbbii sbco2 3bitr3ri vtoclbg
+      nfv bitri pm5.21nii ) ABCFGZCDGZDHIABDGZUACDJABDJUACEFZGZABUDGZUBUCEDHUAC
+      UDDKABUDDKUEABELZUFABCLZCELUACELUGUEUHUACEABCMNABECACROUACEMPABEMSQT $.
+  $}
+
+  ${
+    $d x y $.  $d y ph $.  $d A y $.
+    sbcco2.1 $e |- ( x = y -> A = B ) $.
+    $( A composition law for class substitution.  Importantly, ` x ` may occur
+       free in the class expression substituted for ` A ` .  (Contributed by
+       NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    sbcco2 $p |- ( [. x / y ]. [. B / x ]. ph <-> [. A / x ]. ph ) $=
+      ( wsbc cv wsb sbsbc nfv weq wceq wb equcoms dfsbcq bicomd syl sbie bitr3i
+      ) ABEGZCBHGUACBIABDGZUACBJUAUBCBUBCKCBLDEMZUAUBNUCBCFOUCUBUAABDEPQRST $.
+  $}
+
+  ${
+    $d x y A $.  $d y ph $.
+    $( An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    sbc5 $p |- ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) $=
+      ( vy wsbc cvv wcel cv wceq wex sbcex exsimpl isset sylibr wsb weq dfsbcq2
+      wa eqeq2 anbi1d exbidv sb5 vtoclbg pm5.21nii ) ABCEZCFGZBHZCIZARZBJZABCKU
+      JUHBJUFUHABLBCMNABDOBDPZARZBJUEUJDCFABDCQDHZCIZULUIBUNUKUHAUMCUGSTUAABDUB
+      UCUD $.
+  $}
+
+  ${
+    $d x y A $.
+    $( An equivalence for class substitution.  (Contributed by NM,
+       11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+    sbc6g $p |- ( A e. V -> ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $=
+      ( wcel cv wceq wi wal wa wex wsbc nfe1 ceqex ceqsalg sbc5 syl6rbbr ) CDEB
+      FCGZAHBIRAJZBKZABCLATBCDSBMABCNOABCPQ $.
+  $}
+
+  ${
+    $d x A $.
+    sbc6.1 $e |- A e. _V $.
+    $( An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
+    sbc6 $p |- ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) $=
+      ( cvv wcel wsbc cv wceq wi wal wb sbc6g ax-mp ) CEFABCGBHCIAJBKLDABCEMN
+      $.
+  $}
+
+  ${
+    $d y A $.  $d y ph $.  $d x y $.
+    $( An equivalence for class substitution in the spirit of ~ df-clab .  Note
+       that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
+       18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+    sbc7 $p |- ( [. A / x ]. ph <-> E. y ( y = A /\ [. y / x ]. ph ) ) $=
+      ( wsbc cv wceq wa wex sbcco sbc5 bitr3i ) ABDEABCFZEZCDEMDGNHCIABCDJNCDKL
+      $.
+  $}
+
+  ${
+    cbvsbc.1 $e |- F/ y ph $.
+    cbvsbc.2 $e |- F/ x ps $.
+    cbvsbc.3 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( Change bound variables in a wff substitution.  (Contributed by Jeff
+       Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
+       8-Jun-2011.) $)
+    cbvsbc $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $=
+      ( cab wcel wsbc cbvab eleq2i df-sbc 3bitr4i ) EACIZJEBDIZJACEKBDEKPQEABCD
+      FGHLMACENBDENO $.
+  $}
+
+  ${
+    $d y ph $.  $d x ps $.
+    cbvsbcv.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( Change the bound variable of a class substitution using implicit
+       substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
+       Carneiro, 13-Oct-2016.) $)
+    cbvsbcv $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $=
+      ( nfv cbvsbc ) ABCDEADGBCGFH $.
+  $}
+
+  ${
+    $d x y A $.  $d y ps $.
+    $( Conversion of implicit substitution to explicit class substitution,
+       using a bound-variable hypothesis instead of distinct variables.
+       (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
+       10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+    sbciegft $p |- ( ( A e. V /\ F/ x ps /\
+            A. x ( x = A -> ( ph <-> ps ) ) ) -> ( [. A / x ]. ph <-> ps ) ) $=
+      ( wcel wnf cv wceq wb wi wal w3a wsbc imim2i alimi biimpa sylan2 3adant1
+      wa wex sbc5 bi1 imp3a 19.23t syl5bi bi2 com23 19.21t sbc6g sylibrd impbid
+      3ad2ant1 ) DEFZBCGZCHDIZABJZKZCLZMZACDNZBVAUPATZCUAZUTBACDUBUOUSVCBKZUNUS
+      UOVBBKZCLZVDURVECURUPABUQABKUPABUCOUDPUOVFVDVBBCUEQRSUFUTBUPAKZCLZVAUOUSB
+      VHKZUNUSUOBVGKZCLZVIURVJCURUPBAUQBAKUPABUGOUHPUOVKVIBVGCUIQRSUNUOVAVHJUSA
+      CDEUJUMUKUL $.
+  $}
+
+  ${
+    $d x A $.
+    sbciegf.1 $e |- F/ x ps $.
+    sbciegf.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) $)
+    sbciegf $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $=
+      ( wcel wnf cv wceq wb wi wal wsbc ax-gen sbciegft mp3an23 ) DEHBCICJDKABL
+      MZCNACDOBLFSCGPABCDEQR $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    sbcieg.1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 10-Nov-2005.) $)
+    sbcieg $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $=
+      ( nfv sbciegf ) ABCDEBCGFH $.
+  $}
+
+  ${
+    $d x y $.  $d A y $.  $d ch y $.  $d ph y $.  $d ps x $.
+    sbcie2g.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    sbcie2g.2 $e |- ( y = A -> ( ps <-> ch ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       This version of ~ sbcie avoids a disjointness condition on ` x ` and
+       ` A ` by substituting twice.  (Contributed by Mario Carneiro,
+       15-Oct-2016.) $)
+    sbcie2g $p |- ( A e. V -> ( [. A / x ]. ph <-> ch ) ) $=
+      ( cv wsbc dfsbcq wsb sbsbc nfv sbie bitr3i vtoclbg ) ADEJZKZBADFKCEFGADSF
+      LITADEMBADENABDEBDOHPQR $.
+  $}
+
+  ${
+    $d x A $.  $d x ps $.
+    sbcie.1 $e |- A e. _V $.
+    sbcie.2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 4-Sep-2004.) $)
+    sbcie $p |- ( [. A / x ]. ph <-> ps ) $=
+      ( cvv wcel wsbc wb sbcieg ax-mp ) DGHACDIBJEABCDGFKL $.
+  $}
+
+  ${
+    $d x A $.
+    sbcied.1 $e |- ( ph -> A e. V ) $.
+    sbcied.2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+    ${
+      sbciedf.3 $e |- F/ x ph $.
+      sbciedf.4 $e |- ( ph -> F/ x ch ) $.
+      $( Conversion of implicit substitution to explicit class substitution,
+         deduction form.  (Contributed by NM, 29-Dec-2014.) $)
+      sbciedf $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
+        ( wcel wnf cv wceq wb wi wal wsbc ex alrimi sbciegft syl3anc ) AEFKCDLD
+        MENZBCOZPZDQBDERCOGJAUEDIAUCUDHSTBCDEFUAUB $.
+    $}
+
+    $d x ph $.  $d x ch $.
+    $( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) $)
+    sbcied $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
+      ( nfv nfvd sbciedf ) ABCDEFGHADIACDJK $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.  $d x ch $.
+    sbcied2.1 $e |- ( ph -> A e. V ) $.
+    sbcied2.2 $e |- ( ph -> A = B ) $.
+    sbcied2.3 $e |- ( ( ph /\ x = B ) -> ( ps <-> ch ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) $)
+    sbcied2 $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
+      ( cv wceq wb id sylan9eqr syldan sbcied ) ABCDEGHADKZELZRFLBCMSAREFSNIOJP
+      Q $.
+  $}
+
+  ${
+    $d y A $.  $d y B $.  $d y ph $.  $d x y $.
+    elrabsf.1 $e |- F/_ x B $.
+    $( Membership in a restricted class abstraction, expressed with explicit
+       class substitution.  (The variation ~ elrabf has implicit
+       substitution).  The hypothesis specifies that ` x ` must not be a free
+       variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
+       by Mario Carneiro, 13-Oct-2016.) $)
+    elrabsf $p |- ( A e. { x e. B | ph }
+          <-> ( A e. B /\ [. A / x ]. ph ) ) $=
+      ( vy cv wsbc crab dfsbcq nfcv nfv nfsbc1v sbceq1a cbvrab elrab2 ) ABFGZHZ
+      ABCHFCDABDIABQCJARBFDEFDKAFLABQMABQNOP $.
+  $}
+
+  ${
+    $d x y B $.  $d y A $.
+    $( Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
+       (Contributed by Andrew Salmon, 29-Jun-2011.) $)
+    eqsbc3 $p |- ( A e. V -> ( [. A / x ]. x = B <-> A = B ) ) $=
+      ( vy cv wceq wsbc dfsbcq eqeq1 wsb sbsbc eqsb3 bitr3i vtoclbg ) AFCGZAEFZ
+      HZQCGZPABHBCGEBDPAQBIQBCJRPAEKSPAELEACMNO $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y ph $.  $d y ps $.
+    $( Move negation in and out of class substitution.  (Contributed by NM,
+       16-Jan-2004.) $)
+    sbcng $p |- ( A e. V -> ( [. A / x ]. -. ph <-> -. [. A / x ]. ph ) ) $=
+      ( vy wn wsb wsbc dfsbcq2 cv wceq notbid sbn vtoclbg ) AFZBEGABEGZFOBCHABC
+      HZFECDOBECIEJCKPQABECILABEMN $.
+
+    $( Distribution of class substitution over implication.  (Contributed by
+       NM, 16-Jan-2004.) $)
+    sbcimg $p |- ( A e. V ->
+     ( [. A / x ]. ( ph -> ps ) <-> ( [. A / x ]. ph -> [. A / x ]. ps ) ) ) $=
+      ( vy wi wsb wsbc dfsbcq2 cv wceq imbi12d sbim vtoclbg ) ABGZCFHACFHZBCFHZ
+      GPCDIACDIZBCDIZGFDEPCFDJFKDLQSRTACFDJBCFDJMABCFNO $.
+
+    $( Distribution of class substitution over conjunction.  (Contributed by
+       NM, 31-Dec-2016.) $)
+    sbcan $p |- ( [. A / x ]. ( ph /\ ps )
+        <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) $=
+      ( vy wa wsbc cvv wcel sbcex adantl dfsbcq2 cv wceq anbi12d sban pm5.21nii
+      wsb vtoclbg ) ABFZCDGZDHIZACDGZBCDGZFZTCDJUDUBUCBCDJKTCERACERZBCERZFUAUEE
+      DHTCEDLEMDNUFUCUGUDACEDLBCEDLOABCEPSQ $.
+
+    $( Distribution of class substitution over conjunction.  (Contributed by
+       NM, 21-May-2004.) $)
+    sbcang $p |- ( A e. V ->
+     ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) ) $=
+      ( vy wa wsb wsbc dfsbcq2 cv wceq anbi12d sban vtoclbg ) ABGZCFHACFHZBCFHZ
+      GPCDIACDIZBCDIZGFDEPCFDJFKDLQSRTACFDJBCFDJMABCFNO $.
+
+    $( Distribution of class substitution over disjunction.  (Contributed by
+       NM, 31-Dec-2016.) $)
+    sbcor $p |- ( [. A / x ]. ( ph \/ ps )
+         <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) $=
+      ( vy wo wsbc cvv wcel sbcex jaoi wsb dfsbcq2 cv wceq orbi12d sbor vtoclbg
+      pm5.21nii ) ABFZCDGZDHIZACDGZBCDGZFZTCDJUCUBUDACDJBCDJKTCELACELZBCELZFUAU
+      EEDHTCEDMENDOUFUCUGUDACEDMBCEDMPABCEQRS $.
+
+    $( Distribution of class substitution over disjunction.  (Contributed by
+       NM, 21-May-2004.) $)
+    sbcorg $p |- ( A e. V ->
+     ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) ) $=
+      ( vy wo wsb wsbc dfsbcq2 cv wceq orbi12d sbor vtoclbg ) ABGZCFHACFHZBCFHZ
+      GPCDIACDIZBCDIZGFDEPCFDJFKDLQSRTACFDJBCFDJMABCFNO $.
+
+    $( Distribution of class substitution over biconditional.  (Contributed by
+       Raph Levien, 10-Apr-2004.) $)
+    sbcbig $p |- ( A e. V ->
+   ( [. A / x ]. ( ph <-> ps ) <-> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) ) $=
+      ( vy wb wsb wsbc dfsbcq2 cv wceq bibi12d sbbi vtoclbg ) ABGZCFHACFHZBCFHZ
+      GPCDIACDIZBCDIZGFDEPCFDJFKDLQSRTACFDJBCFDJMABCFNO $.
+  $}
+
+  ${
+    $d x z A $.  $d x y z $.  $d z ph $.
+    $( Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 31-Dec-2016.) $)
+    sbcal $p |- ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) $=
+      ( vz wal wsbc cvv wcel sbcex sps dfsbcq2 cv wceq albidv vtoclbg pm5.21nii
+      wsb sbal ) ABFZCDGZDHIZACDGZBFZTCDJUCUBBACDJKTCERACERZBFUAUDEDHTCEDLEMDNU
+      EUCBACEDLOABCESPQ $.
+
+    $( Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 16-Jan-2004.) $)
+    sbcalg $p |- ( A e. V
+        -> ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) ) $=
+      ( vz wal wsb wsbc dfsbcq2 cv wceq albidv sbal vtoclbg ) ABGZCFHACFHZBGPCD
+      IACDIZBGFDEPCFDJFKDLQRBACFDJMABCFNO $.
+
+    $( Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) $)
+    sbcex2 $p |- ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) $=
+      ( vz wex wsbc cvv wcel sbcex exlimiv wsb dfsbcq2 wceq exbidv sbex vtoclbg
+      cv pm5.21nii ) ABFZCDGZDHIZACDGZBFZTCDJUCUBBACDJKTCELACELZBFUAUDEDHTCEDME
+      RDNUEUCBACEDMOABCEPQS $.
+
+    $( Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) $)
+    sbcexg $p |- ( A e. V
+         -> ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) ) $=
+      ( vz wex wsb wsbc dfsbcq2 cv wceq exbidv sbex vtoclbg ) ABGZCFHACFHZBGPCD
+      IACDIZBGFDEPCFDJFKDLQRBACFDJMABCFNO $.
+  $}
+
+  ${
+    $d x B $.  $d x A $.
+    $( A variation of extensionality for classes.  (Contributed by Andrew
+       Salmon, 28-Jun-2011.) $)
+    sbceqal $p |- ( A e. V -> ( A. x ( x = A -> x = B ) -> A = B ) ) $=
+      ( wcel cv wceq wi wal wsbc spsbc sbcimg wb eqsbc3 mpbiri pm5.5 syl 3bitrd
+      eqid sylibd ) BDEZAFZBGZUBCGZHZAIUEABJZBCGZUEABDKUAUFUCABJZUDABJZHZUIUGUC
+      UDABDLUAUHUJUIMUAUHBBGBSABBDNOUHUIPQABCDNRT $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
+       Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) $)
+    sbeqalb $p |- ( A e. V -> ( ( A. x ( ph <-> x = A ) /\ A. x ( ph <->
+      x = B ) ) -> A = B ) ) $=
+      ( cv wceq wb wal wa wi wcel bibi1 biimpa biimpd alanimi sbceqal syl5 ) AB
+      FZCGZHZBIASDGZHZBIJTUBKZBICELCDGUAUCUDBUAUCJTUBUAUCTUBHATUBMNOPBCDEQR $.
+  $}
+
+  ${
+    sbcbid.1 $e |- F/ x ph $.
+    sbcbid.2 $e |- ( ph -> ( ps <-> ch ) ) $.
+    $( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) $)
+    sbcbid $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $=
+      ( cab wcel wsbc abbid eleq2d df-sbc 3bitr4g ) AEBDHZIECDHZIBDEJCDEJAOPEAB
+      CDFGKLBDEMCDEMN $.
+  $}
+
+  ${
+    $d x ph $.
+    sbcbidv.1 $e |- ( ph -> ( ps <-> ch ) ) $.
+    $( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) $)
+    sbcbidv $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $=
+      ( nfv sbcbid ) ABCDEADGFH $.
+  $}
+
+  ${
+    sbcbii.1 $e |- ( ph <-> ps ) $.
+    $( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.) $)
+    sbcbii $p |- ( [. A / x ]. ph <-> [. A / x ]. ps ) $=
+      ( wsbc wb wtru a1i sbcbidv trud ) ACDFBCDFGHABCDABGHEIJK $.
+
+    $( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.)  (New usage is discouraged.)
+       (Proof modification is discouraged.) $)
+    sbcbiiOLD $p |- ( A e. V -> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) $=
+      ( wsbc wb wcel sbcbii a1i ) ACDGBCDGHDEIABCDFJK $.
+  $}
+
+  ${
+    $d x C $.  $d x A $.
+    $( ~ eqsbc3 with set variable on right side of equals sign.  (Contributed
+       by Alan Sare, 24-Oct-2011.) $)
+    eqsbc3r $p |- ( A e. B -> ( [. A / x ]. C = x <-> C = A ) ) $=
+      ( wcel wceq wsbc eqcom sbcbii biimpi eqsbc3 syl5ib syl6ib syl6ibr sylibrd
+      cv idd impbid ) BCEZDAPZFZABGZDBFZSUBBDFZUCUBTDFZABGZSUDUBUFUAUEABDTHIZJA
+      BDCKZLBDHZMSUCUFUBSUCUDUFSUCUCUDSUCQUINUHOUGNR $.
+  $}
+
+  ${
+    $d y ch $.  $d y ps $.  $d y ph $.  $d y A $.  $d x y $.
+    $( Distribution of class substitution over triple conjunction.
+       (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbc3ang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps /\ ch ) <->
+                ( [. A / x ]. ph /\ [. A / x ]. ps /\ [. A / x ]. ch ) ) ) $=
+      ( vy w3a wsb wsbc dfsbcq2 cv wceq 3anbi123d sb3an vtoclbg ) ABCHZDGIADGIZ
+      BDGIZCDGIZHQDEJADEJZBDEJZCDEJZHGEFQDGEKGLEMRUASUBTUCADGEKBDGEKCDGEKNABCDG
+      OP $.
+  $}
+
+  ${
+    $d y z A $.  $d x y B $.
+    $( Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+    sbcel1gv $p |- ( A e. V -> ( [. A / x ]. x e. B <-> A e. B ) ) $=
+      ( vy cv wcel wsb wsbc dfsbcq2 eleq1 clelsb3 vtoclbg ) AFCGZAEHEFZCGNABIBC
+      GEBDNAEBJOBCKEACLM $.
+  $}
+
+  ${
+    $d y z B $.  $d x y A $.
+    $( Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+    sbcel2gv $p |- ( B e. V -> ( [. B / x ]. A e. x <-> A e. B ) ) $=
+      ( vy cv wcel eleq2 sbcie2g ) BAFZGBEFZGBCGAECDJKBHKCBHI $.
+  $}
+
+  ${
+    $d x ph $.
+    sbcimdv.1 $e |- ( ph -> ( ps -> ch ) ) $.
+    $( Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
+       by NM, 11-Nov-2005.) $)
+    sbcimdv $p |- ( ( ph /\ A e. V ) ->
+          ( [. A / x ]. ps -> [. A / x ]. ch ) ) $=
+      ( wcel wsbc wi wal alrimiv spsbc syl5 sbcimg sylibd impcom ) EFHZABDEICDE
+      IJZRABCJZDEIZSATDKRUAATDGLTDEFMNBCDEFOPQ $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y ph $.
+    $( Substitution for a variable not free in a wff does not affect it.
+       (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+    sbctt $p |- ( ( A e. V /\ F/ x ph ) -> ( [. A / x ]. ph <-> ph ) ) $=
+      ( vy wcel wnf wsbc wb wsb wi wceq dfsbcq2 bibi1d imbi2d sbft vtoclg imp
+      cv ) CDFABGZABCHZAIZTABEJZAIZKTUBKECDESCLZUDUBTUEUCUAAABECMNOABEPQR $.
+  $}
+
+  ${
+    $d y A $.  $d y ph $.  $d x y $.
+    sbcgf.1 $e |- F/ x ph $.
+    $( Substitution for a variable not free in a wff does not affect it.
+       (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbcgf $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $=
+      ( wcel wnf wsbc wb sbctt mpan2 ) CDFABGABCHAIEABCDJK $.
+
+    $( Substitution for a variable not free in antecedent affects only the
+       consequent.  (Contributed by NM, 11-Oct-2004.) $)
+    sbc19.21g $p |- ( A e. V ->
+            ( [. A / x ]. ( ph -> ps ) <-> ( ph -> [. A / x ]. ps ) ) ) $=
+      ( wcel wi wsbc sbcimg sbcgf imbi1d bitrd ) DEGZABHCDIACDIZBCDIZHAPHABCDEJ
+      NOAPACDEFKLM $.
+  $}
+
+  ${
+    $d x ph $.
+    $( Substitution for a variable not occurring in a wff does not affect it.
+       Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
+       10-Nov-2012.) $)
+    sbcg $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $=
+      ( nfv sbcgf ) ABCDABEF $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x V $.  $d y W $.
+    sbc2iegf.1 $e |- F/ x ps $.
+    sbc2iegf.2 $e |- F/ y ps $.
+    sbc2iegf.3 $e |- F/ x B e. W $.
+    sbc2iegf.4 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by Mario Carneiro, 19-Dec-2013.) $)
+    sbc2iegf $p |- ( ( A e. V /\ B e. W ) ->
+            ( [. A / x ]. [. B / y ]. ph <-> ps ) ) $=
+      ( wcel wa simpl cv wceq wb adantll nfv wsbc wnf a1i sbciedf nfan ) EGMZFH
+      MZNZADFUAZBCEGUFUGOUGCPEQZUIBRUFUGUJNZABDFHUGUJOUJDPFQABRUGLSUKDTBDUBUKJU
+      CUDSUFUGCUFCTKUEBCUBUHIUCUD $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x y ps $.
+    sbc2ie.1 $e |- A e. _V $.
+    sbc2ie.2 $e |- B e. _V $.
+    sbc2ie.3 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
+       19-Dec-2013.) $)
+    sbc2ie $p |- ( [. A / x ]. [. B / y ]. ph <-> ps ) $=
+      ( cvv wcel wsbc wb nfv nfth sbc2iegf mp2an ) EJKFJKZADFLCELBMGHABCDEFJJBC
+      NBDNRCHOIPQ $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x y ph $.  $d x y ch $.
+    sbc2iedv.1 $e |- A e. _V $.
+    sbc2iedv.2 $e |- B e. _V $.
+    sbc2iedv.3 $e |- ( ph -> ( ( x = A /\ y = B ) -> ( ps <-> ch ) ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
+       18-Oct-2016.) $)
+    sbc2iedv $p |- ( ph -> ( [. A / x ]. [. B / y ]. ps <-> ch ) ) $=
+      ( wsbc cvv wcel a1i cv wceq wa wb impl sbcied ) ABEGKCDFLFLMAHNADOFPZQZBC
+      EGLGLMUBINAUAEOGPBCRJSTT $.
+  $}
+
+  ${
+    $d x y z A $.  $d y z B $.  $d z C $.  $d x y z ps $.
+    sbc3ie.1 $e |- A e. _V $.
+    sbc3ie.2 $e |- B e. _V $.
+    sbc3ie.3 $e |- C e. _V $.
+    sbc3ie.4 $e |- ( ( x = A /\ y = B /\ z = C ) -> ( ph <-> ps ) ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
+       Carneiro, 29-Dec-2014.) $)
+    sbc3ie $p |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph <-> ps ) $=
+      ( wsbc cv wceq wa cvv wcel a1i wb 3expa sbcied sbc2ie ) AEHMBCDFGIJCNFOZD
+      NGOZPZABEHQHQRUFKSUDUEENHOABTLUAUBUC $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d y V $.  $d x W $.
+    $( Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
+       Mario Carneiro, 18-Oct-2016.) $)
+    sbccomlem $p |- ( [. A / x ]. [. B / y ]. ph
+         <-> [. B / y ]. [. A / x ]. ph ) $=
+      ( cv wceq wa wex wsbc excom exdistr an12 exbii bitri 3bitr3i sbc5 3bitr4i
+      19.42v sbcbii ) CFEGZAHZCIZBDJZBFDGZAHZBIZCEJZACEJZBDJABDJZCEJUEUCHBIZUAU
+      GHZCIZUDUHUEUBHZCIBIUNBIZCIUKUMUNBCKUEUBBCLUOULCUOUAUFHZBIULUNUPBUEUAAMNU
+      AUFBSONPUCBDQUGCEQRUIUCBDACEQTUJUGCEABDQTR $.
+  $}
+
+  ${
+    $d w y z A $.  $d w x z B $.  $d w z ph $.  $d x y $.
+    $( Commutative law for double class substitution.  (Contributed by NM,
+       15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) $)
+    sbccom $p |- ( [. A / x ]. [. B / y ]. ph
+          <-> [. B / y ]. [. A / x ]. ph ) $=
+      ( vw vz cv wsbc sbccomlem sbcbii bitri 3bitr3i sbcco ) ACFHZIZFEIZBDIZABG
+      HZIZGDIZCEIZACEIZBDIABDIZCEIQBSIZGDIZUACOIZFEIZRUBTCOIZFEIZGDIUIGDIZFEIUF
+      UHUIGFDEJUJUEGDUJPBSIZFEIUEUIULFEACBOSJKPFBESJLKUKUGFETGCDOJKMQBGDNUACFEN
+      MQUCBDACFENKUAUDCEABGDNKM $.
+  $}
+
+  ${
+    $d x y z $.  $d A z $.  $d B x z $.  $d V z $.  $d ph z $.
+    $( Interchange class substitution and restricted quantifier.  (Contributed
+       by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) $)
+    sbcralt $p |- ( ( A e. V /\ F/_ y A ) ->
+           ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $=
+      ( vz wral wsbc cv wcel wnfc wa sbcco simpl wsb wceq sbsbc nfcv wb nfralxy
+      nfs1v weq sbequ12 ralbidv sbie bitr3i nfnfc1 nfcvd id nfeqd nfan1 dfsbcq2
+      adantl ralbid adantll syl5bb sbcied syl5bbr ) ACEHZBDIUTBGJZIZGDIDFKZCDLZ
+      MZABDIZCEHZUTBGDNVEVBVGGDFVCVDOVBABGPZCEHZVEVADQZMVGVBUTBGPVIUTBGRUTVIBGV
+      HBCEBESABGUBUABGUCAVHCEABGUDUEUFUGVDVJVIVGTVCVDVJMVHVFCEVDVJCCDUHVDCVADVD
+      CVAUIVDUJUKULVJVHVFTVDABGDUMUNUOUPUQURUS $.
+
+    $( Interchange class substitution and restricted existential quantifier.
+       (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
+       13-Oct-2016.) $)
+    sbcrext $p |- ( ( A e. V /\ F/_ y A ) ->
+          ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $=
+      ( vz wrex wsbc cv wcel wnfc wa sbcco simpl wsb wceq sbsbc nfcv wb
+      nfs1v nfrexxy sbequ12 rexbidv sbie bitr3i nfnfc1 nfcvd id dfsbcq2
+      nfeqd nfan1 adantl rexbid adantll syl5bb sbcied syl5bbr ) ACEHZBD
+      IUSBGJZIZGDIDFKZCDLZMZABDIZCEHZUSBGDNVDVAVFGDFVBVCOVAABGPZCEHZVDU
+      TDQZMVFVAUSBGPVHUSBGRUSVHBGVGBCEBESABGUAUBBJUTQAVGCEABGUCUDUEUFVC
+      VIVHVFTVBVCVIMVGVECEVCVICCDUGVCCUTDVCCUTUHVCUIUKULVIVGVETVCABGDUJ
+      UMUNUOUPUQUR $.
+  $}
+
+  ${
+    $d y z A $.  $d x B $.  $d x y z $.  $d ph z $.  $d B z $.
+    $( Interchange class substitution and restricted quantifier.  (Contributed
+       by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbcralg $p |- ( A e. V ->
+                 ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $=
+      ( vz wral wsb wsbc dfsbcq2 wceq ralbidv nfcv nfs1v nfralxy weq sbequ12 sbie
+      cv vtoclbg ) ACEHZBGIABGIZCEHZUBBDJABDJZCEHGDFUBBGDKGTDLUCUECEABGDKMUBUDB
+      GUCBCEBENABGOPBGQAUCCEABGRMSUA $.
+
+    $( Interchange class substitution and restricted existential quantifier.
+       (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbcrexg $p |- ( A e. V ->
+                 ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $=
+      ( vz wrex wsb wsbc dfsbcq2 wceq rexbidv nfcv nfs1v nfrexxy weq sbequ12 sbie
+      cv vtoclbg ) ACEHZBGIABGIZCEHZUBBDJABDJZCEHGDFUBBGDKGTDLUCUECEABGDKMUBUDB
+      GUCBCEBENABGOPBGQAUCCEABGRMSUA $.
+
+    $( Interchange class substitution and restricted uniqueness quantifier.
+       (Contributed by NM, 24-Feb-2013.) $)
+    sbcreug $p |- ( A e. V ->
+                 ( [. A / x ]. E! y e. B ph <-> E! y e. B [. A / x ]. ph ) ) $=
+      ( vz wreu wsb wsbc dfsbcq2 wceq reubidv nfcv nfs1v nfreuxy weq sbequ12 sbie
+      cv vtoclbg ) ACEHZBGIABGIZCEHZUBBDJABDJZCEHGDFUBBGDKGTDLUCUECEABGDKMUBUDB
+      GUCBCEBENABGOPBGQAUCCEABGRMSUA $.
+  $}
+
+  ${
+    $d y w A $.  $d w z B $.  $d w ph $.  $d x y $.  $d w x z $.
+    sbcabel.1 $e |- F/_ x B $.
+    $( Interchange class substitution and class abstraction.  (Contributed by
+       NM, 5-Nov-2005.) $)
+    sbcabel $p |- ( A e. V -> ( [. A / x ]. { y | ph } e. B <->
+                  { y | [. A / x ]. ph } e. B ) ) $=
+      ( vw wcel cvv cab wsbc wb cv wceq wa wex wal bitrd abeq2 elex sbcexg sbcg
+      sbcang sbcalg sbcbig bibi1d albidv sbcbii 3bitr4g nfcri sbcgf anbi12d syl
+      exbidv df-clel ) DFIDJIZACKZEIZBDLZABDLZCKZEIZMDFUAUQHNZUROZVDEIZPZHQZBDL
+      ZVDVBOZVFPZHQZUTVCUQVIVGBDLZHQVLVGHBDJUBUQVMVKHUQVMVEBDLZVFBDLZPVKVEVFBDJ
+      UDUQVNVJVOVFUQCNVDIZAMZCRZBDLZVPVAMZCRZVNVJUQVSVQBDLZCRWAVQCBDJUEUQWBVTCU
+      QWBVPBDLZVAMVTVPABDJUFUQWCVPVAVPBDJUCUGSUHSVEVRBDACVDTUIVACVDTUJVFBDJBHEG
+      UKULUMSUOSUSVHBDHUREUPUIHVBEUPUJUN $.
+  $}
+
+  ${
+    $d y A $.  $d x y B $.  $d y ph $.
+    $( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
+       provides an axiom for a predicate calculus for a restricted domain.
+       This theorem generalizes the unrestricted ~ stdpc4 and ~ spsbc .  See
+       also ~ rspsbca and rspcsbela .  (Contributed by NM, 17-Nov-2006.)
+       (Proof shortened by Mario Carneiro, 13-Oct-2016.) $)
+    rspsbc $p |- ( A e. B -> ( A. x e. B ph -> [. A / x ]. ph ) ) $=
+      ( vy wral wsb wcel wsbc cbvralsv dfsbcq2 rspcv syl5bi ) ABDFABEGZEDFCDHAB
+      CIZABEDJNOECDABECKLM $.
+
+    $( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
+       (Contributed by NM, 14-Dec-2005.) $)
+    rspsbca $p |- ( ( A e. B /\ A. x e. B ph ) -> [. A / x ]. ph ) $=
+      ( wcel wral wsbc rspsbc imp ) CDEABDFABCGABCDHI $.
+
+    $( Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) $)
+    rspesbca $p |- ( ( A e. B /\ [. A / x ]. ph ) -> E. x e. B ph ) $=
+      ( vy wcel wsbc wa wsb wrex dfsbcq2 rspcev cbvrexsv sylibr ) CDFABCGZHABEI
+      ZEDJABDJPOECDABECKLABEDMN $.
+
+    $( Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
+       18-Nov-2016.) $)
+    spesbc $p |- ( [. A / x ]. ph -> E. x ph ) $=
+      ( wsbc cvv wrex wex wcel sbcex rspesbca mpancom rexv sylib ) ABCDZABEFZAB
+      GCEHNOABCIABCEJKABLM $.
+
+    spesbcd.1 $e |- ( ph -> [. A / x ]. ps ) $.
+    $( form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
+    spesbcd $p |- ( ph -> E. x ps ) $=
+      ( wsbc wex spesbc syl ) ABCDFBCGEBCDHI $.
+  $}
+
+  ${
+    $d x B $.
+    sbcth2.1 $e |- ( x e. B -> ph ) $.
+    $( A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) $)
+    sbcth2 $p |- ( A e. B -> [. A / x ]. ph ) $=
+      ( wcel wral wsbc rgen rspsbc mpi ) CDFABDGABCHABDEIABCDJK $.
+  $}
+
+  ${
+    ra5.1 $e |- F/ x ph $.
+    $( Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
+       an axiom of a predicate calculus for a restricted domain.  Compare the
+       unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) $)
+    ra5 $p |- ( A. x e. A ( ph -> ps ) -> ( ph -> A. x e. A ps ) ) $=
+      ( wi wral cv wcel wal df-ral bi2.04 albii bitri stdpc5 sylbi syl6ibr ) AB
+      FZCDGZACHDIZBFZCJZBCDGSAUAFZCJZAUBFSTRFZCJUDRCDKUEUCCTABLMNAUACEOPBCDKQ
+      $.
+  $}
+
+  ${
+    $d x y A $.
+    rmo2.1 $e |- F/ y ph $.
+    $( Condition implying restricted "at most one."  (Contributed by Jim
+       Kingdon, 14-Jul-2018.) $)
+    rmo2ilem $p |- ( E. y A. x e. A ( ph -> x = y ) -> E* x e. A ph ) $=
+      ( cv wceq wi wral wex wcel wa wal wrmo impexp albii df-ral bitr4i
+      exbii wmo nfv nfan mo2r df-rmo sylibr sylbir ) ABFZCFGZHZBDIZCJUG
+      DKZALZUHHZBMZCJZABDNZUNUJCUNUKUIHZBMUJUMUQBUKAUHOPUIBDQRSUOULBTUP
+      ULBCUKACUKCUAEUBUCABDUDUEUF $.
+
+    $( Condition implying restricted "at most one."  (Contributed by NM,
+       17-Jun-2017.) $)
+    rmo2i $p |- ( E. y e. A A. x e. A ( ph -> x = y ) -> E* x e. A ph ) $=
+      ( cv wceq wi wral wrex wex wrmo rexex rmo2ilem syl ) ABFCFGHBDI
+      ZCDJPCKABDLPCDMABCDENO $.
+
+    $( Restricted "at most one" using explicit substitution.  (Contributed by
+       NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
+    rmo3 $p |- ( E* x e. A ph <->
+               A. x e. A A. y e. A ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+      ( wrmo cv wcel wa wmo wsb wi wral anbi1i bitri 3bitri impexp albii df-ral
+      wal weq df-rmo sban clelsb3 anbi2i an4 ancom r19.21v 3bitr2i nfv nfan mo3
+      imbi1i 3bitr4i ) ABDFBGDHZAIZBJZAABCKZIZBCUAZLZCDMZBDMZABDUBUPUPBCKZIZUTL
+      ZCTZBTUOVBLZBTUQVCVGVHBVGCGDHZUOVALZLZCTVJCDMVHVFVKCVFVIUOIZUSIZUTLVLVALV
+      KVEVMUTVEUPVIURIZIUOVIIZUSIVMVDVNUPVDUOBCKZURIVNUOABCUCVPVIURCBDUDNOUEUOA
+      VIURUFVOVLUSUOVIUGNPUMVLUSUTQVIUOVAQPRVJCDSUOVACDUHUIRUPBCUOACUOCUJEUKULV
+      BBDSUNO $.
+  $}
+
+  ${
+    $d x y A $.  $d x y B $.  $d x y C $.  $d y ph $.  $d x y ps $.  $d x ch $.
+    rmoi.b $e |- ( x = B -> ( ph <-> ps ) ) $.
+    rmoi.c $e |- ( x = C -> ( ph <-> ch ) ) $.
+    $( Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) $)
+    rmob $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) ) ->
+        ( B = C <-> ( C e. A /\ ch ) ) ) $=
+      ( wrmo cv wcel wa wmo wceq wb df-rmo simprl eleq1 anbi12d syl5ibcom simpl
+      wi a1i simplrl simpr simpll simplrr mob syl212anc ex pm5.21ndd sylanb ) A
+      DEJDKZELZAMZDNZFELZBMZFGOZGELZCMZPZADEQUQUSMZVAUTVBVDURUTVAUQURBRFGESUAVB
+      VAUCVDVACUBUDVDVAVCVDVAMURVAUQURBVCUQURBVAUEZVDVAUFUQUSVAUGVEUQURBVAUHUPU
+      SVBDFGEEUNFOUOURABUNFESHTUNGOUOVAACUNGESITUIUJUKULUM $.
+
+    $( Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
+    rmoi $p |- ( ( E* x e. A ph
+          /\ ( B e. A /\ ps ) /\ ( C e. A /\ ch ) ) -> B = C ) $=
+      ( wrmo wcel wa wceq rmob biimp3ar ) ADEJFEKBLFGMGEKCLABCDEFGHINO $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Proper substitution of classes for sets into classes
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  $c [_ $.  $( Underlined left bracket $)
+  $c ]_ $.  $( Underlined right bracket $)
+
+  $( Extend class notation to include the proper substitution of a class for a
+     set into another class. $)
+  csb $a class [_ A / x ]_ B $.
+
+  ${
+    $d y A $.  $d y B $.  $d x y $.
+    $( Define the proper substitution of a class for a set into another class.
+       The underlined brackets distinguish it from the substitution into a wff,
+       ~ wsbc , to prevent ambiguity.  Theorem ~ sbcel1g shows an example of
+       how ambiguity could arise if we didn't use distinguished brackets.
+       Theorem ~ sbccsbg recreates substitution into a wff from this
+       definition.  (Contributed by NM, 10-Nov-2005.) $)
+    df-csb $a |- [_ A / x ]_ B = { y | [. A / x ]. y e. B } $.
+  $}
+
+  ${
+    $d x y A $.  $d y B $.  $d x y $.
+    $( Alternate expression for the proper substitution into a class, without
+       referencing substitution into a wff.  Note that ` x ` can be free in
+       ` B ` but cannot occur in ` A ` .  (Contributed by NM, 2-Dec-2013.) $)
+    csb2 $p |- [_ A / x ]_ B = { y | E. x ( x = A /\ y e. B ) } $=
+      ( csb cv wcel wsbc cab wceq wa wex df-csb sbc5 abbii eqtri ) ACDEBFDGZACH
+      ZBIAFCJQKALZBIABCDMRSBQACNOP $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y B $.  $d y C $.
+    $( Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
+       by NM, 10-Nov-2005.) $)
+    csbeq1 $p |- ( A = B -> [_ A / x ]_ C = [_ B / x ]_ C ) $=
+      ( vy wceq cv wcel wsbc cab csb dfsbcq abbidv df-csb 3eqtr4g ) BCFZEGDHZAB
+      IZEJQACIZEJABDKACDKPRSEQABCLMAEBDNAECDNO $.
+  $}
+
+  ${
+    $d x z $.  $d y z $.  $d z A $.  $d z C $.  $d z D $.
+    cbvcsb.1 $e |- F/_ y C $.
+    cbvcsb.2 $e |- F/_ x D $.
+    cbvcsb.3 $e |- ( x = y -> C = D ) $.
+    $( Change bound variables in a class substitution.  Interestingly, this
+       does not require any bound variable conditions on ` A ` .  (Contributed
+       by Jeff Hankins, 13-Sep-2009.)  (Revised by Mario Carneiro,
+       11-Dec-2016.) $)
+    cbvcsb $p |- [_ A / x ]_ C = [_ A / y ]_ D $=
+      ( vz cv wcel wsbc cab csb nfcri weq eleq2d cbvsbc abbii df-csb 3eqtr4i )
+      IJZDKZACLZIMUBEKZBCLZIMACDNBCENUDUFIUCUEABCBIDFOAIEGOABPDEUBHQRSAICDTBICE
+      TUA $.
+  $}
+
+  ${
+    $d x y $.  $d z A $.  $d y z B $.  $d x z C $.
+    cbvcsbv.1 $e |- ( x = y -> B = C ) $.
+    $( Change the bound variable of a proper substitution into a class using
+       implicit substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by
+       Mario Carneiro, 13-Oct-2016.) $)
+    cbvcsbv $p |- [_ A / x ]_ B = [_ A / y ]_ C $=
+      ( nfcv cbvcsb ) ABCDEBDGAEGFH $.
+  $}
+
+  ${
+    csbeq1d.1 $e |- ( ph -> A = B ) $.
+    $( Equality deduction for proper substitution into a class.  (Contributed
+       by NM, 3-Dec-2005.) $)
+    csbeq1d $p |- ( ph -> [_ A / x ]_ C = [_ B / x ]_ C ) $=
+      ( wceq csb csbeq1 syl ) ACDGBCEHBDEHGFBCDEIJ $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.
+    $( Analog of ~ sbid for proper substitution into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+    csbid $p |- [_ x / x ]_ A = A $=
+      ( vy cv csb wcel wsbc cab df-csb sbcid abbii abid2 3eqtri ) AADZBECDBFZAN
+      GZCHOCHBACNBIPOCOAJKCBLM $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y B $.
+    $( Equality theorem for proper substitution into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+    csbeq1a $p |- ( x = A -> B = [_ A / x ]_ B ) $=
+      ( cv wceq csb csbid csbeq1 syl5eqr ) ADZBECAJCFABCFACGAJBCHI $.
+  $}
+
+  ${
+    $d z A $.  $d y z B $.  $d z V $.  $d x z $.
+    $( Composition law for chained substitutions into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+    csbco $p |- [_ A / y ]_ [_ y / x ]_ B = [_ A / x ]_ B $=
+      ( vz cv csb wcel wsbc cab df-csb abeq2i sbcbii sbcco bitri abbii 3eqtr4i
+      ) EFZABFZDGZHZBCIZEJRDHZACIZEJBCTGACDGUBUDEUBUCASIZBCIUDUAUEBCUEETAESDKLM
+      UCABCNOPBECTKAECDKQ $.
+  $}
+
+  ${
+    $d y A $.  $d y B $.  $d x y $.
+    $( The existence of proper substitution into a class.  (Contributed by NM,
+       10-Nov-2005.) $)
+    csbexg $p |- ( ( A e. V /\ A. x B e. W ) -> [_ A / x ]_ B e. _V ) $=
+      ( vy wcel wal wa csb wsbc cab cvv df-csb abid2 elex syl5eqel alimi spsbc
+      cv syl5 imp wb nfcv sbcabel adantr mpbid ) BDGZCEGZAHZIZABCJFTCGZABKFLZMA
+      FBCNUKULFLZMGZABKZUMMGZUHUJUPUJUOAHUHUPUIUOAUIUNCMFCOCEPQRUOABDSUAUBUHUPU
+      QUCUJULAFBMDAMUDUEUFUGQ $.
+  $}
+
+  ${
+    csbex.1 $e |- A e. _V $.
+    csbex.2 $e |- B e. _V $.
+    $( The existence of proper substitution into a class.  (Contributed by NM,
+       7-Aug-2007.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+    csbex $p |- [_ A / x ]_ B e. _V $=
+      ( cvv wcel csb wal csbexg mpan mpg ) CFGZABCHFGZABFGMAINDABCFFJKEL $.
+  $}
+
+  ${
+    $d y A $.  $d y B $.  $d y V $.  $d x y $.
+    $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free).  (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+    csbtt $p |- ( ( A e. V /\ F/_ x B ) -> [_ A / x ]_ B = B ) $=
+      ( vy wcel wnfc wa csb cv wsbc cab df-csb wnf wb nfcr sbctt sylan2 abbi1dv
+      syl5eq ) BDFZACGZHZABCIEJCFZABKZELCAEBCMUCUEECUBUAUDANUEUDOAECPUDABDQRST
+      $.
+  $}
+
+  ${
+    csbconstgf.1 $e |- F/_ x B $.
+    $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free).  (Contributed by NM, 10-Nov-2005.) $)
+    csbconstgf $p |- ( A e. V -> [_ A / x ]_ B = B ) $=
+      ( wcel wnfc csb wceq csbtt mpan2 ) BDFACGABCHCIEABCDJK $.
+  $}
+
+  ${
+    $d A y $.  $d B x y $.  $d V y $.
+    $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free). ~ csbconstgf with distinct variable requirement.  (Contributed by
+       Alan Sare, 22-Jul-2012.) $)
+    csbconstg $p |- ( A e. V -> [_ A / x ]_ B = B ) $=
+      ( nfcv csbconstgf ) ABCDACEF $.
+  $}
+
+  ${
+    $d w x y z $.  $d w y z A $.  $d w y z B $.  $d w y z C $.
+    $( Distribute proper substitution through a membership relation.
+       (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbcel12g $p |- ( A e. V -> ( [. A / x ]. B e. C <->
+                   [_ A / x ]_ B e. [_ A / x ]_ C ) ) $=
+      ( vy vz wcel wsbc cv cab csb wsb dfsbcq2 abbidv eleq12d nfs1v nfab df-csb
+      sbab wceq nfel weq sbie vtoclbg eleq12i syl6bbr ) BEHCDHZABIZFJZCHZABIZFK
+      ZUJDHZABIZFKZHZABCLZABDLZHUHAGMUKAGMZFKZUNAGMZFKZHZUIUQGBEUHAGBNGJBUAZVAU
+      MVCUPVEUTULFUKAGBNOVEVBUOFUNAGBNOPUHVDAGAVAVCUTAFUKAGQRVBAFUNAGQRUBAGUCCV
+      ADVCAGFCTAGFDTPUDUEURUMUSUPAFBCSAFBDSUFUG $.
+
+    $( Distribute proper substitution through an equality relation.
+       (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+    sbceqg $p |- ( A e. V -> ( [. A / x ]. B = C <->
+                   [_ A / x ]_ B = [_ A / x ]_ C ) ) $=
+      ( vy vz wcel wceq wsbc cab csb wsb dfsbcq2 abbidv eqeq12d nfs1v nfab sbab
+      cv nfeq weq sbie vtoclbg df-csb eqeq12i syl6bbr ) BEHCDIZABJZFTZCHZABJZFK
+      ZUJDHZABJZFKZIZABCLZABDLZIUHAGMUKAGMZFKZUNAGMZFKZIZUIUQGBEUHAGBNGTBIZVAUM
+      VCUPVEUTULFUKAGBNOVEVBUOFUNAGBNOPUHVDAGAVAVCUTAFUKAGQRVBAFUNAGQRUAAGUBCVA
+      DVCAGFCSAGFDSPUCUDURUMUSUPAFBCUEAFBDUEUFUG $.
+  $}
+
+  $( Distribute proper substitution through negated membership.  (Contributed
+     by Andrew Salmon, 18-Jun-2011.) $)
+  sbcnel12g $p |- ( A e. V -> ( [. A / x ]. B e/ C <-> [_ A / x ]_ B e/
+                    [_ A / x ]_ C ) ) $=
+    ( wcel wnel wsbc wn csb wb df-nel sbcbii a1i sbcel12g notbid syl6bbr 3bitrd
+    sbcng ) BEFZCDGZABHZCDFZIZABHZUCABHZIZABCJZABDJZGZUBUEKTUAUDABCDLMNUCABESTU
+    GUHUIFZIUJTUFUKABCDEOPUHUILQR $.
+
+  $( Distribute proper substitution through an inequality.  (Contributed by
+     Andrew Salmon, 18-Jun-2011.) $)
+  sbcne12g $p |- ( A e. V -> ( [. A / x ]. B =/= C <-> [_ A / x ]_ B =/=
+                   [_ A / x ]_ C ) ) $=
+    ( wcel wne wsbc csb wb wn sbceqg notbid df-ne sbcbii sbcng syl5bb
+    wceq a1i bibi12d mpbird ) BEFZCDGZABHZABCIZABDIZGZJCDRZABHZKZUEUF
+    RZKZJUBUIUKABCDELMUBUDUJUGULUDUHKZABHUBUJUCUMABCDNOUHABEPQUGULJUB
+    UEUFNSTUA $.
+
+  ${
+    $d y A $.  $d x y C $.  $d y V $.
+    $( Move proper substitution in and out of a membership relation.  Note that
+       the scope of ` [. A / x ]. ` is the wff ` B e. C ` , whereas the scope
+       of ` [_ A / x ]_ ` is the class ` B ` .  (Contributed by NM,
+       10-Nov-2005.) $)
+    sbcel1g $p |- ( A e. V -> ( [. A / x ]. B e. C <->
+                    [_ A / x ]_ B e. C ) ) $=
+      ( wcel wsbc csb sbcel12g csbconstg eleq2d bitrd ) BEFZCDFABGABCHZABDHZFND
+      FABCDEIMODNABDEJKL $.
+
+    $( Move proper substitution to first argument of an equality.  (Contributed
+       by NM, 30-Nov-2005.) $)
+    sbceq1g $p |- ( A e. V -> ( [. A / x ]. B = C <->
+                    [_ A / x ]_ B = C ) ) $=
+      ( wcel wceq wsbc csb sbceqg csbconstg eqeq2d bitrd ) BEFZCDGABHABCIZABDIZ
+      GODGABCDEJNPDOABDEKLM $.
+  $}
+
+  ${
+    $d y A $.  $d x y B $.  $d y V $.
+    $( Move proper substitution in and out of a membership relation.
+       (Contributed by NM, 14-Nov-2005.) $)
+    sbcel2g $p |- ( A e. V -> ( [. A / x ]. B e. C <->
+                    B e. [_ A / x ]_ C ) ) $=
+      ( wcel wsbc csb sbcel12g csbconstg eleq1d bitrd ) BEFZCDFABGABCHZABDHZFCO
+      FABCDEIMNCOABCEJKL $.
+
+    $( Move proper substitution to second argument of an equality.
+       (Contributed by NM, 30-Nov-2005.) $)
+    sbceq2g $p |- ( A e. V -> ( [. A / x ]. B = C <->
+                    B = [_ A / x ]_ C ) ) $=
+      ( wcel wceq wsbc csb sbceqg csbconstg eqeq1d bitrd ) BEFZCDGABHABCIZABDIZ
+      GCPGABCDEJNOCPABCEKLM $.
+  $}
+
+  ${
+    $d y z A $.  $d x z B $.  $d z C $.  $d x y $.
+    $( Commutative law for double substitution into a class.  (Contributed by
+       NM, 14-Nov-2005.) $)
+    csbcomg $p |- ( ( A e. V /\ B e. W ) ->
+                 [_ A / x ]_ [_ B / y ]_ C = [_ B / y ]_ [_ A / x ]_ C ) $=
+      ( vz wcel cvv csb wceq elex wsbc wb sbcel2g sbcbidv adantl adantr 3bitr3d
+      wa cv sbccom a1i eqrdv syl2an ) CFICJIZDJIZACBDEKZKZBDACEKZKZLDGICFMDGMUG
+      UHUAZHUJULUMHUBZUIIZACNZUNUKIZBDNZUNUJIZUNULIZUMUNEIZBDNZACNZVAACNZBDNZUP
+      URVCVEOUMVAABCDUCUDUHVCUPOUGUHVBUOACBDUNEJPQRUGVEUROUHUGVDUQBDACUNEJPQSTU
+      GUPUSOUHACUNUIJPSUHURUTOUGBDUNUKJPRTUEUF $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y B $.  $d y C $.  $d y ph $.
+    csbeq2d.1 $e |- F/ x ph $.
+    csbeq2d.2 $e |- ( ph -> B = C ) $.
+    $( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 22-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+    csbeq2d $p |- ( ph -> [_ A / x ]_ B = [_ A / x ]_ C ) $=
+      ( vy cv wcel wsbc cab csb eleq2d sbcbid abbidv df-csb 3eqtr4g ) AHIZDJZBC
+      KZHLSEJZBCKZHLBCDMBCEMAUAUCHATUBBCFADESGNOPBHCDQBHCEQR $.
+  $}
+
+  ${
+    $d x ph $.
+    csbeq2dv.1 $e |- ( ph -> B = C ) $.
+    $( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+    csbeq2dv $p |- ( ph -> [_ A / x ]_ B = [_ A / x ]_ C ) $=
+      ( nfv csbeq2d ) ABCDEABGFH $.
+  $}
+
+  ${
+    csbeq2i.1 $e |- B = C $.
+    $( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+    csbeq2i $p |- [_ A / x ]_ B = [_ A / x ]_ C $=
+      ( csb wceq wtru a1i csbeq2dv trud ) ABCFABDFGHABCDCDGHEIJK $.
+  $}
+
+  ${
+    $d y z A $.  $d x y z $.
+    $( The proper substitution of a class for set variable results in the class
+       (if the class exists).  (Contributed by NM, 10-Nov-2005.) $)
+    csbvarg $p |- ( A e. V -> [_ A / x ]_ x = A ) $=
+      ( vz vy wcel cvv cv csb wceq elex wsbc cab df-csb sbcel2gv abbi1dv syl5eq
+      vex ax-mp csbeq2i csbco 3eqtr3i syl ) BCFBGFZABAHZIZBJBCKUDUFDHZEHZFEBLZD
+      MZBEBAUHUEIZIEBUHIUFUJEBUKUHUHGFZUKUHJERULUKUGUEFAUHLZDMUHADUHUENULUMDUHA
+      UGUHGOPQSTAEBUEUAEDBUHNUBUDUIDBEUGBGOPQUC $.
+  $}
+
+  ${
+    $d x y $.
+    $( Substitution into a wff expressed in terms of substitution into a
+       class.  (Contributed by NM, 15-Aug-2007.) $)
+    sbccsbg $p |- ( A e. V ->
+                 ( [. A / x ]. ph <-> y e. [_ A / x ]_ { y | ph } ) ) $=
+      ( wsbc cv cab wcel csb abid sbcbii sbcel2g syl5bbr ) ABDFCGZACHZIZBDFDEIO
+      BDPJIQABDACKLBDOPEMN $.
+  $}
+
+  $( Substitution into a wff expressed in using substitution into a class.
+     (Contributed by NM, 27-Nov-2005.) $)
+  sbccsb2g $p |- ( A e. V ->
+               ( [. A / x ]. ph <-> A e. [_ A / x ]_ { x | ph } ) ) $=
+    ( wsbc cv cab wcel csb abid sbcbii sbcel12g csbvarg eleq1d bitrd syl5bbr )
+    ABCEBFZABGZHZBCEZCDHZCBCRIZHZSABCABJKUATBCQIZUBHUCBCQRDLUAUDCUBBCDMNOP $.
+
+  ${
+    $d x y $.  $d y A $.  $d y B $.  $d y ph $.
+    nfcsb1d.1 $e |- ( ph -> F/_ x A ) $.
+    $( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+    nfcsb1d $p |- ( ph -> F/_ x [_ A / x ]_ B ) $=
+      ( vy csb cv wcel wsbc cab df-csb nfv nfsbc1d nfabd nfcxfrd ) ABBCDGFHDIZB
+      CJZFKBFCDLARBFAFMAQBCENOP $.
+  $}
+
+  ${
+    $d y z A $.  $d z B $.  $d x y z $.
+    nfcsb1.1 $e |- F/_ x A $.
+    $( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+    nfcsb1 $p |- F/_ x [_ A / x ]_ B $=
+      ( csb wnfc wtru a1i nfcsb1d trud ) AABCEFGABCABFGDHIJ $.
+  $}
+
+  ${
+    $d x y A $.
+    $( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by NM, 17-Aug-2006.)  (Revised by Mario Carneiro,
+       12-Oct-2016.) $)
+    nfcsb1v $p |- F/_ x [_ A / x ]_ B $=
+      ( nfcv nfcsb1 ) ABCABDE $.
+  $}
+
+  ${
+    $d x z $.  $d y z $.  $d z A $.  $d z B $.  $d z ph $.
+    nfcsbd.1 $e |- F/ y ph $.
+    nfcsbd.2 $e |- ( ph -> F/_ x A ) $.
+    nfcsbd.3 $e |- ( ph -> F/_ x B ) $.
+    $( Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
+    nfcsbd $p |- ( ph -> F/_ x [_ A / y ]_ B ) $=
+      ( vz csb cv wcel wsbc cab df-csb nfv nfcrd nfsbcd nfabd nfcxfrd ) ABCDEJI
+      KELZCDMZINCIDEOAUBBIAIPAUABCDFGABIEHQRST $.
+  $}
+
+  ${
+    nfcsb.1 $e |- F/_ x A $.
+    nfcsb.2 $e |- F/_ x B $.
+    $( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+    nfcsb $p |- F/_ x [_ A / y ]_ B $=
+      ( csb wnfc wtru nftru a1i nfcsbd trud ) ABCDGHIABCDBJACHIEKADHIFKLM $.
+  $}
+
+  ${
+    $d x y $.
+    csbhypf.1 $e |- F/_ x A $.
+    csbhypf.2 $e |- F/_ x C $.
+    csbhypf.3 $e |- ( x = A -> B = C ) $.
+    $( Introduce an explicit substitution into an implicit substitution
+       hypothesis.  See ~ sbhypf for class substitution version.  (Contributed
+       by NM, 19-Dec-2008.) $)
+    csbhypf $p |- ( y = A -> [_ y / x ]_ B = C ) $=
+      ( cv wceq wi csb nfeq2 nfcsb1v nfeq nfim eqeq1 csbeq1a eqeq1d imbi12d
+      chvar ) AIZCJZDEJZKBIZCJZAUEDLZEJZKABUFUHAAUECFMAUGEAUEDNGOPUBUEJZUCUFUDU
+      HUBUECQUIDUGEAUEDRSTHUA $.
+  $}
+
+  ${
+    $d x A $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Closed theorem version of ~ csbiegf .)  (Contributed by NM,
+       11-Nov-2005.) $)
+    csbiebt $p |- ( ( A e. V /\ F/_ x C ) ->
+                 ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) ) $=
+      ( wcel cvv wnfc cv wceq wi wal csb wb elex wa wsbc adantl a1i nfeqd spsbc
+      adantr simpl biimt csbeq1a eqeq1d bitr3d nfv nfnfc1 nfcsb1v simpr sbciedf
+      nfan sylibd id nfan1 biimprcd alrimi ex impbid sylan ) BEFBGFZADHZAIBJZCD
+      JZKZALZABCMZDJZNBEOVBVCPZVGVIVJVGVFABQZVIVBVGVKKVCVFABGUAUBVJVFVIABGVBVCU
+      CVDVFVINVJVDVEVFVIVDVEUDVDCVHDABCUEUFZUGRVBVCAVBAUHADUIZUMVJAVHDAVHHZVJAB
+      CUJZSVBVCUKTULUNVCVIVGKVBVCVIVGVCVIPVFAVCVIAVMVCAVHDVNVCVOSVCUOTUPVIVFVCV
+      DVEVIVLUQRURUSRUTVA $.
+
+    csbiedf.1 $e |- F/ x ph $.
+    csbiedf.2 $e |- ( ph -> F/_ x C ) $.
+    csbiedf.3 $e |- ( ph -> A e. V ) $.
+    csbiedf.4 $e |- ( ( ph /\ x = A ) -> B = C ) $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by Mario Carneiro, 13-Oct-2016.) $)
+    csbiedf $p |- ( ph -> [_ A / x ]_ B = C ) $=
+      ( cv wceq wi wal csb ex alrimi wcel wnfc wb csbiebt syl2anc mpbid ) ABKCL
+      ZDELZMZBNZBCDOELZAUFBGAUDUEJPQACFRBESUGUHTIHBCDEFUAUBUC $.
+  $}
+
+  ${
+    $d x z A $.  $d z B $.  $d y C $.  $d x y $.
+    csbieb.1 $e |- A e. _V $.
+    csbieb.2 $e |- F/_ x C $.
+    $( Bidirectional conversion between an implicit class substitution
+       hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
+       (Contributed by NM, 2-Mar-2008.) $)
+    csbieb $p |- ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) $=
+      ( cvv wcel wnfc cv wceq wi wal csb wb csbiebt mp2an ) BGHADIAJBKCDKLAMABC
+      NDKOEFABCDGPQ $.
+  $}
+
+  ${
+    $d a x A $.  $d a B $.  $d a y C $.  $d x y $.
+    csbiebg.2 $e |- F/_ x C $.
+    $( Bidirectional conversion between an implicit class substitution
+       hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
+       (Contributed by NM, 24-Mar-2013.)  (Revised by Mario Carneiro,
+       11-Dec-2016.) $)
+    csbiebg $p |- ( A e. V ->
+          ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) ) $=
+      ( va cv wceq wal csb eqeq2 imbi1d albidv csbeq1 eqeq1d vex csbieb vtoclbg
+      wi ) AHZGHZIZCDIZTZAJAUBCKZDIUABIZUDTZAJABCKZDIGBEUBBIZUEUHAUJUCUGUDUBBUA
+      LMNUJUFUIDAUBBCOPAUBCDGQFRS $.
+  $}
+
+  ${
+    $d x y A $.  $d y C $.  $d x y V $.
+    csbiegf.1 $e |- ( A e. V -> F/_ x C ) $.
+    csbiegf.2 $e |- ( x = A -> B = C ) $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 11-Nov-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) $)
+    csbiegf $p |- ( A e. V -> [_ A / x ]_ B = C ) $=
+      ( wcel cv wceq wi wal csb ax-gen wnfc wb csbiebt mpdan mpbii ) BEHZAIBJCD
+      JKZALZABCMDJZUAAGNTADOUBUCPFABCDEQRS $.
+  $}
+
+  ${
+    $d x A $.  $d y C $.  $d x y $.
+    csbief.1 $e |- A e. _V $.
+    csbief.2 $e |- F/_ x C $.
+    csbief.3 $e |- ( x = A -> B = C ) $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 26-Nov-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) $)
+    csbief $p |- [_ A / x ]_ B = C $=
+      ( cvv wcel csb wceq wnfc a1i csbiegf ax-mp ) BHIZABCJDKEABCDHADLPFMGNO $.
+  $}
+
+  ${
+    $d x A $.  $d x y C $.  $d x y ph $.
+    csbied.1 $e |- ( ph -> A e. V ) $.
+    csbied.2 $e |- ( ( ph /\ x = A ) -> B = C ) $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by Mario Carneiro, 2-Dec-2014.)  (Revised by Mario
+       Carneiro, 13-Oct-2016.) $)
+    csbied $p |- ( ph -> [_ A / x ]_ B = C ) $=
+      ( nfv nfcvd csbiedf ) ABCDEFABIABEJGHK $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.  $d x D $.
+    csbied2.1 $e |- ( ph -> A e. V ) $.
+    csbied2.2 $e |- ( ph -> A = B ) $.
+    csbied2.3 $e |- ( ( ph /\ x = B ) -> C = D ) $.
+    $( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by Mario Carneiro, 2-Jan-2017.) $)
+    csbied2 $p |- ( ph -> [_ A / x ]_ C = D ) $=
+      ( cv wceq id sylan9eqr syldan csbied ) ABCEFGHABKZCLZQDLEFLRAQCDRMINJOP
+      $.
+  $}
+
+  ${
+    $d x y z A $.  $d x y z B $.  $d z C $.  $d x y z D $.
+    csbie2t.1 $e |- A e. _V $.
+    csbie2t.2 $e |- B e. _V $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class (closed form of ~ csbie2 ).  (Contributed by NM, 3-Sep-2007.)
+       (Revised by Mario Carneiro, 13-Oct-2016.) $)
+    csbie2t $p |- ( A. x A. y ( ( x = A /\ y = B ) -> C = D ) ->
+                  [_ A / x ]_ [_ B / y ]_ C = D ) $=
+      ( cv wceq wa wi wal csb cvv nfa1 nfcvd wcel a1i csbiedf nfa2 nfv nfan sps
+      sp impl ) AICJZBIDJZKEFJZLZBMZAMZACBDENFOUKAPULAFQCORULGSULUGKZBDEFOULUGB
+      UJBAUAUGBUBUCUMBFQDORUMHSULUGUHUIUKUJAUJBUEUDUFTT $.
+
+    csbie2.3 $e |- ( ( x = A /\ y = B ) -> C = D ) $.
+    $( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 27-Aug-2007.) $)
+    csbie2 $p |- [_ A / x ]_ [_ B / y ]_ C = D $=
+      ( cv wceq wa wi wal csb gen2 csbie2t ax-mp ) AJCKBJDKLEFKMZBNANACBDEOOFKS
+      ABIPABCDEFGHQR $.
+  $}
+
+  ${
+    $d x y z $.  $d A y z $.  $d B y z $.  $d C x $.  $d D y z $.  $d V z $.
+    csbie2g.1 $e |- ( x = y -> B = C ) $.
+    csbie2g.2 $e |- ( y = A -> C = D ) $.
+    $( Conversion of implicit substitution to explicit class substitution.
+       This version of ~ sbcie avoids a disjointness condition on ` x ` and
+       ` A ` by substituting twice.  (Contributed by Mario Carneiro,
+       11-Nov-2016.) $)
+    csbie2g $p |- ( A e. V -> [_ A / x ]_ B = D ) $=
+      ( vz wcel csb cv wsbc cab df-csb wceq eleq2d sbcie2g abbi1dv syl5eq ) CGK
+      ZACDLJMZDKZACNZJOFAJCDPUBUEJFUDUCEKUCFKABCGAMBMZQDEUCHRUFCQEFUCIRSTUA $.
+  $}
+
+  ${
+    $d x z $.  $d y z $.  $d z A $.  $d z B $.  $d z C $.  $d z ph $.
+    $( Nest the composition of two substitutions.  (Contributed by Mario
+       Carneiro, 11-Nov-2016.) $)
+    sbcnestgf $p |- ( ( A e. V /\ A. y F/ x ph ) ->
+         ( [. A / x ]. [. B / y ]. ph <-> [. [_ A / x ]_ B / y ]. ph ) ) $=
+      ( vz wcel wnf wal wsbc csb wb cv wi wceq dfsbcq syl cvv a1i csbeq1 imbi2d
+      bibi12d vex csbeq1a adantl nfnf1 nfal nfa1 wnfc nfcsb1v sp nfsbcd sbciedf
+      vtoclg imp ) DFHABIZCJZACEKZBDKZACBDELZKZMZURUSBGNZKZACBVDELZKZMZOURVCOGD
+      FVDDPZVHVCURVIVEUTVGVBUSBVDDQVIVFVAPVGVBMBVDDEUAACVFVAQRUCUBURUSVGBVDSVDS
+      HURGUDTBNVDPZUSVGMZURVJEVFPVKBVDEUEACEVFQRUFUQBCABUGUHURABCVFUQCUIBVFUJUR
+      BVDEUKTUQCULUMUNUOUP $.
+
+    $( Nest the composition of two substitutions.  (Contributed by NM,
+       23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
+    csbnestgf $p |- ( ( A e. V /\ A. y F/_ x C ) ->
+         [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+      ( vz wcel wnfc wal wa cv csb wsbc cab cvv wceq elex df-csb abeq2i wb nfcr
+      sbcbii wnf alimi sbcnestgf sylan2 syl5bb abbidv sylan 3eqtr4g ) CFHZAEIZB
+      JZKGLZBDEMZHZACNZGOZUOEHZBACDMZNZGOZACUPMBVAEMULCPHZUNUSVCQCFRVDUNKZURVBG
+      URUTBDNZACNZVEVBUQVFACVFGUPBGDESTUCUNVDUTAUDZBJVGVBUAUMVHBAGEUBUEUTABCDPU
+      FUGUHUIUJAGCUPSBGVAESUK $.
+
+    $d x ph $.
+    $( Nest the composition of two substitutions.  (Contributed by NM,
+       27-Nov-2005.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
+    sbcnestg $p |- ( A e. V ->
+          ( [. A / x ]. [. B / y ]. ph <-> [. [_ A / x ]_ B / y ]. ph ) ) $=
+      ( wcel wnf wal wsbc csb wb nfv ax-gen sbcnestgf mpan2 ) DFGABHZCIACEJBDJA
+      CBDEKJLQCABMNABCDEFOP $.
+
+    $d x C $.
+    $( Nest the composition of two substitutions.  (Contributed by NM,
+       23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
+    csbnestg $p |- ( A e. V ->
+          [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+      ( wcel wnfc wal csb wceq nfcv ax-gen csbnestgf mpan2 ) CFGAEHZBIACBDEJJBA
+      CDJEJKPBAELMABCDEFNO $.
+  $}
+
+  ${
+    $d x C $.
+    $( Nest the composition of two substitutions.  (New usage is discouraged.)
+       (Proof modification is discouraged.)  (Contributed by NM,
+       23-Nov-2005.) $)
+    csbnestgOLD $p |- ( ( A e. V /\ A. x B e. W ) ->
+                  [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+      ( wcel csb wceq wal csbnestg adantr ) CFHACBDEIIBACDIEIJDGHAKABCDEFLM $.
+  $}
+
+  ${
+    $d x y $.  $d y C $.
+    $( Nest the composition of two substitutions.  (Contributed by NM,
+       23-May-2006.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
+    csbnest1g $p |- ( A e. V ->
+         [_ A / x ]_ [_ B / x ]_ C = [_ [_ A / x ]_ B / x ]_ C ) $=
+      ( vy wcel cv csb wnfc wceq nfcsb1v ax-gen csbnestgf mpan2 csbeq2i 3eqtr3g
+      wal csbco ) BEGZABFCAFHZDIZIZIZFABCIZUBIZABACDIZIAUEDITAUBJZFRUDUFKUHFAUA
+      DLMAFBCUBENOABUCUGAFCDSPAFUEDSQ $.
+  $}
+
+  ${
+    $d x A $.
+    $( Idempotent law for class substitutions.  (Contributed by NM,
+       1-Mar-2008.) $)
+    csbidmg $p |- ( A e. V -> [_ A / x ]_ [_ A / x ]_ B = [_ A / x ]_ B ) $=
+      ( wcel cvv csb wceq elex csbnest1g csbconstg csbeq1d eqtrd syl ) BDEBFEZA
+      BABCGZGZPHBDIOQAABBGZCGPABBCFJOARBCABBFKLMN $.
+  $}
+
+  ${
+    $d x A $.  $d x ph $.  $d x C $.  $d x D $.
+    sbcco3g.1 $e |- ( x = A -> B = C ) $.
+    $( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+       (Revised by Mario Carneiro, 11-Nov-2016.) $)
+    sbcco3g $p |- ( A e. V ->
+         ( [. A / x ]. [. B / y ]. ph <-> [. C / y ]. ph ) ) $=
+      ( wcel wsbc csb sbcnestg cvv wceq wb elex nfcvd csbiegf dfsbcq 3syl bitrd
+      ) DGIZACEJBDJACBDEKZJZACFJZABCDEGLUBDMIZUCFNUDUEODGPBDEFMUFBFQHRACUCFSTUA
+      $.
+
+    $( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+       (New usage is discouraged.)  (Proof modification is discouraged.) $)
+    sbcco3gOLD $p |- ( ( A e. V /\ A. x B e. W ) ->
+                ( [. A / x ]. [. B / y ]. ph <-> [. C / y ]. ph ) ) $=
+      ( wcel wsbc wb wal sbcco3g adantr ) DGJACEKBDKACFKLEHJBMABCDEFGINO $.
+
+    $( Composition of two class substitutions.  (Contributed by NM,
+       27-Nov-2005.)  (Revised by Mario Carneiro, 11-Nov-2016.) $)
+    csbco3g $p |- ( A e. V ->
+                 [_ A / x ]_ [_ B / y ]_ D = [_ C / y ]_ D ) $=
+      ( wcel csb csbnestg cvv wceq elex nfcvd csbiegf syl csbeq1d eqtrd ) CGIZA
+      CBDFJJBACDJZFJBEFJABCDFGKTBUAEFTCLIZUAEMCGNACDELUBAEOHPQRS $.
+  $}
+
+  ${
+    $d x B $.  $d x D $.
+    $( Special case related to ~ rspsbc .  (Contributed by NM, 10-Dec-2005.)
+       (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
+    rspcsbela $p |- ( ( A e. B /\ A. x e. B C e. D ) -> [_ A / x ]_ C e. D ) $=
+      ( wcel wral csb wsbc rspsbc sbcel1g sylibd imp ) BCFZDEFZACGZABDHEFZNPOAB
+      IQOABCJABDECKLM $.
+  $}
+
+  ${
+    $d w x y z $.  $d w y z A $.
+    $( Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
+       (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+    sbnfc2 $p |- ( F/_ x A <-> A. y A. z [_ y / x ]_ A = [_ z / x ]_ A ) $=
+      ( vw cv csb wceq wal cvv wcel vex csbtt mpan wsb wsbc sbsbc sbcel2g ax-mp
+      wb eqtr4d alrimivv nfv wnf eleq2 bitri 3bitr4g 2alimi sbnf2 sylibr impbii
+      wnfc nfcd ) ADULZABFZDGZACFZDGZHZCIBIZUNUSBCUNUPDURUOJKZUNUPDHBLZAUODJMNU
+      QJKZUNURDHCLZAUQDJMNUAUBUTAEDUTEUCUTEFZDKZABOZVFACOZTZCIBIVFAUDUSVIBCUSVE
+      UPKZVEURKZVGVHUPURVEUEVGVFAUOPZVJVFABQVAVLVJTVBAUOVEDJRSUFVHVFAUQPZVKVFAC
+      QVCVMVKTVDAUQVEDJRSUFUGUHVFABCUIUJUMUK $.
+  $}
+
+  ${
+    $d y z A $.  $d z ph $.  $d x y z $.  $d V z $.
+    $( Move substitution into a class abstraction.  (Contributed by NM,
+       13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+    csbabg $p |- ( A e. V ->
+                 [_ A / x ]_ { y | ph } = { y | [. A / x ]. ph } ) $=
+      ( vz wcel cab csb wsbc cv sbccom wsb df-clab sbsbc sbcbii 3bitr4i sbcel2g
+      bitri syl5rbb eqrdv ) DEGZFBDACHZIZABDJZCHZFKZUFGZUGUCGZBDJZUBUGUDGUECUGJ
+      ZACUGJZBDJUHUJACBUGDLUHUECFMUKUEFCNUECFOSUIULBDUIACFMULAFCNACFOSPQBDUGUCE
+      RTUA $.
+  $}
+
+  ${
+    $d x v z $.  $d y v z $.  $d A w v z $.  $d B w v z $.  $d ph v z $.
+    $d ps v z $.
+    cbvralcsf.1 $e |- F/_ y A $.
+    cbvralcsf.2 $e |- F/_ x B $.
+    cbvralcsf.3 $e |- F/ y ph $.
+    cbvralcsf.4 $e |- F/ x ps $.
+    cbvralcsf.5 $e |- ( x = y -> A = B ) $.
+    cbvralcsf.6 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    $( A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
+       to be distinct from ` x ` or ` y ` .  Changes bound variables using
+       implicit substitution.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+    cbvralcsf $p |- ( A. x e. A ph <-> A. y e. B ps ) $=
+      ( vz vv cv wcel wi wal wsbc nfcri wral csb nfv nfcsb1v nfsbc1v id csbeq1a
+      nfim weq eleq12d sbceq1a imbi12d cbval nfcv nfcsb nfsbc csbeq1 cab df-csb
+      eleq2d sbie sbsbc bitr3i abbi2i eqtr4i syl6eq dfsbcq syl6bb bitri 3bitr4i
+      wsb df-ral ) COZEPZAQZCRZDOZFPZBQZDRZACEUABDFUAVPMOZCWAEUBZPZACWASZQZMRVT
+      VOWECMVOMUCWCWDCCMWBCWAEUDTACWAUEUHCMUIZVNWCAWDWFVMWAEWBWFUFCWAEUGUJACWAU
+      KULUMWEVSMDWCWDDDMWBDCWAEDWAUNZGUOTADCWAWGIUPUHVSMUCMDUIZWCVRWDBWHWAVQWBF
+      WHUFWHWBCVQEUBZFCWAVQEUQWINOZEPZCVQSZNURFCNVQEUSWLNFWJFPZWKCDVKWLWKWMCDCN
+      FHTCDUIEFWJKUTVAWKCDVBVCVDVEVFUJWHWDACVQSZBACWAVQVGWNACDVKBACDVBABCDJLVAV
+      CVHULUMVIACEVLBDFVLVJ $.
+
+    $( A more general version of ~ cbvrexf that has no distinct variable
+       restrictions.  Changes bound variables using implicit substitution.
+       (Contributed by Andrew Salmon, 13-Jul-2011.)  (Proof shortened by Mario
+       Carneiro, 7-Dec-2014.) $)
+    cbvrexcsf $p |- ( E. x e. A ph <-> E. y e. B ps ) $=
+      ( vz vv cv wcel wa wex wsbc nfcri wrex csb nfv nfcsb1v nfsbc1v id csbeq1a
+      nfan weq eleq12d sbceq1a anbi12d cbvex nfcv nfcsb nfsbc csbeq1 cab df-csb
+      eleq2d sbie sbsbc bitr3i abbi2i eqtr4i syl6eq dfsbcq syl6bb bitri 3bitr4i
+      wsb df-rex ) COZEPZAQZCRZDOZFPZBQZDRZACEUABDFUAVPMOZCWAEUBZPZACWASZQZMRVT
+      VOWECMVOMUCWCWDCCMWBCWAEUDTACWAUEUHCMUIZVNWCAWDWFVMWAEWBWFUFCWAEUGUJACWAU
+      KULUMWEVSMDWCWDDDMWBDCWAEDWAUNZGUOTADCWAWGIUPUHVSMUCMDUIZWCVRWDBWHWAVQWBF
+      WHUFWHWBCVQEUBZFCWAVQEUQWINOZEPZCVQSZNURFCNVQEUSWLNFWJFPZWKCDVKWLWKWMCDCN
+      FHTCDUIEFWJKUTVAWKCDVBVCVDVEVFUJWHWDACVQSZBACWAVQVGWNACDVKBACDVBABCDJLVAV
+      CVHULUMVIACEVLBDFVLVJ $.
+
+    $( A more general version of ~ cbvreuv that has no distinct variable
+       rextrictions.  Changes bound variables using implicit substitution.
+       (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+    cbvreucsf $p |- ( E! x e. A ph <-> E! y e. B ps ) $=
+      ( vz vv cv wcel wa weu wsb nfcri wreu csb nfv nfcsb1v nfan weq id csbeq1a
+      nfs1v eleq12d sbequ12 anbi12d cbveu nfcv nfcsb nfsb csbeq1 cab wsbc sbsbc
+      abbii eleq2d sbie bicomi abbi2i df-csb 3eqtr4ri syl6eq sbequ syl6bb bitri
+      df-reu 3bitr4i ) COZEPZAQZCRZDOZFPZBQZDRZACEUABDFUAVQMOZCWBEUBZPZACMSZQZM
+      RWAVPWFCMVPMUCWDWECCMWCCWBEUDTACMUIUECMUFZVOWDAWEWGVNWBEWCWGUGCWBEUHUJACM
+      UKULUMWFVTMDWDWEDDMWCDCWBEDWBUNGUOTACMDIUPUEVTMUCMDUFZWDVSWEBWHWBVRWCFWHU
+      GWHWCCVREUBZFCWBVREUQNOZEPZCDSZNURWKCVRUSZNURFWIWLWMNWKCDUTVAWLNFWLWJFPZW
+      KWNCDCNFHTCDUFEFWJKVBVCVDVECNVREVFVGVHUJWHWEACDSBAMDCVIABCDJLVCVJULUMVKAC
+      EVLBDFVLVM $.
+
+    $( A more general version of ~ cbvrab with no distinct variable
+       restrictions.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+    cbvrabcsf $p |- { x e. A | ph } = { y e. B | ps } $=
+      ( vz vv cv wcel wa cab wsb nfcri crab csb nfv nfcsb1v nfan weq id csbeq1a
+      nfs1v eleq12d sbequ12 anbi12d cbvab nfcv nfcsb csbeq1 df-csb eleq2d sbsbc
+      nfsb wsbc bitr3i abbi2i eqtr4i syl6eq sbequ syl6bb eqtri df-rab 3eqtr4i
+      sbie ) COZEPZAQZCRZDOZFPZBQZDRZACEUABDFUAVOMOZCVTEUBZPZACMSZQZMRVSVNWDCMV
+      NMUCWBWCCCMWACVTEUDTACMUIUECMUFZVMWBAWCWEVLVTEWAWEUGCVTEUHUJACMUKULUMWDVR
+      MDWBWCDDMWADCVTEDVTUNGUOTACMDIUTUEVRMUCMDUFZWBVQWCBWFVTVPWAFWFUGWFWACVPEU
+      BZFCVTVPEUPWGNOZEPZCVPVAZNRFCNVPEUQWJNFWHFPZWICDSWJWIWKCDCNFHTCDUFEFWHKUR
+      VKWICDUSVBVCVDVEUJWFWCACDSBAMDCVFABCDJLVKVGULUMVHACEVIBDFVIVJ $.
+  $}
+
+  ${
+    $d A y $.  $d ps y $.  $d B x $.  $d ch x $.
+    cbvralv2.1 $e |- ( x = y -> ( ps <-> ch ) ) $.
+    cbvralv2.2 $e |- ( x = y -> A = B ) $.
+    $( Rule used to change the bound variable in a restricted universal
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  (Contributed by David Moews, 1-May-2017.) $)
+    cbvralv2 $p |- ( A. x e. A ps <-> A. y e. B ch ) $=
+      ( nfcv nfv cbvralcsf ) ABCDEFDEICFIADJBCJHGK $.
+
+    $( Rule used to change the bound variable in a restricted existential
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  (Contributed by David Moews, 1-May-2017.) $)
+    cbvrexv2 $p |- ( E. x e. A ps <-> E. y e. B ch ) $=
+      ( nfcv nfv cbvrexcsf ) ABCDEFDEICFIADJBCJHGK $.
+  $}
+
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Define basic set operations and relations
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  $( Declare new symbols. $)
+  $c \ $. $( Backslash (difference) $)
+  $c u. $. $( Cup (union) $)
+  $c i^i $. $( Cap (intersection) $)
+  $c C_ $. $( Subclass or subset symbol $)
+  $c C. $. $( Proper subclass or subset symbol $)
+
+  $( Extend class notation to include class difference (read:  " ` A ` minus
+     ` B ` "). $)
+  cdif $a class ( A \ B ) $.
+
+  $( Extend class notation to include union of two classes (read:  " ` A `
+     union ` B ` "). $)
+  cun $a class ( A u. B ) $.
+
+  $( Extend class notation to include the intersection of two classes
+     (read:  " ` A ` intersect ` B ` "). $)
+  cin $a class ( A i^i B ) $.
+
+  $( Extend wff notation to include the subclass relation.  This is
+     read " ` A ` is a subclass of ` B ` " or " ` B ` includes ` A ` ."  When
+     ` A ` exists as a set, it is also read " ` A ` is a subset of ` B ` ." $)
+  wss $a wff A C_ B $.
+
+  $( Extend wff notation with proper subclass relation. $)
+  wpss $a wff A C. B $.
+
+  ${
+    $d x A $.  $d x B $.  $d y A $.  $d y B $.  $d z x $.  $d z y $.  $d z A $.
+    $d z B $.
+    $( Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
+       Medina, 27-Apr-2010.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) $)
+    difjust $p |- { x | ( x e. A /\ -. x e. B ) }
+                  = { y | ( y e. A /\ -. y e. B ) } $=
+      ( vz cv wcel wn wa cab weq eleq1 notbid anbi12d cbvabv eqtri ) AFZCGZQDGZ
+      HZIZAJEFZCGZUBDGZHZIZEJBFZCGZUGDGZHZIZBJUAUFAEAEKZRUCTUEQUBCLULSUDQUBDLMN
+      OUFUKEBEBKZUCUHUEUJUBUGCLUMUDUIUBUGDLMNOP $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Define class difference, also called relative complement.  Definition
+       5.12 of [TakeutiZaring] p. 20.  Contrast this operation with union
+       ` ( A u. B ) ` ( ~ df-un ) and intersection ` ( A i^i B ) `
+       ( ~ df-in ).  Several notations are used in the literature; we chose the
+       ` \ ` convention used in Definition 5.3 of [Eisenberg] p. 67 instead of
+       the more common minus sign to reserve the latter for later use in, e.g.,
+       arithmetic.  We will use the terminology " ` A ` excludes ` B ` " to
+       mean ` A \ B ` .  We will use " ` B ` is removed from ` A ` " to mean
+       ` A \ { B } ` i.e. the removal of an element or equivalently the
+       exclusion of a singleton.  (Contributed by NM, 29-Apr-1994.) $)
+    df-dif $a |- ( A \ B ) = { x | ( x e. A /\ -. x e. B ) } $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d y A $.  $d y B $.  $d z x $.  $d z y $.  $d z A $.
+    $d z B $.
+    $( Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
+       Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) $)
+    unjust $p |- { x | ( x e. A \/ x e. B ) } = { y | ( y e. A \/ y e. B ) } $=
+      ( vz cv wcel wo cab weq eleq1 orbi12d cbvabv eqtri ) AFZCGZODGZHZAIEFZCGZ
+      SDGZHZEIBFZCGZUCDGZHZBIRUBAEAEJPTQUAOSCKOSDKLMUBUFEBEBJTUDUAUESUCCKSUCDKL
+      MN $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
+       p. 16.  Contrast this operation with difference ` ( A \ B ) `
+       ( ~ df-dif ) and intersection ` ( A i^i B ) ` ( ~ df-in ).  (Contributed
+       by NM, 23-Aug-1993.) $)
+    df-un $a |- ( A u. B ) = { x | ( x e. A \/ x e. B ) } $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d y A $.  $d y B $.  $d z x $.  $d z y $.  $d z A $.
+    $d z B $.
+    $( Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
+       Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) $)
+    injust $p |- { x | ( x e. A /\ x e. B ) }
+                  = { y | ( y e. A /\ y e. B ) } $=
+      ( vz cv wcel wa cab weq eleq1 anbi12d cbvabv eqtri ) AFZCGZODGZHZAIEFZCGZ
+      SDGZHZEIBFZCGZUCDGZHZBIRUBAEAEJPTQUAOSCKOSDKLMUBUFEBEBJTUDUAUESUCCKSUCDKL
+      MN $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Define the intersection of two classes.  Definition 5.6 of
+       [TakeutiZaring] p. 16.  Contrast this operation with union
+       ` ( A u. B ) ` ( ~ df-un ) and difference ` ( A \ B ) ` ( ~ df-dif ).
+       (Contributed by NM, 29-Apr-1994.) $)
+    df-in $a |- ( A i^i B ) = { x | ( x e. A /\ x e. B ) } $.
+
+    $( Alternate definition for the intersection of two classes.  (Contributed
+       by NM, 6-Jul-2005.) $)
+    dfin5 $p |- ( A i^i B ) = { x e. A | x e. B } $=
+      ( cin cv wcel wa cab crab df-in df-rab eqtr4i ) BCDAEZBFMCFZGAHNABIABCJNA
+      BKL $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Alternate definition of class difference.  (Contributed by NM,
+       25-Mar-2004.) $)
+    dfdif2 $p |- ( A \ B ) = { x e. A | -. x e. B } $=
+      ( cdif cv wcel wn wa cab crab df-dif df-rab eqtr4i ) BCDAEZBFNCFGZHAIOABJ
+      ABCKOABLM $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( Expansion of membership in a class difference.  (Contributed by NM,
+       29-Apr-1994.) $)
+    eldif $p |- ( A e. ( B \ C ) <-> ( A e. B /\ -. A e. C ) ) $=
+      ( vx cdif wcel cvv wn wa elex adantr cv wceq notbid anbi12d df-dif elab2g
+      eleq1 pm5.21nii ) ABCEZFAGFZABFZACFZHZIZATJUBUAUDABJKDLZBFZUFCFZHZIUEDATG
+      UFAMZUGUBUIUDUFABRUJUHUCUFACRNODBCPQS $.
+  $}
+
+  ${
+    eldifd.1 $e |- ( ph -> A e. B ) $.
+    eldifd.2 $e |- ( ph -> -. A e. C ) $.
+    $( If a class is in one class and not another, it is also in their
+       difference.  One-way deduction form of ~ eldif .  (Contributed by David
+       Moews, 1-May-2017.) $)
+    eldifd $p |- ( ph -> A e. ( B \ C ) ) $=
+      ( wcel wn cdif eldif sylanbrc ) ABCGBDGHBCDIGEFBCDJK $.
+  $}
+
+  ${
+    eldifad.1 $e |- ( ph -> A e. ( B \ C ) ) $.
+    $( If a class is in the difference of two classes, it is also in the
+       minuend.  One-way deduction form of ~ eldif .  (Contributed by David
+       Moews, 1-May-2017.) $)
+    eldifad $p |- ( ph -> A e. B ) $=
+      ( wcel wn cdif wa eldif sylib simpld ) ABCFZBDFGZABCDHFMNIEBCDJKL $.
+  $}
+
+  ${
+    eldifbd.1 $e |- ( ph -> A e. ( B \ C ) ) $.
+    $( If a class is in the difference of two classes, it is not in the
+       subtrahend.  One-way deduction form of ~ eldif .  (Contributed by David
+       Moews, 1-May-2017.) $)
+    eldifbd $p |- ( ph -> -. A e. C ) $=
+      ( wcel wn cdif wa eldif sylib simprd ) ABCFZBDFGZABCDHFMNIEBCDJKL $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Subclasses and subsets
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+  $( Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
+     Note that ` A C_ A ` (proved in ~ ssid ).  Contrast this relationship with
+     the relationship ` A C. B ` (as will be defined in ~ df-pss ).  For a more
+     traditional definition, but requiring a dummy variable, see ~ dfss2 (or
+     ~ dfss3 which is similar).  (Contributed by NM, 27-Apr-1994.) $)
+  df-ss $a |- ( A C_ B <-> ( A i^i B ) = A ) $.
+
+  $( Variant of subclass definition ~ df-ss .  (Contributed by NM,
+     3-Sep-2004.) $)
+  dfss $p |- ( A C_ B <-> A = ( A i^i B ) ) $=
+    ( wss cin wceq df-ss eqcom bitri ) ABCABDZAEAIEABFIAGH $.
+
+  $( Define proper subclass relationship between two classes.  Definition 5.9
+     of [TakeutiZaring] p. 17.  Note that ` -. A C. A ` (proved in ~ pssirr ).
+     Contrast this relationship with the relationship ` A C_ B ` (as defined in
+     ~ df-ss ).  Other possible definitions are given by ~ dfpss2 and
+     ~ dfpss3 .  (Contributed by NM, 7-Feb-1996.) $)
+  df-pss $a |- ( A C. B <-> ( A C_ B /\ A =/= B ) ) $.
+
+  ${
+    $d x A $.  $d x B $.
+    $( Alternate definition of the subclass relationship between two classes.
+       Definition 5.9 of [TakeutiZaring] p. 17.  (Contributed by NM,
+       8-Jan-2002.) $)
+    dfss2 $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $=
+      ( wss cv wcel wa wb wal wi cin wceq dfss df-in eqeq2i abeq2 3bitri pm4.71
+      cab albii bitr4i ) BCDZAEZBFZUDUCCFZGZHZAIZUDUEJZAIUBBBCKZLBUFASZLUHBCMUJ
+      UKBABCNOUFABPQUIUGAUDUERTUA $.
+
+    $( Alternate definition of subclass relationship.  (Contributed by NM,
+       14-Oct-1999.) $)
+    dfss3 $p |- ( A C_ B <-> A. x e. A x e. B ) $=
+      ( wss cv wcel wi wal wral dfss2 df-ral bitr4i ) BCDAEZBFMCFZGAHNABIABCJNA
+      BKL $.
+  $}
+
+  ${
+    $d z y A $.  $d z y B $.  $d x z $.
+    dfss2f.1 $e |- F/_ x A $.
+    dfss2f.2 $e |- F/_ x B $.
+    $( Equivalence for subclass relation, using bound-variable hypotheses
+       instead of distinct variable conditions.  (Contributed by NM,
+       3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) $)
+    dfss2f $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $=
+      ( vz wss cv wcel wal dfss2 nfcri nfim nfv weq eleq1 imbi12d cbval bitri
+      wi ) BCGFHZBIZUACIZTZFJAHZBIZUECIZTZAJFBCKUDUHFAUBUCAAFBDLAFCELMUHFNFAOUB
+      UFUCUGUAUEBPUAUECPQRS $.
+
+    $d y A $.  $d y B $.
+    $( Equivalence for subclass relation, using bound-variable hypotheses
+       instead of distinct variable conditions.  (Contributed by NM,
+       20-Mar-2004.) $)
+    dfss3f $p |- ( A C_ B <-> A. x e. A x e. B ) $=
+      ( wss cv wcel wi wal wral dfss2f df-ral bitr4i ) BCFAGZBHOCHZIAJPABKABCDE
+      LPABMN $.
+
+    $( If ` x ` is not free in ` A ` and ` B ` , it is not free in
+       ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) $)
+    nfss $p |- F/ x A C_ B $=
+      ( wss cv wcel wral dfss3f nfra1 nfxfr ) BCFAGCHZABIAABCDEJMABKL $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( Membership relationships follow from a subclass relationship.
+       (Contributed by NM, 5-Aug-1993.) $)
+    ssel $p |- ( A C_ B -> ( C e. A -> C e. B ) ) $=
+      ( vx wss cv wceq wa wex wi wal dfss2 biimpi 19.21bi anim2d eximdv df-clel
+      wcel 3imtr4g ) ABEZDFZCGZUAARZHZDIUBUABRZHZDICARCBRTUDUFDTUCUEUBTUCUEJZDT
+      UGDKDABLMNOPDCAQDCBQS $.
+  $}
+
+  $( Membership relationships follow from a subclass relationship.
+     (Contributed by NM, 7-Jun-2004.) $)
+  ssel2 $p |- ( ( A C_ B /\ C e. A ) -> C e. B ) $=
+    ( wss wcel ssel imp ) ABDCAECBEABCFG $.
+
+  ${
+    sseli.1 $e |- A C_ B $.
+    $( Membership inference from subclass relationship.  (Contributed by NM,
+       5-Aug-1993.) $)
+    sseli $p |- ( C e. A -> C e. B ) $=
+      ( wss wcel wi ssel ax-mp ) ABECAFCBFGDABCHI $.
+
+    ${
+      sselii.2 $e |- C e. A $.
+      $( Membership inference from subclass relationship.  (Contributed by NM,
+         31-May-1999.) $)
+      sselii $p |- C e. B $=
+        ( wcel sseli ax-mp ) CAFCBFEABCDGH $.
+    $}
+
+    ${
+      sseldi.2 $e |- ( ph -> C e. A ) $.
+      $( Membership inference from subclass relationship.  (Contributed by NM,
+         25-Jun-2014.) $)
+      sseldi $p |- ( ph -> C e. B ) $=
+        ( wcel sseli syl ) ADBGDCGFBCDEHI $.
+    $}
+  $}
+
+  ${
+    sseld.1 $e |- ( ph -> A C_ B ) $.
+    $( Membership deduction from subclass relationship.  (Contributed by NM,
+       15-Nov-1995.) $)
+    sseld $p |- ( ph -> ( C e. A -> C e. B ) ) $=
+      ( wss wcel wi ssel syl ) ABCFDBGDCGHEBCDIJ $.
+
+    $( Membership deduction from subclass relationship.  (Contributed by NM,
+       26-Jun-2014.) $)
+    sselda $p |- ( ( ph /\ C e. A ) -> C e. B ) $=
+      ( wcel sseld imp ) ADBFDCFABCDEGH $.
+
+    ${
+      sseldd.2 $e |- ( ph -> C e. A ) $.
+      $( Membership inference from subclass relationship.  (Contributed by NM,
+         14-Dec-2004.) $)
+      sseldd $p |- ( ph -> C e. B ) $=
+        ( wcel sseld mpd ) ADBGDCGFABCDEHI $.
+    $}
+  $}
+
+  ${
+    ssneld.1 $e |- ( ph -> A C_ B ) $.
+    $( If a class is not in another class, it is also not in a subclass of that
+       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
+    ssneld $p |- ( ph -> ( -. C e. B -> -. C e. A ) ) $=
+      ( wcel sseld con3d ) ADBFDCFABCDEGH $.
+
+    ssneldd.2 $e |- ( ph -> -. C e. B ) $.
+    $( If an element is not in a class, it is also not in a subclass of that
+       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
+    ssneldd $p |- ( ph -> -. C e. A ) $=
+      ( wcel wn ssneld mpd ) ADCGHDBGHFABCDEIJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    ssriv.1 $e |- ( x e. A -> x e. B ) $.
+    $( Inference rule based on subclass definition.  (Contributed by NM,
+       5-Aug-1993.) $)
+    ssriv $p |- A C_ B $=
+      ( wss cv wcel wi dfss2 mpgbir ) BCEAFZBGKCGHAABCIDJ $.
+  $}
+
+  ${
+    ssrd.0 $e |- F/ x ph $.
+    ssrd.1 $e |- F/_ x A $.
+    ssrd.2 $e |- F/_ x B $.
+    ssrd.3 $e |- ( ph -> ( x e. A -> x e. B ) ) $.
+    $( Deduction rule based on subclass definition.  (Contributed by Thierry
+       Arnoux, 8-Mar-2017.) $)
+    ssrd $p |- ( ph -> A C_ B ) $=
+      ( cv wcel wi wal wss alrimi dfss2f sylibr ) ABIZCJQDJKZBLCDMARBEHNBCDFGOP
+      $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ph $.
+    ssrdv.1 $e |- ( ph -> ( x e. A -> x e. B ) ) $.
+    $( Deduction rule based on subclass definition.  (Contributed by NM,
+       15-Nov-1995.) $)
+    ssrdv $p |- ( ph -> A C_ B ) $=
+      ( cv wcel wi wal wss alrimiv dfss2 sylibr ) ABFZCGNDGHZBICDJAOBEKBCDLM $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
+       14-Jun-2011.) $)
+    sstr2 $p |- ( A C_ B -> ( B C_ C -> A C_ C ) ) $=
+      ( vx wss cv wcel wi wal ssel imim1d alimdv dfss2 3imtr4g ) ABEZDFZBGZPCGZ
+      HZDIPAGZRHZDIBCEACEOSUADOTQRABPJKLDBCMDACMN $.
+  $}
+
+  $( Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
+     NM, 5-Sep-2003.) $)
+  sstr $p |- ( ( A C_ B /\ B C_ C ) -> A C_ C ) $=
+    ( wss sstr2 imp ) ABDBCDACDABCEF $.
+
+  ${
+    sstri.1 $e |- A C_ B $.
+    sstri.2 $e |- B C_ C $.
+    $( Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) $)
+    sstri $p |- A C_ C $=
+      ( wss sstr2 mp2 ) ABFBCFACFDEABCGH $.
+  $}
+
+  ${
+    sstrd.1 $e |- ( ph -> A C_ B ) $.
+    sstrd.2 $e |- ( ph -> B C_ C ) $.
+    $( Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) $)
+    sstrd $p |- ( ph -> A C_ C ) $=
+      ( wss sstr syl2anc ) ABCGCDGBDGEFBCDHI $.
+  $}
+
+  ${
+    syl5ss.1 $e |- A C_ B $.
+    syl5ss.2 $e |- ( ph -> B C_ C ) $.
+    $( Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) $)
+    syl5ss $p |- ( ph -> A C_ C ) $=
+      ( wss a1i sstrd ) ABCDBCGAEHFI $.
+  $}
+
+  ${
+    syl6ss.1 $e |- ( ph -> A C_ B ) $.
+    syl6ss.2 $e |- B C_ C $.
+    $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
+    syl6ss $p |- ( ph -> A C_ C ) $=
+      ( wss a1i sstrd ) ABCDECDGAFHI $.
+  $}
+
+  ${
+    sylan9ss.1 $e |- ( ph -> A C_ B ) $.
+    sylan9ss.2 $e |- ( ps -> B C_ C ) $.
+    $( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
+       (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
+    sylan9ss $p |- ( ( ph /\ ps ) -> A C_ C ) $=
+      ( wss sstr syl2an ) ACDHDEHCEHBFGCDEIJ $.
+  $}
+
+  ${
+    sylan9ssr.1 $e |- ( ph -> A C_ B ) $.
+    sylan9ssr.2 $e |- ( ps -> B C_ C ) $.
+    $( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) $)
+    sylan9ssr $p |- ( ( ps /\ ph ) -> A C_ C ) $=
+      ( wss sylan9ss ancoms ) ABCEHABCDEFGIJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( The subclass relationship is antisymmetric.  Compare Theorem 4 of
+       [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
+    eqss $p |- ( A = B <-> ( A C_ B /\ B C_ A ) ) $=
+      ( vx cv wcel wb wal wi wa wceq wss albiim dfcleq dfss2 anbi12i 3bitr4i )
+      CDZAEZQBEZFCGRSHCGZSRHCGZIABJABKZBAKZIRSCLCABMUBTUCUACABNCBANOP $.
+  $}
+
+  ${
+    eqssi.1 $e |- A C_ B $.
+    eqssi.2 $e |- B C_ A $.
+    $( Infer equality from two subclass relationships.  Compare Theorem 4 of
+       [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) $)
+    eqssi $p |- A = B $=
+      ( wceq wss eqss mpbir2an ) ABEABFBAFCDABGH $.
+  $}
+
+  ${
+    eqssd.1 $e |- ( ph -> A C_ B ) $.
+    eqssd.2 $e |- ( ph -> B C_ A ) $.
+    $( Equality deduction from two subclass relationships.  Compare Theorem 4
+       of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) $)
+    eqssd $p |- ( ph -> A = B ) $=
+      ( wss wceq eqss sylanbrc ) ABCFCBFBCGDEBCHI $.
+  $}
+
+  ${
+    eqrd.0 $e |- F/ x ph $.
+    eqrd.1 $e |- F/_ x A $.
+    eqrd.2 $e |- F/_ x B $.
+    eqrd.3 $e |- ( ph -> ( x e. A <-> x e. B ) ) $.
+    $( Deduce equality of classes from equivalence of membership.  (Contributed
+       by Thierry Arnoux, 21-Mar-2017.) $)
+    eqrd $p |- ( ph -> A = B ) $=
+      ( cv wcel biimpd ssrd biimprd eqssd ) ACDABCDEFGABIZCJZODJZHKLABDCEGFAPQH
+      MLN $.
+  $}
+
+  ${
+    $d A x $.
+    $( Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
+       p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
+       Salmon, 14-Jun-2011.) $)
+    ssid $p |- A C_ A $=
+      ( vx cv wcel id ssriv ) BAABCADEF $.
+  $}
+
+  ${
+    $d A x $.
+    $( Any class is a subclass of the universal class.  (Contributed by NM,
+       31-Oct-1995.) $)
+    ssv $p |- A C_ _V $=
+      ( vx cvv cv elex ssriv ) BACBDAEF $.
+  $}
+
+  $( Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 21-Jun-2011.) $)
+  sseq1 $p |- ( A = B -> ( A C_ C <-> B C_ C ) ) $=
+    ( wceq wss wa wb eqss wi sstr2 adantl adantr impbid sylbi ) ABDABEZBAEZFZAC
+    EZBCEZGABHQRSPRSIOBACJKOSRIPABCJLMN $.
+
+  $( Equality theorem for the subclass relationship.  (Contributed by NM,
+     25-Jun-1998.) $)
+  sseq2 $p |- ( A = B -> ( C C_ A <-> C C_ B ) ) $=
+    ( wss wa wi wceq wb sstr2 com12 anim12i eqss dfbi2 3imtr4i ) ABDZBADZECADZC
+    BDZFZRQFZEABGQRHOSPTQORCABIJRPQCBAIJKABLQRMN $.
+
+  $( Equality theorem for the subclass relationship.  (Contributed by NM,
+     31-May-1999.) $)
+  sseq12 $p |- ( ( A = B /\ C = D ) -> ( A C_ C <-> B C_ D ) ) $=
+    ( wceq wss sseq1 sseq2 sylan9bb ) ABEACFBCFCDEBDFABCGCDBHI $.
+
+  ${
+    sseq1i.1 $e |- A = B $.
+    $( An equality inference for the subclass relationship.  (Contributed by
+       NM, 18-Aug-1993.) $)
+    sseq1i $p |- ( A C_ C <-> B C_ C ) $=
+      ( wceq wss wb sseq1 ax-mp ) ABEACFBCFGDABCHI $.
+
+    $( An equality inference for the subclass relationship.  (Contributed by
+       NM, 30-Aug-1993.) $)
+    sseq2i $p |- ( C C_ A <-> C C_ B ) $=
+      ( wceq wss wb sseq2 ax-mp ) ABECAFCBFGDABCHI $.
+
+    ${
+      sseq12i.2 $e |- C = D $.
+      $( An equality inference for the subclass relationship.  (Contributed by
+         NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
+      sseq12i $p |- ( A C_ C <-> B C_ D ) $=
+        ( wceq wss wb sseq12 mp2an ) ABGCDGACHBDHIEFABCDJK $.
+    $}
+  $}
+
+  ${
+    sseq1d.1 $e |- ( ph -> A = B ) $.
+    $( An equality deduction for the subclass relationship.  (Contributed by
+       NM, 14-Aug-1994.) $)
+    sseq1d $p |- ( ph -> ( A C_ C <-> B C_ C ) ) $=
+      ( wceq wss wb sseq1 syl ) ABCFBDGCDGHEBCDIJ $.
+
+    $( An equality deduction for the subclass relationship.  (Contributed by
+       NM, 14-Aug-1994.) $)
+    sseq2d $p |- ( ph -> ( C C_ A <-> C C_ B ) ) $=
+      ( wceq wss wb sseq2 syl ) ABCFDBGDCGHEBCDIJ $.
+
+    ${
+      sseq12d.2 $e |- ( ph -> C = D ) $.
+      $( An equality deduction for the subclass relationship.  (Contributed by
+         NM, 31-May-1999.) $)
+      sseq12d $p |- ( ph -> ( A C_ C <-> B C_ D ) ) $=
+        ( wss sseq1d sseq2d bitrd ) ABDHCDHCEHABCDFIADECGJK $.
+    $}
+  $}
+
+  ${
+    eqsstr.1 $e |- A = B $.
+    eqsstr.2 $e |- B C_ C $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 16-Jul-1995.) $)
+    eqsstri $p |- A C_ C $=
+      ( wss sseq1i mpbir ) ACFBCFEABCDGH $.
+  $}
+
+  ${
+    eqsstr3.1 $e |- B = A $.
+    eqsstr3.2 $e |- B C_ C $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 19-Oct-1999.) $)
+    eqsstr3i $p |- A C_ C $=
+      ( eqcomi eqsstri ) ABCBADFEG $.
+  $}
+
+  ${
+    sseqtr.1 $e |- A C_ B $.
+    sseqtr.2 $e |- B = C $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 28-Jul-1995.) $)
+    sseqtri $p |- A C_ C $=
+      ( wss sseq2i mpbi ) ABFACFDBCAEGH $.
+  $}
+
+  ${
+    sseqtr4.1 $e |- A C_ B $.
+    sseqtr4.2 $e |- C = B $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 4-Apr-1995.) $)
+    sseqtr4i $p |- A C_ C $=
+      ( eqcomi sseqtri ) ABCDCBEFG $.
+  $}
+
+  ${
+    eqsstrd.1 $e |- ( ph -> A = B ) $.
+    eqsstrd.2 $e |- ( ph -> B C_ C ) $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
+    eqsstrd $p |- ( ph -> A C_ C ) $=
+      ( wss sseq1d mpbird ) ABDGCDGFABCDEHI $.
+  $}
+
+  ${
+    eqsstr3d.1 $e |- ( ph -> B = A ) $.
+    eqsstr3d.2 $e |- ( ph -> B C_ C ) $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
+    eqsstr3d $p |- ( ph -> A C_ C ) $=
+      ( eqcomd eqsstrd ) ABCDACBEGFH $.
+  $}
+
+  ${
+    sseqtrd.1 $e |- ( ph -> A C_ B ) $.
+    sseqtrd.2 $e |- ( ph -> B = C ) $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
+    sseqtrd $p |- ( ph -> A C_ C ) $=
+      ( wss sseq2d mpbid ) ABCGBDGEACDBFHI $.
+  $}
+
+  ${
+    sseqtr4d.1 $e |- ( ph -> A C_ B ) $.
+    sseqtr4d.2 $e |- ( ph -> C = B ) $.
+    $( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
+    sseqtr4d $p |- ( ph -> A C_ C ) $=
+      ( eqcomd sseqtrd ) ABCDEADCFGH $.
+  $}
+
+  ${
+    3sstr3.1 $e |- A C_ B $.
+    3sstr3.2 $e |- A = C $.
+    3sstr3.3 $e |- B = D $.
+    $( Substitution of equality in both sides of a subclass relationship.
+       (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
+       26-Jan-2007.) $)
+    3sstr3i $p |- C C_ D $=
+      ( wss sseq12i mpbi ) ABHCDHEACBDFGIJ $.
+  $}
+
+  ${
+    3sstr4.1 $e |- A C_ B $.
+    3sstr4.2 $e |- C = A $.
+    3sstr4.3 $e |- D = B $.
+    $( Substitution of equality in both sides of a subclass relationship.
+       (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
+       26-Jan-2007.) $)
+    3sstr4i $p |- C C_ D $=
+      ( wss sseq12i mpbir ) CDHABHECADBFGIJ $.
+  $}
+
+  ${
+    3sstr3g.1 $e |- ( ph -> A C_ B ) $.
+    3sstr3g.2 $e |- A = C $.
+    3sstr3g.3 $e |- B = D $.
+    $( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 1-Oct-2000.) $)
+    3sstr3g $p |- ( ph -> C C_ D ) $=
+      ( wss sseq12i sylib ) ABCIDEIFBDCEGHJK $.
+  $}
+
+  ${
+    3sstr4g.1 $e |- ( ph -> A C_ B ) $.
+    3sstr4g.2 $e |- C = A $.
+    3sstr4g.3 $e |- D = B $.
+    $( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 16-Aug-1994.)  (Proof shortened by Eric Schmidt,
+       26-Jan-2007.) $)
+    3sstr4g $p |- ( ph -> C C_ D ) $=
+      ( wss sseq12i sylibr ) ABCIDEIFDBECGHJK $.
+  $}
+
+  ${
+    3sstr3d.1 $e |- ( ph -> A C_ B ) $.
+    3sstr3d.2 $e |- ( ph -> A = C ) $.
+    3sstr3d.3 $e |- ( ph -> B = D ) $.
+    $( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 1-Oct-2000.) $)
+    3sstr3d $p |- ( ph -> C C_ D ) $=
+      ( wss sseq12d mpbid ) ABCIDEIFABDCEGHJK $.
+  $}
+
+  ${
+    3sstr4d.1 $e |- ( ph -> A C_ B ) $.
+    3sstr4d.2 $e |- ( ph -> C = A ) $.
+    3sstr4d.3 $e |- ( ph -> D = B ) $.
+    $( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 30-Nov-1995.)  (Proof shortened by Eric Schmidt,
+       26-Jan-2007.) $)
+    3sstr4d $p |- ( ph -> C C_ D ) $=
+      ( wss sseq12d mpbird ) ADEIBCIFADBECGHJK $.
+  $}
+
+  ${
+    syl5eqss.1 $e |- A = B $.
+    syl5eqss.2 $e |- ( ph -> B C_ C ) $.
+    $( B chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
+    syl5eqss $p |- ( ph -> A C_ C ) $=
+      ( wss sseq1i sylibr ) ACDGBDGFBCDEHI $.
+  $}
+
+  ${
+    syl5eqssr.1 $e |- B = A $.
+    syl5eqssr.2 $e |- ( ph -> B C_ C ) $.
+    $( B chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
+    syl5eqssr $p |- ( ph -> A C_ C ) $=
+      ( eqcomi syl5eqss ) ABCDCBEGFH $.
+  $}
+
+  ${
+    syl6sseq.1 $e |- ( ph -> A C_ B ) $.
+    syl6sseq.2 $e |- B = C $.
+    $( A chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
+    syl6sseq $p |- ( ph -> A C_ C ) $=
+      ( wss sseq2i sylib ) ABCGBDGECDBFHI $.
+  $}
+
+  ${
+    syl6ssr.1 $e |- ( ph -> A C_ B ) $.
+    syl6ssr.2 $e |- C = B $.
+    $( A chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
+    syl6sseqr $p |- ( ph -> A C_ C ) $=
+      ( eqcomi syl6sseq ) ABCDEDCFGH $.
+  $}
+
+  ${
+    syl5sseq.1 $e |- B C_ A $.
+    syl5sseq.2 $e |- ( ph -> A = C ) $.
+    $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
+    syl5sseq $p |- ( ph -> B C_ C ) $=
+      ( wceq wss sseq2 biimpa sylancl ) ABDGZCBHZCDHZFELMNBDCIJK $.
+  $}
+
+  ${
+    syl5sseqr.1 $e |- B C_ A $.
+    syl5sseqr.2 $e |- ( ph -> C = A ) $.
+    $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
+    syl5sseqr $p |- ( ph -> B C_ C ) $=
+      ( wss a1i sseqtr4d ) ACBDCBGAEHFI $.
+  $}
+
+  ${
+    syl6eqss.1 $e |- ( ph -> A = B ) $.
+    syl6eqss.2 $e |- B C_ C $.
+    $( A chained subclass and equality deduction.  (Contributed by Mario
+       Carneiro, 2-Jan-2017.) $)
+    syl6eqss $p |- ( ph -> A C_ C ) $=
+      ( wss a1i eqsstrd ) ABCDECDGAFHI $.
+  $}
+
+  ${
+    syl6eqssr.1 $e |- ( ph -> B = A ) $.
+    syl6eqssr.2 $e |- B C_ C $.
+    $( A chained subclass and equality deduction.  (Contributed by Mario
+       Carneiro, 2-Jan-2017.) $)
+    syl6eqssr $p |- ( ph -> A C_ C ) $=
+      ( eqcomd syl6eqss ) ABCDACBEGFH $.
+  $}
+
+  $( Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
+     (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
+  eqimss $p |- ( A = B -> A C_ B ) $=
+    ( wceq wss eqss simplbi ) ABCABDBADABEF $.
+
+  $( Equality implies the subclass relation.  (Contributed by NM,
+     23-Nov-2003.) $)
+  eqimss2 $p |- ( B = A -> A C_ B ) $=
+    ( wss eqimss eqcoms ) ABCABABDE $.
+
+  ${
+    eqimssi.1 $e |- A = B $.
+    $( Infer subclass relationship from equality.  (Contributed by NM,
+       6-Jan-2007.) $)
+    eqimssi $p |- A C_ B $=
+      ( ssid sseqtri ) AABADCE $.
+
+    $( Infer subclass relationship from equality.  (Contributed by NM,
+       7-Jan-2007.) $)
+    eqimss2i $p |- B C_ A $=
+      ( ssid sseqtr4i ) BBABDCE $.
+  $}
+
+  $( Two classes are different if they don't include the same class.
+     (Contributed by NM, 23-Apr-2015.) $)
+  nssne1 $p |- ( ( A C_ B /\ -. A C_ C ) -> B =/= C ) $=
+    ( wss wn wne wceq sseq2 biimpcd necon3bd imp ) ABDZACDZEBCFLMBCBCGLMBCAHIJK
+    $.
+
+  $( Two classes are different if they are not subclasses of the same class.
+     (Contributed by NM, 23-Apr-2015.) $)
+  nssne2 $p |- ( ( A C_ C /\ -. B C_ C ) -> A =/= B ) $=
+    ( wss wn wne wceq sseq1 biimpcd necon3bd imp ) ACDZBCDZEABFLMABABGLMABCHIJK
+    $.
+
+  ${
+    $d x A $.  $d x B $.
+    $( Negation of subclass relationship.  One direction of Exercise 13 of
+       [TakeutiZaring] p. 18.  (Contributed by Jim Kingdon, 15-Jul-2018.) $)
+    nssr $p |- ( E. x ( x e. A /\ -. x e. B ) -> -. A C_ B ) $=
+      ( cv wcel wn wa wex wi wal wss exanaliim dfss2 sylnibr ) ADZBEZ
+      OCEZFGAHPQIAJBCKPQALABCMN $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Quantification restricted to a subclass.  (Contributed by NM,
+       11-Mar-2006.) $)
+    ssralv $p |- ( A C_ B -> ( A. x e. B ph -> A. x e. A ph ) ) $=
+      ( wss cv wcel ssel imim1d ralimdv2 ) CDEZAABDCKBFZCGLDGACDLHIJ $.
+
+    $( Existential quantification restricted to a subclass.  (Contributed by
+       NM, 11-Jan-2007.) $)
+    ssrexv $p |- ( A C_ B -> ( E. x e. A ph -> E. x e. B ph ) ) $=
+      ( wss cv wcel ssel anim1d reximdv2 ) CDEZAABCDKBFZCGLDGACDLHIJ $.
+  $}
+
+  ${
+    $d A x $.  $d B x $.
+    $( Restricted universal quantification on a subset in terms of superset.
+       (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
+    ralss $p |- ( A C_ B -> ( A. x e. A ph <->
+          A. x e. B ( x e. A -> ph ) ) ) $=
+      ( wss cv wcel wi wa ssel pm4.71rd imbi1d impexp syl6bb ralbidv2 ) CDEZABF
+      ZCGZAHZBCDPSQDGZRIZAHTSHPRUAAPRTCDQJKLTRAMNO $.
+
+    $( Restricted existential quantification on a subset in terms of superset.
+       (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
+    rexss $p |- ( A C_ B -> ( E. x e. A ph <->
+          E. x e. B ( x e. A /\ ph ) ) ) $=
+      ( wss cv wcel wa ssel pm4.71rd anbi1d anass syl6bb rexbidv2 ) CDEZABFZCGZ
+      AHZBCDORPDGZQHZAHSRHOQTAOQSCDPIJKSQALMN $.
+  $}
+
+  ${
+    $d ph y $.  $d ps y $.  $d x y $.
+    $( Class abstractions in a subclass relationship.  (Contributed by NM,
+       3-Jul-1994.) $)
+    ss2ab $p |- ( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) ) $=
+      ( cab wss cv wcel wi wal nfab1 dfss2f abid imbi12i albii bitri ) ACDZBCDZ
+      ECFZPGZRQGZHZCIABHZCICPQACJBCJKUAUBCSATBACLBCLMNO $.
+  $}
+
+  ${
+    $d x A $.
+    $( Class abstraction in a subclass relationship.  (Contributed by NM,
+       16-Aug-2006.) $)
+    abss $p |- ( { x | ph } C_ A <-> A. x ( ph -> x e. A ) ) $=
+      ( cab wss cv wcel wi wal abid2 sseq2i ss2ab bitr3i ) ABDZCENBFCGZBDZEAOHB
+      IPCNBCJKAOBLM $.
+
+    $( Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) $)
+    ssab $p |- ( A C_ { x | ph } <-> A. x ( x e. A -> ph ) ) $=
+      ( cab wss cv wcel wi wal abid2 sseq1i ss2ab bitr3i ) CABDZEBFCGZBDZNEOAHB
+      IPCNBCJKOABLM $.
+
+    $( The relation for a subclass of a class abstraction is equivalent to
+       restricted quantification.  (Contributed by NM, 6-Sep-2006.) $)
+    ssabral $p |- ( A C_ { x | ph } <-> A. x e. A ph ) $=
+      ( cab wss cv wcel wi wal wral ssab df-ral bitr4i ) CABDEBFCGAHBIABCJABCKA
+      BCLM $.
+  $}
+
+  ${
+    ss2abi.1 $e |- ( ph -> ps ) $.
+    $( Inference of abstraction subclass from implication.  (Contributed by NM,
+       31-Mar-1995.) $)
+    ss2abi $p |- { x | ph } C_ { x | ps } $=
+      ( cab wss wi ss2ab mpgbir ) ACEBCEFABGCABCHDI $.
+  $}
+
+  ${
+    $d x ph $.
+    ss2abdv.1 $e |- ( ph -> ( ps -> ch ) ) $.
+    $( Deduction of abstraction subclass from implication.  (Contributed by NM,
+       29-Jul-2011.) $)
+    ss2abdv $p |- ( ph -> { x | ps } C_ { x | ch } ) $=
+      ( wi wal cab wss alrimiv ss2ab sylibr ) ABCFZDGBDHCDHIAMDEJBCDKL $.
+  $}
+
+  ${
+    $d x ph $.  $d x A $.
+    abssdv.1 $e |- ( ph -> ( ps -> x e. A ) ) $.
+    $( Deduction of abstraction subclass from implication.  (Contributed by NM,
+       20-Jan-2006.) $)
+    abssdv $p |- ( ph -> { x | ps } C_ A ) $=
+      ( cv wcel wi wal cab wss alrimiv abss sylibr ) ABCFDGHZCIBCJDKAOCELBCDMN
+      $.
+  $}
+
+  ${
+    $d x A $.
+    abssi.1 $e |- ( ph -> x e. A ) $.
+    $( Inference of abstraction subclass from implication.  (Contributed by NM,
+       20-Jan-2006.) $)
+    abssi $p |- { x | ph } C_ A $=
+      ( cab cv wcel ss2abi abid2 sseqtri ) ABEBFCGZBECAKBDHBCIJ $.
+  $}
+
+  $( Restricted abstraction classes in a subclass relationship.  (Contributed
+     by NM, 30-May-1999.) $)
+  ss2rab $p |- ( { x e. A | ph } C_ { x e. A | ps } <->
+               A. x e. A ( ph -> ps ) ) $=
+    ( crab wss cv wcel wa cab wi wal df-rab sseq12i ss2ab df-ral imdistan albii
+    wral bitr2i 3bitri ) ACDEZBCDEZFCGDHZAIZCJZUDBIZCJZFUEUGKZCLZABKZCDSZUBUFUC
+    UHACDMBCDMNUEUGCOULUDUKKZCLUJUKCDPUMUICUDABQRTUA $.
+
+  ${
+    $d x B $.
+    $( Restricted class abstraction in a subclass relationship.  (Contributed
+       by NM, 16-Aug-2006.) $)
+    rabss $p |- ( { x e. A | ph } C_ B <-> A. x e. A ( ph -> x e. B ) ) $=
+      ( crab wss cv wcel wa cab wal wral df-rab sseq1i abss impexp albii df-ral
+      wi bitr4i 3bitri ) ABCEZDFBGZCHZAIZBJZDFUEUCDHZSZBKZAUGSZBCLZUBUFDABCMNUE
+      BDOUIUDUJSZBKUKUHULBUDAUGPQUJBCRTUA $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Subclass of a restricted class abstraction.  (Contributed by NM,
+       16-Aug-2006.) $)
+    ssrab $p |- ( B C_ { x e. A | ph } <-> ( B C_ A /\ A. x e. B ph ) ) $=
+      ( crab wss cv wcel wa cab wal wral df-rab sseq2i ssab dfss3 anbi1i r19.26
+      wi df-ral 3bitr2ri 3bitri ) DABCEZFDBGZCHZAIZBJZFUDDHUFSBKZDCFZABDLZIZUCU
+      GDABCMNUFBDOUKUEBDLZUJIUFBDLUHUIULUJBDCPQUEABDRUFBDTUAUB $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x ph $.
+    ssrabdv.1 $e |- ( ph -> B C_ A ) $.
+    ssrabdv.2 $e |- ( ( ph /\ x e. B ) -> ps ) $.
+    $( Subclass of a restricted class abstraction (deduction rule).
+       (Contributed by NM, 31-Aug-2006.) $)
+    ssrabdv $p |- ( ph -> B C_ { x e. A | ps } ) $=
+      ( wss wral crab ralrimiva ssrab sylanbrc ) AEDHBCEIEBCDJHFABCEGKBCDELM $.
+  $}
+
+  ${
+    $d x B $.  $d x ph $.
+    rabssdv.1 $e |- ( ( ph /\ x e. A /\ ps ) -> x e. B ) $.
+    $( Subclass of a restricted class abstraction (deduction rule).
+       (Contributed by NM, 2-Feb-2015.) $)
+    rabssdv $p |- ( ph -> { x e. A | ps } C_ B ) $=
+      ( cv wcel wi wral crab wss 3exp ralrimiv rabss sylibr ) ABCGZEHZIZCDJBCDK
+      ELASCDAQDHBRFMNBCDEOP $.
+  $}
+
+  ${
+    $d x ph $.
+    ss2rabdv.1 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+    $( Deduction of restricted abstraction subclass from implication.
+       (Contributed by NM, 30-May-2006.) $)
+    ss2rabdv $p |- ( ph -> { x e. A | ps } C_ { x e. A | ch } ) $=
+      ( wi wral crab wss ralrimiva ss2rab sylibr ) ABCGZDEHBDEICDEIJANDEFKBCDEL
+      M $.
+  $}
+
+  ${
+    ss2rabi.1 $e |- ( x e. A -> ( ph -> ps ) ) $.
+    $( Inference of restricted abstraction subclass from implication.
+       (Contributed by NM, 14-Oct-1999.) $)
+    ss2rabi $p |- { x e. A | ph } C_ { x e. A | ps } $=
+      ( crab wss wi ss2rab mprgbir ) ACDFBCDFGABHCDABCDIEJ $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.
+    $( Subclass law for restricted abstraction.  (Contributed by NM,
+       18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+    rabss2 $p |- ( A C_ B -> { x e. A | ph } C_ { x e. B | ph } ) $=
+      ( wss cv wcel wa cab crab wi wal pm3.45 alimi dfss2 ss2ab 3imtr4i 3sstr4g
+      df-rab ) CDEZBFZCGZAHZBIZUADGZAHZBIZABCJABDJUBUEKZBLUCUFKZBLTUDUGEUHUIBUB
+      UEAMNBCDOUCUFBPQABCSABDSR $.
+
+    $( Subclass relation for the restriction of a class abstraction.
+       (Contributed by NM, 31-Mar-1995.) $)
+    ssab2 $p |- { x | ( x e. A /\ ph ) } C_ A $=
+      ( cv wcel wa simpl abssi ) BDCEZAFBCIAGH $.
+
+    $( Subclass relation for a restricted class.  (Contributed by NM,
+       19-Mar-1997.) $)
+    ssrab2 $p |- { x e. A | ph } C_ A $=
+      ( crab cv wcel wa cab df-rab ssab2 eqsstri ) ABCDBECFAGBHCABCIABCJK $.
+  $}
+
+  ${
+    $d V x $.
+    $( If the restricting class of a restricted class abstraction is a subset
+       of this restricted class abstraction, it is equal to this restricted
+       class abstraction.  (Contributed by Alexander van der Vekens,
+       31-Dec-2017.) $)
+    ssrabeq $p |- ( V C_ { x e. V | ph } <-> V = { x e. V | ph } ) $=
+      ( crab wss wa wceq ssrab2 biantru eqss bitr4i ) CABCDZEZMLCEZFCLGNMABCHIC
+      LJK $.
+  $}
+
+  $( A restricted class is a subclass of the corresponding unrestricted class.
+     (Contributed by Mario Carneiro, 23-Dec-2016.) $)
+  rabssab $p |- { x e. A | ph } C_ { x | ph } $=
+    ( crab cv wcel wa cab df-rab simpr ss2abi eqsstri ) ABCDBECFZAGZBHABHABCINA
+    BMAJKL $.
+
+  ${
+    $d x y $.  $d y z A $.  $d y z B $.  $d x z C $.
+    $( A subset relationship useful for converting union to indexed union using
+       dfiun2 or dfiun2g and intersection to indexed intersection using
+       dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
+       Carneiro, 26-Sep-2015.) $)
+    uniiunlem $p |- ( A. x e. A B e. D ->
+                     ( A. x e. A B e. C <-> { y | E. x e. A y = B } C_ C ) ) $=
+      ( vz cv wceq wrex cab wss wcel wi wal wral eqeq1 rexbidv cbvabv wb sseq1i
+      r19.23v albii ralcom4 abss 3bitr4i bitr4i nfv eleq1 ceqsalg ralbi syl5rbb
+      ralimi syl ) BHZDIZACJZBKZELZGHZDIZUTEMZNZGOZACPZDFMZACPZDEMZACPZUSVAACJZ
+      GKZELZVEURVKEUQVJBGUOUTIUPVAACUOUTDQRSUAVCACPZGOVJVBNZGOVEVLVMVNGVAVBACUB
+      UCVCAGCUDVJGEUEUFUGVGVDVHTZACPVEVITVFVOACVBVHGDFVHGUHUTDEUIUJUMVDVHACUKUN
+      UL $.
+  $}
+
+  $( Alternate definition of proper subclass.  (Contributed by NM,
+     7-Feb-1996.) $)
+  dfpss2 $p |- ( A C. B <-> ( A C_ B /\ -. A = B ) ) $=
+    ( wpss wss wne wa wceq wn df-pss df-ne anbi2i bitri ) ABCABDZABEZFMABGHZFAB
+    INOMABJKL $.
+
+  $( Alternate definition of proper subclass.  (Contributed by NM,
+     7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+  dfpss3 $p |- ( A C. B <-> ( A C_ B /\ -. B C_ A ) ) $=
+    ( wpss wss wceq wn wa dfpss2 eqss baib notbid pm5.32i bitri ) ABCABDZABEZFZ
+    GNBADZFZGABHNPRNOQONQABIJKLM $.
+
+  $( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+  psseq1 $p |- ( A = B -> ( A C. C <-> B C. C ) ) $=
+    ( wceq wss wne wa wpss sseq1 neeq1 anbi12d df-pss 3bitr4g ) ABDZACEZACFZGBC
+    EZBCFZGACHBCHNOQPRABCIABCJKACLBCLM $.
+
+  $( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+  psseq2 $p |- ( A = B -> ( C C. A <-> C C. B ) ) $=
+    ( wceq wss wne wa wpss sseq2 neeq2 anbi12d df-pss 3bitr4g ) ABDZCAEZCAFZGCB
+    EZCBFZGCAHCBHNOQPRABCIABCJKCALCBLM $.
+
+  ${
+    psseq1i.1 $e |- A = B $.
+    $( An equality inference for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
+    psseq1i $p |- ( A C. C <-> B C. C ) $=
+      ( wceq wpss wb psseq1 ax-mp ) ABEACFBCFGDABCHI $.
+
+    $( An equality inference for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
+    psseq2i $p |- ( C C. A <-> C C. B ) $=
+      ( wceq wpss wb psseq2 ax-mp ) ABECAFCBFGDABCHI $.
+
+    ${
+      psseq12i.2 $e |- C = D $.
+      $( An equality inference for the proper subclass relationship.
+         (Contributed by NM, 9-Jun-2004.) $)
+      psseq12i $p |- ( A C. C <-> B C. D ) $=
+        ( wpss psseq1i psseq2i bitri ) ACGBCGBDGABCEHCDBFIJ $.
+    $}
+  $}
+
+  ${
+    psseq1d.1 $e |- ( ph -> A = B ) $.
+    $( An equality deduction for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
+    psseq1d $p |- ( ph -> ( A C. C <-> B C. C ) ) $=
+      ( wceq wpss wb psseq1 syl ) ABCFBDGCDGHEBCDIJ $.
+
+    $( An equality deduction for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
+    psseq2d $p |- ( ph -> ( C C. A <-> C C. B ) ) $=
+      ( wceq wpss wb psseq2 syl ) ABCFDBGDCGHEBCDIJ $.
+
+    ${
+      psseq12d.2 $e |- ( ph -> C = D ) $.
+      $( An equality deduction for the proper subclass relationship.
+         (Contributed by NM, 9-Jun-2004.) $)
+      psseq12d $p |- ( ph -> ( A C. C <-> B C. D ) ) $=
+        ( wpss psseq1d psseq2d bitrd ) ABDHCDHCEHABCDFIADECGJK $.
+    $}
+  $}
+
+  $( A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
+  pssss $p |- ( A C. B -> A C_ B ) $=
+    ( wpss wss wne df-pss simplbi ) ABCABDABEABFG $.
+
+  $( Two classes in a proper subclass relationship are not equal.  (Contributed
+     by NM, 16-Feb-2015.) $)
+  pssne $p |- ( A C. B -> A =/= B ) $=
+    ( wpss wss wne df-pss simprbi ) ABCABDABEABFG $.
+
+  ${
+    pssssd.1 $e |- ( ph -> A C. B ) $.
+    $( Deduce subclass from proper subclass.  (Contributed by NM,
+       29-Feb-1996.) $)
+    pssssd $p |- ( ph -> A C_ B ) $=
+      ( wpss wss pssss syl ) ABCEBCFDBCGH $.
+
+    $( Proper subclasses are unequal.  Deduction form of ~ pssne .
+       (Contributed by David Moews, 1-May-2017.) $)
+    pssned $p |- ( ph -> A =/= B ) $=
+      ( wpss wne pssne syl ) ABCEBCFDBCGH $.
+  $}
+
+  $( Subclass in terms of proper subclass.  (Contributed by Jim Kingdon,
+     16-Jul-2018.) $)
+  sspssr $p |- ( ( A C. B \/ A = B ) -> A C_ B ) $=
+    ( wpss wss wceq pssss eqimss jaoi ) ABCABDABEABFABGH $.
+
+  $( Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
+  pssirr $p |- -. A C. A $=
+    ( wpss wss wn wa pm3.24 dfpss3 mtbir ) AABAACZIDEIFAAGH $.
+
+  $( Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
+     p. 23.  (Contributed by NM, 7-Feb-1996.)  (Proof shortened by Andrew
+     Salmon, 26-Jun-2011.) $)
+  pssn2lp $p |- -. ( A C. B /\ B C. A ) $=
+    ( wpss wn wi wa wss dfpss3 simprbi pssss nsyl imnan mpbi ) ABCZBACZDENOFDNB
+    AGZONABGPDABHIBAJKNOLM $.
+
+  $( Two ways of stating trichotomy with respect to inclusion.  (Contributed by
+     Jim Kingdon, 16-Jul-2018.) $)
+  sspsstrir $p |- ( ( A C. B \/ A = B \/ B C. A ) -> ( A C_ B \/ B C_ A ) ) $=
+    ( wpss wss wo wceq pssss orcd eqimss olcd 3jaoi ) ABCZABDZBADZEAB
+    FZBACZLMNABGHOMNABIHPNMBAGJK $.
+
+  $( Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
+     (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+  ssnpss $p |- ( A C_ B -> -. B C. A ) $=
+    ( wpss wss wn dfpss3 simprbi con2i ) BACZABDZIBADJEBAFGH $.
+
+  $( Like ~ pssn2lp but for subset and proper subset.  (Contributed by Jim
+     Kingdon, 17-Jul-2018.) $)
+  sspssn $p |- -. ( A C_ B /\ B C. A ) $=
+    ( wss wpss wa wn pm3.24 ssnpss anim2i ancoms mto ) ABCZBADZEMMFZE
+    ZMGMLOLNMABHIJK $.
+
+  $( Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
+  psstr $p |- ( ( A C. B /\ B C. C ) -> A C. C ) $=
+    ( wpss wa wss wceq pssss sylan9ss pssn2lp psseq1 anbi1d mtbiri con2i dfpss2
+    wn sylanbrc ) ABDZBCDZEZACFACGZPACDRSABCABHBCHIUATUATCBDZSECBJUARUBSACBKLMN
+    ACOQ $.
+
+  $( Transitive law for subclass and proper subclass.  (Contributed by NM,
+     3-Apr-1996.) $)
+  sspsstr $p |- ( ( A C_ B /\ B C. C ) -> A C. C ) $=
+    ( wss wpss wa wceq wn id pssss sylan9ss sspssn sseq1 anbi1d con2i
+    mtbiri dfpss2 sylanbrc ) ABDZBCEZFZACDACGZHACESTABCSIBCJKUBUAUBUA
+    CBDZTFCBLUBSUCTACBMNPOACQR $.
+
+  $( Transitive law for subclass and proper subclass.  (Contributed by NM,
+     3-Apr-1996.) $)
+  psssstr $p |- ( ( A C. B /\ B C_ C ) -> A C. C ) $=
+    ( wpss wss wa wn pssss sylan9ss sspssn psseq1 anbi2d mtbiri con2i
+    wceq id ancoms dfpss2 sylanbrc ) ABDZBCEZFACEACOZGZACDTUAABCABHUA
+    PIUATUCUBUATFZUBUDUACBDZFBCJUBTUEUAACBKLMNQACRS $.
+
+  ${
+    psstrd.1 $e |- ( ph -> A C. B ) $.
+    psstrd.2 $e |- ( ph -> B C. C ) $.
+    $( Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
+       (Contributed by David Moews, 1-May-2017.) $)
+    psstrd $p |- ( ph -> A C. C ) $=
+      ( wpss psstr syl2anc ) ABCGCDGBDGEFBCDHI $.
+  $}
+
+  ${
+    sspsstrd.1 $e |- ( ph -> A C_ B ) $.
+    sspsstrd.2 $e |- ( ph -> B C. C ) $.
+    $( Transitivity involving subclass and proper subclass inclusion.
+       Deduction form of ~ sspsstr .  (Contributed by David Moews,
+       1-May-2017.) $)
+    sspsstrd $p |- ( ph -> A C. C ) $=
+      ( wss wpss sspsstr syl2anc ) ABCGCDHBDHEFBCDIJ $.
+  $}
+
+  ${
+    psssstrd.1 $e |- ( ph -> A C. B ) $.
+    psssstrd.2 $e |- ( ph -> B C_ C ) $.
+    $( Transitivity involving subclass and proper subclass inclusion.
+       Deduction form of ~ psssstr .  (Contributed by David Moews,
+       1-May-2017.) $)
+    psssstrd $p |- ( ph -> A C. C ) $=
+      ( wpss wss psssstr syl2anc ) ABCGCDHBDGEFBCDIJ $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The difference, union, and intersection of two classes
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+$(
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+      The difference of two classes
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+$)
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+    difeq1 $p |- ( A = B -> ( A \ C ) = ( B \ C ) ) $=
+      ( vx wceq cv wcel wn crab cdif rabeq dfdif2 3eqtr4g ) ABEDFCGHZDAINDBIACJ
+      BCJNDABKDACLDBCLM $.
+
+    $( Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+    difeq2 $p |- ( A = B -> ( C \ A ) = ( C \ B ) ) $=
+      ( vx wceq cv wcel wn crab cdif eleq2 notbid rabbidv dfdif2 3eqtr4g ) ABEZ
+      DFZAGZHZDCIQBGZHZDCICAJCBJPSUADCPRTABQKLMDCANDCBNO $.
+  $}
+
+  $( Equality theorem for class difference.  (Contributed by FL,
+     31-Aug-2009.) $)
+  difeq12 $p |- ( ( A = B /\ C = D ) -> ( A \ C ) = ( B \ D ) ) $=
+    ( wceq cdif difeq1 difeq2 sylan9eq ) ABECDEACFBCFBDFABCGCDBHI $.
+
+  ${
+    difeq1i.1 $e |- A = B $.
+    $( Inference adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+    difeq1i $p |- ( A \ C ) = ( B \ C ) $=
+      ( wceq cdif difeq1 ax-mp ) ABEACFBCFEDABCGH $.
+
+    $( Inference adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+    difeq2i $p |- ( C \ A ) = ( C \ B ) $=
+      ( wceq cdif difeq2 ax-mp ) ABECAFCBFEDABCGH $.
+
+    ${
+      difeq12i.2 $e |- C = D $.
+      $( Equality inference for class difference.  (Contributed by NM,
+         29-Aug-2004.) $)
+      difeq12i $p |- ( A \ C ) = ( B \ D ) $=
+        ( cdif difeq1i difeq2i eqtri ) ACGBCGBDGABCEHCDBFIJ $.
+    $}
+  $}
+
+  ${
+    difeq1d.1 $e |- ( ph -> A = B ) $.
+    $( Deduction adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+    difeq1d $p |- ( ph -> ( A \ C ) = ( B \ C ) ) $=
+      ( wceq cdif difeq1 syl ) ABCFBDGCDGFEBCDHI $.
+
+    $( Deduction adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+    difeq2d $p |- ( ph -> ( C \ A ) = ( C \ B ) ) $=
+      ( wceq cdif difeq2 syl ) ABCFDBGDCGFEBCDHI $.
+  $}
+
+  ${
+    difeq12d.1 $e |- ( ph -> A = B ) $.
+    difeq12d.2 $e |- ( ph -> C = D ) $.
+    $( Equality deduction for class difference.  (Contributed by FL,
+       29-May-2014.) $)
+    difeq12d $p |- ( ph -> ( A \ C ) = ( B \ D ) ) $=
+      ( cdif difeq1d difeq2d eqtrd ) ABDHCDHCEHABCDFIADECGJK $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    difeqri.1 $e |- ( ( x e. A /\ -. x e. B ) <-> x e. C ) $.
+    $( Inference from membership to difference.  (Contributed by NM,
+       17-May-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+    difeqri $p |- ( A \ B ) = C $=
+      ( cdif cv wcel wn wa eldif bitri eqriv ) ABCFZDAGZNHOBHOCHIJODHOBCKELM $.
+  $}
+
+  ${
+    $d x y $.  $d y A $.  $d y B $.
+    nfdif.1 $e |- F/_ x A $.
+    nfdif.2 $e |- F/_ x B $.
+    $( Bound-variable hypothesis builder for class difference.  (Contributed by
+       NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+    nfdif $p |- F/_ x ( A \ B ) $=
+      ( vy cdif cv wcel wn crab dfdif2 nfcri nfn nfrabxy nfcxfr ) ABCGFHCIZJZFB
+      KFBCLRAFBQAAFCEMNDOP $.
+  $}
+
+  $( Implication of membership in a class difference.  (Contributed by NM,
+     29-Apr-1994.) $)
+  eldifi $p |- ( A e. ( B \ C ) -> A e. B ) $=
+    ( cdif wcel wn eldif simplbi ) ABCDEABEACEFABCGH $.
+
+  $( Implication of membership in a class difference.  (Contributed by NM,
+     3-May-1994.) $)
+  eldifn $p |- ( A e. ( B \ C ) -> -. A e. C ) $=
+    ( cdif wcel wn eldif simprbi ) ABCDEABEACEFABCGH $.
+
+  $( A set does not belong to a class excluding it.  (Contributed by NM,
+     27-Jun-1994.) $)
+  elndif $p |- ( A e. B -> -. A e. ( C \ B ) ) $=
+    ( cdif wcel eldifn con2i ) ACBDEABEACBFG $.
+
+  ${
+    $d x A $.  $d x B $.
+    $( Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 17-May-1998.) $)
+    difdif $p |- ( A \ ( B \ A ) ) = A $=
+      ( vx cdif cv wcel wn wa ax-ia1 wi pm4.45im imanim eldif sylnibr
+      anim2i sylbi impbii difeqri ) CABADZACEZAFZTSFZGZHZUAUAUCIUAUAT
+      BFZUAJZHUDUAUEKUFUCUAUFUEUAGHUBUEUALTBAMNOPQR $.
+
+    $( Subclass relationship for class difference.  Exercise 14 of
+       [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
+    difss $p |- ( A \ B ) C_ A $=
+      ( vx cdif cv eldifi ssriv ) CABDACEABFG $.
+  $}
+
+  $( A difference of two classes is contained in the minuend.  Deduction form
+     of ~ difss .  (Contributed by David Moews, 1-May-2017.) $)
+  difssd $p |- ( ph -> ( A \ B ) C_ A ) $=
+    ( cdif wss difss a1i ) BCDBEABCFG $.
+
+  $( If a class is contained in a difference, it is contained in the minuend.
+     (Contributed by David Moews, 1-May-2017.) $)
+  difss2 $p |- ( A C_ ( B \ C ) -> A C_ B ) $=
+    ( cdif wss id difss syl6ss ) ABCDZEZAIBJFBCGH $.
+
+  ${
+    difss2d.1 $e |- ( ph -> A C_ ( B \ C ) ) $.
+    $( If a class is contained in a difference, it is contained in the
+       minuend.  Deduction form of ~ difss2 .  (Contributed by David Moews,
+       1-May-2017.) $)
+    difss2d $p |- ( ph -> A C_ B ) $=
+      ( cdif wss difss2 syl ) ABCDFGBCGEBCDHI $.
+  $}
+
+  $( Preservation of a subclass relationship by class difference.  (Contributed
+     by NM, 15-Feb-2007.) $)
+  ssdifss $p |- ( A C_ B -> ( A \ C ) C_ B ) $=
+    ( cdif wss difss sstr mpan ) ACDZAEABEIBEACFIABGH $.
+
+  ${
+    $d x A $.
+    ddifnel.1 $e |- ( -. x e. ( _V \ A ) -> x e. A ) $.
+    $( Double complement under universal class.  The hypothesis is one way of
+       expressing the idea that membership in ` A ` is decidable.  Exercise
+       4.10(s) of [Mendelson] p. 231, but with an additional hypothesis.
+       (Contributed by NM, 8-Jan-2002.) $)
+    ddifnel $p |- ( _V \ ( _V \ A ) ) = A $=
+      ( cvv cdif cv wcel wn wa adantl elndif vex jctil impbii difeqri ) ADDBEZB
+      AFZDGZQPGHZIQBGZSTRCJTSRQBDKALMNO $.
+  $}
+
+  ${
+    $d x A $.  $d x B $.  $d x C $.
+    $( Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) $)
+    ssconb $p |- ( ( A C_ C /\ B C_ C ) ->
+                  ( A C_ ( C \ B ) <-> B C_ ( C \ A ) ) ) $=
+      ( vx wss wa cv wcel cdif wi wal wn wb ssel pm5.1 jcab 3bitr4g eldif dfss2
+      imbi2i syl2an con2b a1i anbi12d albidv ) ACEZBCEZFZDGZAHZUICBIZHZJZDKUIBH
+      ZUICAIZHZJZDKAUKEBUOEUHUMUQDUHUJUICHZUNLZFZJZUNURUJLZFZJZUMUQUHUJURJZUJUS
+      JZFUNURJZUNVBJZFVAVDUHVEVGVFVHUFVEVGVEVGMUGACUINBCUINVEVGOUAVFVHMUHUJUNUB
+      UCUDUJURUSPUNURVBPQULUTUJUICBRTUPVCUNUICARTQUEDAUKSDBUOSQ $.
+
+    $( Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 22-Mar-1998.) $)
+    sscon $p |- ( A C_ B -> ( C \ B ) C_ ( C \ A ) ) $=
+      ( vx wss cdif cv wcel wn wa ssel con3d anim2d eldif 3imtr4g ssrdv ) ABEZD
+      CBFZCAFZQDGZCHZTBHZIZJUATAHZIZJTRHTSHQUCUEUAQUDUBABTKLMTCBNTCANOP $.
+
+    $( Difference law for subsets.  (Contributed by NM, 28-May-1998.) $)
+    ssdif $p |- ( A C_ B -> ( A \ C ) C_ ( B \ C ) ) $=
+      ( vx wss cdif cv wcel wn wa ssel anim1d eldif 3imtr4g ssrdv ) ABEZDACFZBC
+      FZPDGZAHZSCHIZJSBHZUAJSQHSRHPTUBUAABSKLSACMSBCMNO $.
+  $}
+
+  ${
+    ssdifd.1 $e |- ( ph -> A C_ B ) $.
+    $( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
+       ` ( B \ C ) ` .  Deduction form of ~ ssdif .  (Contributed by David
+       Moews, 1-May-2017.) $)
+    ssdifd $p |- ( ph -> ( A \ C ) C_ ( B \ C ) ) $=
+      ( wss cdif ssdif syl ) ABCFBDGCDGFEBCDHI $.
+
+    $( If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
+       ` ( C \ A ) ` .  Deduction form of ~ sscon .  (Contributed by David
+       Moews, 1-May-2017.) $)
+    sscond $p |- ( ph -> ( C \ B ) C_ ( C \ A ) ) $=
+      ( wss cdif sscon syl ) ABCFDCGDBGFEBCDHI $.
+
+    $( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
+       ` B ` .  Deduction form of ~ ssdifss .  (Contributed by David Moews,
+       1-May-2017.) $)
+    ssdifssd $p |- ( ph -> ( A \ C ) C_ B ) $=
+      ( wss cdif ssdifss syl ) ABCFBDGCFEBCDHI $.
+
+    ssdif2d.2 $e |- ( ph -> C C_ D ) $.
+    $( If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
+       ` ( A \ D ) ` is contained in ` ( B \ C ) ` .  Deduction form.
+       (Contributed by David Moews, 1-May-2017.) $)
+    ssdif2d $p |- ( ph -> ( A \ D ) C_ ( B \ C ) ) $=
+      ( cdif sscond ssdifd sstrd ) ABEHBDHCDHADEBGIABCDFJK $.
+  $}
+
+  $( Restricted universal quantification on a class difference in terms of an
+     implication.  (Contributed by Alexander van der Vekens, 3-Jan-2018.) $)
+  raldifb $p |- ( A. x e. A ( x e/ B -> ph ) <-> A. x e. ( A \ B ) ph ) $=
+    ( cv wnel wi cdif wcel wa impexp bicomi wn df-nel anbi2i eldif bitri imbi1i
+    ralbii2 ) BEZDFZAGZABCCDHZTCIZUBGZUDUAJZAGZTUCIZAGUGUEUDUAAKLUFUHAUFUDTDIMZ
+    JZUHUAUIUDTDNOUHUJTCDPLQRQS $.
+
+$(
 ###############################################################################
                             CLASSICAL LOGIC
 ###############################################################################
@@ -19707,7 +25688,7 @@ $)
      of theorems which have not yet been converted over to having appropriate
      decidability conditions added.  We could also transform intuitionistic
      logic to classical logic by adding unconditional forms of ~ exmiddc ,
-     ~ peirce , or ~ notnot2dc .
+     ~ peircedc , or ~ notnot2dc .
 
      This axiom swaps or "transposes" the order of the consequents when
      negation is removed.  An informal example is that the statement "if there
@@ -19935,23 +25916,6 @@ $)
       ( wn id nsyl2 ) BDZBAGECF $.
   $}
 
-  $( Simplification.  Similar to Theorem *3.26 (Simp) of [WhiteheadRussell]
-     p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
-     Lammen, 21-Jul-2012.) $)
-  simplim $p |- ( -. ( ph -> ps ) -> ph ) $=
-    ( wi pm2.21 con1i ) AABCABDE $.
-
-  $( Peirce's axiom.  This odd-looking theorem is the "difference" between an
-     intuitionistic system of propositional calculus and a classical system and
-     is not accepted by intuitionists.  When Peirce's axiom is added to an
-     intuitionistic system, the system becomes equivalent to our classical
-     system ~ ax-1 through ~ ax-3 .  A curious fact about this theorem is that
-     it requires ~ ax-3 for its proof even though the result has no negation
-     connectives in it.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
-     Wolf Lammen, 9-Oct-2012.) $)
-  peirce $p |- ( ( ( ph -> ps ) -> ph ) -> ph ) $=
-    ( wi simplim id ja ) ABCAAABDAEF $.
-
   ${
     19.32.1 $e |- ( ph -> A. x ph ) $.
     $( Theorem 19.32 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
@@ -19969,601 +25933,11 @@ $)
       J $.
   $}
 
-  $( Theorem 19.35 of [Margaris] p. 90.  In classical logic, this theorem is
-     useful for moving an implication (in the form of the right-hand side) into
-     the scope of a single existential quantifier.  The forward direction,
-     ~ 19.35-1 , holds intuitionistically.  (Contributed by NM, 5-Aug-1993.)
-     (Proof shortened by Wolf Lammen, 27-Jun-2014.) $)
-  19.35 $p |- ( E. x ( ph -> ps ) <-> ( A. x ph -> E. x ps ) ) $=
-    ( wi wex wal wn wa 19.26 annim albii alnex anbi2i 3bitr3i con4bii ) ABDZCEZ
-    ACFZBCEZDZPGZCFZRSGZHZQGTGABGZHZCFRUECFZHUBUDAUECIUFUACABJKUGUCRBCLMNPCLRSJ
-    NO $.
-
-  ${
-    19.37.1 $e |- ( ph -> A. x ph ) $.
-    $( Theorem 19.37 of [Margaris] p. 90.  The forward direction is valid
-       intuitionistically (it could be proved from ~ 19.35-1 ), but the reverse
-       direction is not.  (Contributed by NM, 5-Aug-1993.) $)
-    19.37 $p |- ( E. x ( ph -> ps ) <-> ( ph -> E. x ps ) ) $=
-      ( wi wex wal 19.35 19.3 imbi1i bitri ) ABECFACGZBCFZEAMEABCHLAMACDIJK $.
-  $}
-
-  ${
-    $d x ph $.
-    $( Special case of Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
-       5-Aug-1993.) $)
-    19.37v $p |- ( E. x ( ph -> ps ) <-> ( ph -> E. x ps ) ) $=
-      ( ax-17 19.37 ) ABCACDE $.
-  $}
-
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        Existential uniqueness (supplemental)
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-   This section contains the theorems on existential uniqueness which have
-   not yet been moved to the main section on existential uniqueness
-   in the predicate logic section. Some of them do not rely on ~ ax-3 and
-   are ready to move as-is, while others will require changes to remove
-   the use of ~ ax-3 .
-
-$)
-
-  ${
-    $d x y z $.  $d ph z $.
-    mo.1 $e |- ( ph -> A. y ph ) $.
-    $( Equivalent definitions of "there exists at most one."  (Contributed by
-       NM, 7-Aug-1994.) $)
-    mo $p |- ( E. y A. x ( ph -> x = y ) <->
-               A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
-      ( vz weq wi wal wex wsb wa ax-17 hbim hbal cbv3h syl sylbir alimi wn hbn
-      equequ2 imbi2d albidv cbvexh hbs1 sbequ2 ax-8 imim12d ancli aaan prth syl6
-      sylibr equtr2 2alimi exlimiv impexp bi2.04 bitri 2albii eximi a7s syl5com
-      alim exim syl5bi alnex sbequ1 equcoms con3d pm2.21 19.8a 3syl a1d pm2.61i
-      impbii ) ABCFZGZBHZCIZAABCJZKZVQGZCHBHZVTABEFZGZBHZEIWDWGVSECWFCBAWECDWEC
-      LMZNVSELECFZWFVRBWIWEVQAECBUAUBUCUDWGWDEWGWFWACEFZGZKZCHBHZWDWGWGWKCHZKWM
-      WGWNWFWKBCWHWAWJBABCUEZWJBLMZVQWAAWEWJABCUFBCEUGUHOUIWFWKBCWHWPUJUMWLWCBC
-      WLWBWEWJKVQAWEWAWJUKBCEUNULUOPUPQWACIZWDVTGWDWAVRGZCHBHZWQVTWCWRBCWCAWAVQ
-      GGWRAWAVQUQAWAVQURUSUTWQWABHZCIZWSVTWAWTCWOVAWSWTVSGZCHZXAVTGWRXCCBWRBHXB
-      CWAVRBVDRVBWTVSCVEPVCVFWQSZVTWDXDWASZCHZVTWACVGXFASZBHVSVTXEXGCBWABWOTACD
-      TCBFAWAAWAGBCABCVHVIVJOXGVRBAVQVKRVSCVLVMQVNVOVP $.
-  $}
-
-  ${
-    $d x y $.
-    eu2.1 $e |- ( ph -> A. y ph ) $.
-    $( An alternate way of defining existential uniqueness.  Definition 6.10 of
-       [TakeutiZaring] p. 26.  (Contributed by NM, 8-Jul-1994.) $)
-    eu2 $p |- ( E! x ph <->
-    ( E. x ph /\ A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) ) $=
-      ( weu wex wsb wa weq wi wal euex eumo0 mo sylib 19.29r impexp albii 19.21h
-      jca bitri anbi2i abai bitr4i exbii eu1 sylibr impbii ) ABEZABFZAABCGZHBCI
-      ZJZCKZBKZHZUIUJUOABLUIAULJBKCFUOABCDMABCDNOTUPAUKULJZCKZHZBFZUIUPAUNHZBFU
-      TAUNBPVAUSBVAAAURJZHUSUNVBAUNAUQJZCKVBUMVCCAUKULQRAUQCDSUAUBAURUCUDUEOABC
-      DUFUGUH $.
-  $}
-
-  ${
-    $d x y $.
-    eu3.1 $e |- ( ph -> A. y ph ) $.
-    $( An alternate way to express existential uniqueness.  (Contributed by NM,
-       8-Jul-1994.) $)
-    eu3 $p |- ( E! x ph <->
-                ( E. x ph /\ E. y A. x ( ph -> x = y ) ) ) $=
-      ( weu wex wsb wa weq wi wal eu2 mo anbi2i bitr4i ) ABEABFZAABCGHBCIZJCKBK
-      ZHPAQJBKCFZHABCDLSRPABCDMNO $.
-  $}
-
-  ${
-    $d x y $.
-    mo2.1 $e |- ( ph -> A. y ph ) $.
-    $( Alternate definition of "at most one."  (Contributed by NM,
-       8-Mar-1995.) $)
-    mo2 $p |- ( E* x ph <-> E. y A. x ( ph -> x = y ) ) $=
-      ( wmo wex weu wi weq wal df-mo alnex pm2.21 alimi 19.8a syl sylbir eumo0
-      wn ja eu3 simplbi2com impbii bitri ) ABEABFZABGZHZABCIZHZBJZCFZABKUGUKUEU
-      FUKUESASZBJZUKABLUMUJUKULUIBAUHMNUJCOPQABCDRTUFUEUKABCDUAUBUCUD $.
-  $}
-
-  ${
-    $d w x z $.  $d w y z $.  $d w ph $.
-    $( Substitution into "at most one".  (Contributed by Jeff Madsen,
-       2-Sep-2009.) $)
-    sbmo $p |- ( [ y / x ] E* z ph <-> E* z [ y / x ] ph ) $=
-      ( vw cv wceq wi wal wex wsbc wmo sbex ax-17 sblim sbalv exbii bitri sbbii
-      mo2 3bitr4i ) ADFEFGZHZDIZEJZBCFZKZABUFKZUBHZDIZEJZADLZBUFKUHDLUGUDBUFKZE
-      JUKUDEBCMUMUJEUCUIBCDAUBBCUBBNOPQRULUEBCADEAENTSUHDEUHENTUA $.
-  $}
-
-  ${
-    $d x y $.
-    mo3.1 $e |- ( ph -> A. y ph ) $.
-    $( Alternate definition of "at most one."  Definition of [BellMachover]
-       p. 460, except that definition has the side condition that ` y ` not
-       occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
-       8-Mar-1995.) $)
-    mo3 $p |- ( E* x ph <->
-               A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
-      ( wmo weq wi wal wex wsb wa mo2 mo bitri ) ABEABCFZGBHCIAABCJKOGCHBHABCDL
-      ABCDMN $.
-  $}
-
-  ${
-    $d x y $.  $d y ph $.
-    mo4f.1 $e |- ( ps -> A. x ps ) $.
-    mo4f.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
-    $( "At most one" expressed using implicit substitution.  (Contributed by
-       NM, 10-Apr-2004.) $)
-    mo4f $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
-      ( wmo wsb wa weq wi wal ax-17 mo3 sbieh anbi2i imbi1i 2albii bitri ) ACGAA
-      CDHZIZCDJZKZDLCLABIZUBKZDLCLACDADMNUCUECDUAUDUBTBAABCDEFOPQRS $.
-  $}
-
-  ${
-    $d x y $.  $d y ph $.  $d x ps $.
-    mo4.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
-    $( "At most one" expressed using implicit substitution.  (Contributed by
-       NM, 26-Jul-1995.) $)
-    mo4 $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
-      ( ax-17 mo4f ) ABCDBCFEG $.
-  $}
-
-  ${
-    $d x y $.  $d y ph $.  $d x ps $.
-    eu4.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
-    $( Uniqueness using implicit substitution.  (Contributed by NM,
-       26-Jul-1995.) $)
-    eu4 $p |- ( E! x ph <-> ( E. x ph /\
-             A. x A. y ( ( ph /\ ps ) -> x = y ) ) ) $=
-      ( weu wex wmo wa weq wi wal eu5 mo4 anbi2i bitri ) ACFACGZACHZIQABICDJKDL
-      CLZIACMRSQABCDENOP $.
-  $}
-
-  $( Existence in terms of "at most one" and uniqueness.  (Contributed by NM,
-     5-Apr-2004.) $)
-  exmoeu $p |- ( E. x ph <-> ( E* x ph -> E! x ph ) ) $=
-    ( wex wmo weu wi df-mo biimpi com12 biimpri euex imim12i peirce syl impbii
-    ) ABCZABDZABEZFZQPRQPRFZABGZHISTPFPTQRPQTUAJABKLPRMNO $.
-
-  $( Existence implies "at most one" is equivalent to uniqueness.  (Contributed
-     by NM, 5-Apr-2004.) $)
-  exmoeu2 $p |- ( E. x ph -> ( E* x ph <-> E! x ph ) ) $=
-    ( weu wex wmo eu5 baibr ) ABCABDABEABFG $.
-
-  $( Absorption of existence condition by "at most one."  (Contributed by NM,
-     4-Nov-2002.) $)
-  moabs $p |- ( E* x ph <-> ( E. x ph -> E* x ph ) ) $=
-    ( wex weu wi wmo pm5.4 df-mo imbi2i 3bitr4ri ) ABCZKABDZEZEMKABFZENKLGNMKAB
-    HZIOJ $.
-
-  $( Something exists or at most one exists.  (Contributed by NM,
-     8-Mar-1995.) $)
-  exmo $p |- ( E. x ph \/ E* x ph ) $=
-    ( wex wmo wn weu wi pm2.21 df-mo sylibr orri ) ABCZABDZLELABFZGMLNHABIJK $.
-
-  ${
-    $d x y $.  $d y ph $.  $d y ps $.
-    $( "At most one" is preserved through implication (notice wff reversal).
-       (Contributed by NM, 22-Apr-1995.) $)
-    immo $p |- ( A. x ( ph -> ps ) -> ( E* x ps -> E* x ph ) ) $=
-      ( vy wi wal weq wex wmo imim1 al2imi eximdv ax-17 mo2 3imtr4g ) ABEZCFZBC
-      DGZEZCFZDHAREZCFZDHBCIACIQTUBDPSUACABRJKLBCDBDMNACDADMNO $.
-  $}
-
-  ${
-    immoi.1 $e |- ( ph -> ps ) $.
-    $( "At most one" is preserved through implication (notice wff reversal).
-       (Contributed by NM, 15-Feb-2006.) $)
-    immoi $p |- ( E* x ps -> E* x ph ) $=
-      ( wi wmo immo mpg ) ABEBCFACFECABCGDH $.
-  $}
-
-  ${
-    $d x y $.  $d x y ph $.  $d y ps $.
-    $( Move antecedent outside of "at most one."  (Contributed by NM,
-       28-Jul-1995.) $)
-    moimv $p |- ( E* x ( ph -> ps ) -> ( ph -> E* x ps ) ) $=
-      ( vy wi wmo weq wal wex ax-1 a1i imim1d alimdv eximdv ax-17 3imtr4g com12
-      mo2 ) AABEZCFZBCFZASCDGZEZCHZDIBUBEZCHZDITUAAUDUFDAUCUECABSUBBSEABAJKLMNS
-      CDSDORBCDBDORPQ $.
-  $}
-
-  $( Uniqueness implies "at most one" through implication.  (Contributed by NM,
-     22-Apr-1995.) $)
-  euimmo $p |- ( A. x ( ph -> ps ) -> ( E! x ps -> E* x ph ) ) $=
-    ( weu wmo wi wal eumo immo syl5 ) BCDBCEABFCGACEBCHABCIJ $.
-
-  $( Add existential uniqueness quantifiers to an implication.  Note the
-     reversed implication in the antecedent.  (Contributed by NM,
-     19-Oct-2005.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
-  euim $p |- ( ( E. x ph /\ A. x ( ph -> ps ) ) -> ( E! x ps -> E! x ph ) ) $=
-    ( wex wi wal wa weu wmo ax-1 euimmo anim12ii eu5 syl6ibr ) ACDZABECFZGBCHZO
-    ACIZGACHOQOPROQJABCKLACMN $.
-
-  $( "At most one" is still the case when a conjunct is added.  (Contributed by
-     NM, 22-Apr-1995.) $)
-  moan $p |- ( E* x ph -> E* x ( ps /\ ph ) ) $=
-    ( wa simpr immoi ) BADACBAEF $.
-
-  ${
-    moani.1 $e |- E* x ph $.
-    $( "At most one" is still true when a conjunct is added.  (Contributed by
-       NM, 9-Mar-1995.) $)
-    moani $p |- E* x ( ps /\ ph ) $=
-      ( wmo wa moan ax-mp ) ACEBAFCEDABCGH $.
-  $}
-
-  $( "At most one" is still the case when a disjunct is removed.  (Contributed
-     by NM, 5-Apr-2004.) $)
-  moor $p |- ( E* x ( ph \/ ps ) -> E* x ph ) $=
-    ( wo orc immoi ) AABDCABEF $.
-
-  $( "At most one" imports disjunction to conjunction.  (Contributed by NM,
-     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-  mooran1 $p |- ( ( E* x ph \/ E* x ps ) -> E* x ( ph /\ ps ) ) $=
-    ( wmo wa simpl immoi moan jaoi ) ACDABEZCDBCDJACABFGBACHI $.
-
-  $( "At most one" exports disjunction to conjunction.  (Contributed by NM,
-     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-  mooran2 $p |- ( E* x ( ph \/ ps ) -> ( E* x ph /\ E* x ps ) ) $=
-    ( wo wmo moor olc immoi jca ) ABDZCEACEBCEABCFBJCBAGHI $.
-
-  ${
-    $d x y $.  $d y ph $.  $d y ps $.
-    moanim.1 $e |- ( ph -> A. x ph ) $.
-    $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
-       by NM, 3-Dec-2001.) $)
-    moanim $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
-      ( vy wa weq wi wal wex impexp albii 19.21h bitri exbii ax-17 imbi2i 19.37v
-      wmo mo2 bitr4i 3bitr4i ) ABFZCEGZHZCIZEJABUDHZCIZHZEJZUCCSABCSZHZUFUIEUFA
-      UGHZCIUIUEUMCABUDKLAUGCDMNOUCCEUCEPTULAUHEJZHUJUKUNABCEBEPTQAUHERUAUB $.
-
-    $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
-       NM, 19-Feb-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-    euan $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
-      ( wa weu wex wmo simpl exlimi adantr simpr eximi hbe1 ancrd impbid2 mobidh
-      a1d biimpa eu5 jca32 anbi2i 3imtr4i ibar eubidh impbii ) ABEZCFZABCFZEZUGC
-      GZUGCHZEZABCGZBCHZEZEUHUJUMAUNUOUKAULUGACDABIJZKUKUNULUGBCABLZMKUKULUOUKU
-      GBCUGCNUKUGBURUKBAUKABUQROPQSUAUGCTUIUPABCTUBUCAUIUHABUGCDABUDUESUF $.
-  $}
-
-  ${
-    $d x y ph $.  $d y ps $.
-    $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
-       by NM, 23-Mar-1995.) $)
-    moanimv $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
-      ( ax-17 moanim ) ABCACDE $.
-  $}
-
-  $( Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
-     25-Jan-2006.) $)
-  moaneu $p |- E* x ( ph /\ E! x ph ) $=
-    ( weu wa wmo wi eumo hbeu1 moanim mpbir ancom mobii ) AABCZDZBEMADZBEZPMABE
-    FABGMABABHIJNOBAMKLJ $.
-
-  $( Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) $)
-  moanmo $p |- E* x ( ph /\ E* x ph ) $=
-    ( wmo wa wi id hbmo1 moanim mpbir ancom mobii ) AABCZDZBCLADZBCZOLLELFLABAB
-    GHIMNBALJKI $.
-
-  ${
-    $d x ph $.
-    $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
-       NM, 23-Mar-1995.) $)
-    euanv $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
-      ( ax-17 euan ) ABCACDE $.
-  $}
-
-  ${
-    $d x y $.  $d y ph $.  $d y ps $.
-    $( "At most one" picks a variable value, eliminating an existential
-       quantifier.  (Contributed by NM, 27-Jan-1997.) $)
-    mopick $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
-      ( vy wa wex wmo wi wsb ax-17 hbs1 hban weq sbequ12 anbi12d cbvexh wal ax-4
-      mo3 sylbi sps sbequ2 imim2i exp3a com4t imp syl5 exlimiv impcom ) ABEZCFZ
-      ACGZABHZUKACDIZBCDIZEZDFULUMHZUJUPCDUJDJUNUOCACDKBCDKLCDMZAUNBUOACDNBCDNO
-      PUPUQDULAUNEZURHZUPUMULUTDQZCQUTACDADJSVAUTCUTDRUATUNUOUTUMHUTAUNUOBUTAUN
-      UOBHZURVBUSBCDUBUCUDUEUFUGUHTUI $.
-  $}
-
-  $( Existential uniqueness "picks" a variable value for which another wff is
-     true.  If there is only one thing ` x ` such that ` ph ` is true, and
-     there is also an ` x ` (actually the same one) such that ` ph ` and ` ps `
-     are both true, then ` ph ` implies ` ps ` regardless of ` x ` .  This
-     theorem can be useful for eliminating existential quantifiers in a
-     hypothesis.  Compare Theorem *14.26 in [WhiteheadRussell] p. 192.
-     (Contributed by NM, 10-Jul-1994.) $)
-  eupick $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
-    ( weu wmo wa wex wi eumo mopick sylan ) ACDACEABFCGABHACIABCJK $.
-
-  $( Version of ~ eupick with closed formulas.  (Contributed by NM,
-     6-Sep-2008.) $)
-  eupicka $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> A. x ( ph -> ps ) ) $=
-    ( weu wa wex wi hbeu1 hbe1 hban eupick alrimih ) ACDZABEZCFZEABGCMOCACHNCIJA
-    BCKL $.
-
-  $( Existential uniqueness "pick" showing wff equivalence.  (Contributed by
-     NM, 25-Nov-1994.) $)
-  eupickb $p |- ( ( E! x ph /\ E! x ps /\ E. x ( ph /\ ps ) ) ->
-               ( ph <-> ps ) ) $=
-    ( weu wa wex w3a wi eupick 3adant2 3simpc pm3.22 eximi anim2i 3syl impbid )
-    ACDZBCDZABEZCFZGZABQTABHRABCIJUARTERBAEZCFZEBAHQRTKTUCRSUBCABLMNBACIOP $.
-
-  $( Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
-     Salmon, 11-Jul-2011.) $)
-  eupickbi $p |- ( E! x ph -> ( E. x ( ph /\ ps ) <-> A. x ( ph -> ps ) ) ) $=
-    ( weu wa wex wi wal eupicka ex hba1 wb ancl simpl impbid1 eubidh euex syl6bi
-    sps com12 impbid ) ACDZABEZCFZABGZCHZUBUDUFABCIJUFUBUDUFUBUCCDUDUFAUCCUECKU
-    EAUCLCUEAUCABMABNOSPUCCQRTUA $.
-
-  $( "At most one" can show the existence of a common value.  In this case we
-     can infer existence of conjunction from a conjunction of existence, and it
-     is one way to achieve the converse of ~ 19.40 .  (Contributed by NM,
-     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-  mopick2 $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) /\ E. x ( ph /\ ch ) ) ->
-                E. x ( ph /\ ps /\ ch ) ) $=
-    ( wmo wa wex w3a hbmo1 hbe1 mopick ancld anim1d df-3an syl6ibr eximdh 3impia
-    hban ) ADEZABFZDGZACFZDGABCHZDGSUAFZUBUCDSUADADITDJRUDUBTCFUCUDATCUDABABDKL
-    MABCNOPQ $.
-
-  $( Introduce or eliminate a disjunct in a uniqueness quantifier.
-     (Contributed by NM, 21-Oct-2005.)  (Proof shortened by Andrew Salmon,
-     9-Jul-2011.) $)
-  euor2 $p |- ( -. E. x ph -> ( E! x ( ph \/ ps ) <-> E! x ps ) ) $=
-    ( wex wn wo hbe1 hbn wb 19.8a con3i orel1 olc impbid1 syl eubidh ) ACDZEZABF
-    ZBCQCACGHRAEZSBIAQACJKTSBABLBAMNOP $.
-
-  ${
-    moexex.1 $e |- ( ph -> A. y ph ) $.
-    $( "At most one" double quantification.  (Contributed by NM,
-       3-Dec-2001.) $)
-    moexex $p |- ( ( E* x ph /\ A. x E* y ps ) -> E* y E. x ( ph /\ ps ) ) $=
-      ( wmo wal wa wex wi hbmo1 hba1 hbe1 hbmo hbim mopick ex exlimi wn a1d ori
-      com3r alrimdh immo spsd syl6 hbex exsimpl con3i exmo syl pm2.61i imp ) ACF
-      ZBDFZCGZABHZCIZDFZACIZUNUPUSJZJZAVBCUNVACACKUPUSCUOCLURCDUQCMNOOAUNURBJZD
-      GZVAAUNVCDEADCENUNURABUNURABJABCPQUBUCVDUOUSCURBDUDUEUFRUTSZVAUNVEUSUPVEU
-      RDIZSUSVFUTURUTDADCEUGABCUHRUIVFUSURDUJUAUKTTULUM $.
-  $}
-
-  ${
-    $d y ph $.
-    $( "At most one" double quantification.  (Contributed by NM,
-       26-Jan-1997.) $)
-    moexexv $p |- ( ( E* x ph /\ A. x E* y ps ) -> E* y E. x ( ph /\ ps ) ) $=
-      ( ax-17 moexex ) ABCDADEF $.
-  $}
-
-  $( Double quantification with "at most one."  (Contributed by NM,
-     3-Dec-2001.) $)
-  2moex $p |- ( E* x E. y ph -> A. y E* x ph ) $=
-    ( wex wmo hbe1 hbmo 19.8a immoi alrimih ) ACDZBEABECKCBACFGAKBACHIJ $.
-
-  $( Double quantification with existential uniqueness.  (Contributed by NM,
-     3-Dec-2001.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-  2euex $p |- ( E! x E. y ph -> E. y E! x ph ) $=
-    ( wex weu wmo wa eu5 excom hbe1 19.8a immoi df-mo sylib eximdh syl5bi impcom
-    hbmo wi sylbi ) ACDZBEUABDZUABFZGABEZCDZUABHUCUBUEUBABDZCDUCUEABCIUCUFUDCUA
-    CBACJRUCABFUFUDSAUABACKLABMNOPQT $.
-
-  $( Double quantification with existential uniqueness and "at most one."
-     (Contributed by NM, 3-Dec-2001.) $)
-  2eumo $p |- ( E! x E* y ph -> E* x E! y ph ) $=
-    ( weu wmo wi euimmo eumo mpg ) ACDZACEZFKBDJBEFBJKBGACHI $.
-
-  $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
-  2eu2ex $p |- ( E! x E! y ph -> E. x E. y ph ) $=
-    ( weu wex euex eximi syl ) ACDZBDIBEACEZBEIBFIJBACFGH $.
-
-  $( A condition allowing swap of "at most one" and existential quantifiers.
-     (Contributed by NM, 10-Apr-2004.) $)
-  2moswap $p |- ( A. x E* y ph -> ( E* x E. y ph -> E* y E. x ph ) ) $=
-    ( wmo wal wex wa hbe1 moexex expcom 19.8a pm4.71ri exbii mobii syl6ibr ) AC
-    DBEZACFZBDZQAGZBFZCDZABFZCDRPUAQABCACHIJUBTCASBAQACKLMNO $.
-
-  $( A condition allowing swap of uniqueness and existential quantifiers.
-     (Contributed by NM, 10-Apr-2004.) $)
-  2euswap $p |- ( A. x E* y ph -> ( E! x E. y ph -> E! y E. x ph ) ) $=
-    ( wmo wal wex wa weu wi excomim a1i 2moswap anim12d eu5 3imtr4g ) ACDBEZACF
-    ZBFZQBDZGABFZCFZTCDZGQBHTCHPRUASUBRUAIPABCJKABCLMQBNTCNO $.
-
-  $( Double existential uniqueness implies double uniqueness quantification.
-     (Contributed by NM, 3-Dec-2001.) $)
-  2exeu $p |- ( ( E! x E. y ph /\ E! y E. x ph ) -> E! x E! y ph ) $=
-    ( wex wmo weu excom hbe1 19.41h 19.8a immoi anim2i eximi sylbir sylanb simpl
-    wa hbmo eu5 anbi12i adantl anim12i ancoms exbii mobii bitri 3imtr4i ) ACDZB
-    DZUHBEZQZABDZCDZULCEZQZQUHACEZQZBDZUQBEZQZUHBFZULCFZQACFZBFZUOUKUTUOURUKUSU
-    MUIUNURACBGUIUNQUHUNQZBDURUHUNBULBCABHRIVEUQBUNUPUHAULCABJKLMNOUJUSUIUQUHBU
-    HUPPKUAUBUCVAUKVBUOUHBSULCSTVDVCBDZVCBEZQUTVCBSVFURVGUSVCUQBACSZUDVCUQBVHUE
-    TUFUG $.
-
-  ${
-    $d x y z w v u $.  $d z w v u ph $.
-    $( Two equivalent expressions for double "at most one."  (Contributed by
-       NM, 2-Feb-2005.) $)
-    2mo $p |- ( E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) <->
-              A. x A. y A. z A. w ( ( ph /\ [ z / x ] [ w / y ] ph ) ->
-                   ( x = z /\ y = w ) ) ) $=
-      ( vv vu weq wa wi wal wex wsb equequ2 bi2anan9 ax-17 albii bitri 2alimi
-      wn imbi2d 2albidv cbvex2v hbs1 hbim hbsb sbequ12 sylan9bbr equequ1 cbval2
-      imbi12d biimpi ancli alcom aaan hbal sylibr prth equtr2 anim12i an4s syl6
-      syl exlimivv sylbir impexp bi2.04 2albii alrimih 2eximi alrot4 alim al2imi
-      sylbi exim alimi syl5com syl5bi alnex notbid biimpri pm2.21 19.8a 19.23bi
-      3syl hbn a1d pm2.61i impbii ) ABDHZCEHZIZJZCKZBKZELZDLZAACEMZBDMZIZWLJZEK
-      DKZCKBKZWQABFHZCGHZIZJZCKZBKZGLFLXCXIWOFGDEFDHZGEHZIZXGWMBCXLXFWLAXJXDWJX
-      KXEWKFDBNGECNOUAUBUCXIXCFGXIXGWSDFHZEGHZIZJZIZEKZDKZCKZBKZXCXIXIXPEKZDKZI
-      ZYAXIYCXIYCXGXPBCDEXGDPXGEPZWSXOBWRBDUDZXOBPUEZWSXOCWRBDCACEUDUFZXOCPUEZW
-      LAWSXFXOWKAWRWJWSACEUGWRBDUGUHZWJXDXMWKXEXNBDFUICEGUIOUKUJULUMYAXHYBIZDKZ
-      BKYDXTYLBXTXRCKZDKYLXRCDUNYMYKDXGXPCEYEYIUOQRQXHYBBDXHDPXPBEYGUPUORUQXSXB
-      BCXQXADEXQWTXFXOIWLAXFWSXOURXDXMXEXNWLXDXMIWJXEXNIWKBDFUSCEGUSUTVAVBSSVCV
-      DVEWSELZDLZXCWQJXCWSWMJZEKDKZCKBKZYOWQXBYQBCXAYPDEXAAWSWLJJYPAWSWLVFAWSWL
-      VGRVHVHYOWSCKZBKZELZDLZYRWQWSYTDEWSYSBYFYHVIVJYRYTWOJZEKZDKZUUAWPJZDKUUBW
-      QJYRYPCKZBKZEKDKUUEYPBCDEVKUUHUUCDEUUGYSWNBWSWMCVLVMSVNUUDUUFDYTWOEVOVPUU
-      AWPDVOWEVQVRYOTZWQXCUUIWSTZEKZDKZWQUULYNTZDKUUIUUKUUMDWSEVSQYNDVSRUULATZC
-      KBKZWOWQUUOUULUUNUUJBCDEUUNDPUUNEPWSBYFWFWSCYHWFWLAWSYJVTUJWAUUNWMBCAWLWB
-      SWOWQEWPDWCWDWEVEWGWHWI $.
-  $}
-
-  ${
-    $d z w ph $.  $d x y ps $.  $d x y z w $.
-    2mos.1 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
-    $( Double "exists at most one", using implicit substitition.  (Contributed
-       by NM, 10-Feb-2005.) $)
-    2mos $p |- ( E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) <->
-             A. x A. y A. z A. w ( ( ph /\ ps ) -> ( x = z /\ y = w ) ) ) $=
-      ( weq wa wi wal wex wsb 2mo ax-17 sbrim wb expcom sbieh 2albii pm5.74ri
-      pm5.74d bitr3i anbi2i imbi1i bitri ) ACEHZDFHZIZJDKCKFLELAADFMZCEMZIZUIJZ
-      FKEKZDKCKABIZUIJZFKEKZDKCKACDEFNUNUQCDUMUPEFULUOUIUKBAUJBCEBCOUGUJBUGUJJU
-      GAJZDFMUGBJZUGADFUGDOPURUSDFUSDOUHUGABUGUHABQGRUBSUCUASUDUETTUF $.
-  $}
-
-  $( Double existential uniqueness.  This theorem shows a condition under which
-     a "naive" definition matches the correct one.  (Contributed by NM,
-     3-Dec-2001.) $)
-  2eu1 $p |- ( A. x E* y ph ->
-        ( E! x E! y ph <-> ( E! x E. y ph /\ E! y E. x ph ) ) ) $=
-    ( wmo wal weu wex wa wi eu5 exbii mobii anbi12i bitri simprbi anim2i ancoms
-    ax-4 sylib com12 immoi hba1 moanim ancrd 2moswap imdistani syl 2eu2ex excom
-    syl6 jca jctild an4 syl6ibr 2exeu impbid1 ) ACDZBEZACFZBFZACGZBFZABGZCFZHZU
-    TURVEUTURVABGZVCCGZHZVABDZVCCDZHZHZVEUTURVKVHUTVAUQHZBDZURVKIUTVMBGZVNUTUSB
-    GZUSBDZHVOVNHUSBJVPVOVQVNUSVMBACJZKUSVMBVRLMNOVNURVIURHVKVNURVIVNURVAHZBDUR
-    VIIVSVMBVAURVMURUQVAUQBRPQUAURVABUQBUBUCSUDVIURVJURVIVJABCUETUFUJUGUTVFVGAB
-    CUHZUTVFVGVTABCUISUKULVEVFVIHZVGVJHZHVLVBWAVDWBVABJVCCJMVFVIVGVJUMNUNTABCUO
-    UP $.
-
-  $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
-  2eu2 $p |- ( E! y E. x ph -> ( E! x E! y ph <-> E! x E. y ph ) ) $=
-    ( wex weu wmo wal wi eumo 2moex 2eu1 simpl syl6bi 3syl 2exeu expcom impbid
-    wa ) ABDZCEZACEBEZACDBEZTSCFACFBGZUAUBHSCIACBJUCUAUBTRUBABCKUBTLMNUBTUAABCO
-    PQ $.
-
-
-  $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
-  2eu3 $p |- ( A. x A. y ( E* x ph \/ E* y ph ) ->
- ( ( E! x E! y ph /\ E! y E! x ph ) <-> ( E! x E. y ph /\ E! y E. x ph ) ) ) $=
-    ( wmo wo wal weu wa wex wb hbmo1 19.31 albii hbal 19.32 bitri wi 2eu1 2exeu
-    biimpd ancom syl6ib adantld adantrd jaoi ancoms jca impbid1 sylbi ) ABDZACD
-    ZECFZBFZUJCFZUKBFZEZACGBGZABGCGZHZACIBGZABICGZHZJUMUNUKEZBFUPULVCBUJUKCACKL
-    MUNUKBUJBCABKNOPUPUSVBUNUSVBQUOUNURVBUQUNURVAUTHZVBUNURVDACBRTVAUTUAUBUCUOU
-    QVBURUOUQVBABCRTUDUEVBUQURABCSVAUTURACBSUFUGUHUI $.
-
-  ${
-    $d x y z w $.  $d z w ph $.
-    $( This theorem provides us with a definition of double existential
-       uniqueness ("exactly one ` x ` and exactly one ` y ` ").  Naively one
-       might think (incorrectly) that it could be defined by
-       ` E! x E! y ph ` .  See ~ 2eu1 for a condition under which the naive
-       definition holds and ~ 2exeu for a one-way implication.  See ~ 2eu5 and
-       ~ 2eu8 for alternate definitions.  (Contributed by NM, 3-Dec-2001.) $)
-    2eu4 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <->
-      ( E. x E. y ph /\ E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) ) ) $=
-      ( wex weu wa weq wal ax-17 eu3 anbi12i anbi2i bitri hba1 19.3 19.26 albii
-      wi an4 excom anidm jcab 3bitr4ri alcom bitr4i 19.23v 2albii 3bitri 2exbii
-      hbe1 hbim aaan eeanv bitr2i ) ACFZBGZABFZCGZHUQBFZUQBDIZTZBJZDFZHZUSCFZUS
-      CEIZTZCJZEFZHZHVAVGHZVEVKHZHVAAVBVHHTZCJZBJZEFDFZHURVFUTVLUQBDUQDKLUSCEUS
-      EKLMVAVEVGVKUAVMVAVNVRVMVAVAHVAVGVAVAACBUBNVAUCOVRVDVJHZEFDFVNVQVSDEVQAVB
-      TZCJZAVHTZBJZHZCJZBJZVCVIHZCJBJVSVQWAWBCJZBJZHZBJZWFWABJZWIBJZHWLWIHZWKVQ
-      WMWIWLWIBWHBPQNWAWIBRVQWAWHHZBJWNVPWOBVPVTWBHZCJWOVOWPCAVBVHUDSVTWBCROSWA
-      WHBROUEWEWJBWEWACJZWCCJZHWJWAWCCRWQWAWRWIWACVTCPQWBCBUFMOSUGWDWGBCWAVCWCV
-      IAVBCUHAVHBUHMUIVCVIBCUQVBCACULVBCKUMUSVHBABULVHBKUMUNUJUKVDVJDEUOUPMUJ
-      $.
-
-    $( An alternate definition of double existential uniqueness (see ~ 2eu4 ).
-       A mistake sometimes made in the literature is to use ` E! x E! y ` to
-       mean "exactly one ` x ` and exactly one ` y ` ."  (For example, see
-       Proposition 7.53 of [TakeutiZaring] p. 53.)  It turns out that this is
-       actually a weaker assertion, as can be seen by expanding out the formal
-       definitions.  This theorem shows that the erroneous definition can be
-       repaired by conjoining ` A. x E* y ph ` as an additional condition.  The
-       correct definition apparently has never been published.  ( ` E* ` means
-       "exists at most one.") (Contributed by NM, 26-Oct-2003.) $)
-    2eu5 $p |- ( ( E! x E! y ph /\ A. x E* y ph ) <->
-      ( E. x E. y ph /\ E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) ) ) $=
-      ( weu wmo wal wa wex weq 2eu1 pm5.32ri eumo adantl 2moex syl pm4.71i 2eu4
-      wi 3bitr2i ) ACFBFZACGBHZIACJZBFZABJZCFZIZUCIUHUDBJABDKCEKITCHBHEJDJIUCUB
-      UHABCLMUHUCUHUFCGZUCUGUIUEUFCNOACBPQRABCDESUA $.
-  $}
-
-  ${
-    $d x y z w v u $.  $d z w v u ph $.
-    $( Two equivalent expressions for double existential uniqueness.
-       (Contributed by NM, 2-Feb-2005.) $)
-    2eu6 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <->
-               E. z E. w A. x A. y ( ph <-> ( x = z /\ y = w ) ) ) $=
-      ( vu vv wex wa weq wi wal ax-17 hbsb sbequ12 equequ2 bi2anan9 hbim 2exbii
-      wsb weu 2eu4 19.29r2 hbs1 sylan9bbr cbvex2 imbi2d 2albidv cbvex2v equequ1
-      wb imbi12d cbval2 3bitri anbi12i 2albiim ancom bitri equcom imbi2i impexp
-      2mo 2albii hban sbco2h sbcom2 sbbii 3bitr3ri syl6bb anbi2d 19.21-2 3bitr3i
-      anbi2i abai 2sb6 anbi1i 3bitr2i bitr4i 3imtr4i 2alimi 2eximi 2exsb sylibr
-      bi2 bi1 jca impbii ) ACHZBUAABHCUAIWHBHZABDJZCEJZIZKZCLBLZEHDHZIZAWLUKZCL
-      BLZEHDHZABCDEUBWPWSACETZBDTZEHDHZXAXAEFTZDGTZIZDGJZEFJZIZKZFLGLZELDLZIXAX
-      JIZEHDHZWPWSXAXJDEUCWIXBWOXKAXABCDEADMAEMZWTBDUDZWTBDCACEUDNZWKAWTWJXAACE
-      OWTBDOUEZUFWOABGJZCFJZIZKZCLBLZFHGHXAXHKZELDLZFHGHXKWNYBDEGFXHWMYABCXHWLX
-      TAXFWJXRXGWKXSDGBPEFCPQUGUHUIYBYDGFYAYCBCDEYADMYAEMXAXHBXOXHBMZRXAXHCXPXH
-      CMZRWLAXAXTXHXQWJXRXFWKXSXGBDGUJCEFUJQULUMSXADEGFVBUNUOWSWLAKZCLBLZWNIZEH
-      DHXMWRYIDEWRWNYHIYIAWLBCUPWNYHUQURSXLYIDEXLXAXAWNKZIXAWNIYIXJYJXAXAAIZDBJ
-      ZECJZIZKZCLBLXAWMKZCLBLXJYJYOYPBCYOYKWLKYPYNWLYKYLWJYMWKDBUSECUSUOUTXAAWL
-      VAURVCYOXIBCGFYOGMYOFMXEXHBXAXDBXOXCDGBXAEFBXONNVDYERXEXHCXAXDCXPXCDGCXAE
-      FCXPNNVDYFRXTYKXEYNXHXTAXDXAXTAACFTZBGTZXDXSAYQXRYRACFOYQBGOUEWTEFTZBDTZD
-      GTYSBGTXDYRYSBGDYSDMVEYTXCDGWTEFBDVFVGYSYQBGACFEXNVEVGVHVIVJXRYLXFXSYMXGB
-      GDPCFEPQULUMXAWMBCXOXPVKVLVMXAWNVNXAYHWNABCDEVOVPVQSVRVSWSWIWOWSYHEHDHWIW
-      RYHDEWQYGBCAWLWDVTWAABCDEWBWCWRWNDEWQWMBCAWLWEVTWAWFWGUR $.
-  $}
-
-  $( Two equivalent expressions for double existential uniqueness.
-     (Contributed by NM, 19-Feb-2005.) $)
-  2eu7 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <->
-             E! x E! y ( E. x ph /\ E. y ph ) ) $=
-    ( wex weu wa hbe1 hbeu euan ancom eubii 3bitri 3bitr4ri ) ABDZCEZACDZFZBEOP
-    BEZFNPFZCEZBEROFOPBNBCABGHITQBTPNFZCEPOFQSUACNPJKPNCACGIPOJLKROJM $.
-
-  $( Two equivalent expressions for double existential uniqueness.  Curiously,
-     we can put ` E! ` on either of the internal conjuncts but not both.  We
-     can also commute ` E! x E! y ` using ~ 2eu7 .  (Contributed by NM,
-     20-Feb-2005.) $)
-  2eu8 $p |- ( E! x E! y ( E. x ph /\ E. y ph ) <->
-                E! x E! y ( E! x ph /\ E. y ph ) ) $=
-    ( wex wa 2eu2 pm5.32i hbeu1 hbeu euan ancom eubii hbe1 3bitri 3bitr4ri 2eu7
-    weu 3bitr3ri ) ACDZBQZABQZCQZEZTABDZCQZEUASEZCQZBQZUDSECQBQTUBUEACBFGUBSEZB
-    QUBTEUHUCUBSBUABCABHIJUGUIBUGSUAEZCQSUBEUIUFUJCUASKLSUACACMJSUBKNLTUBKOABCP
-    R $.
-
-  ${
-    $d x y z $.
-    $( Equality has existential uniqueness.  (Contributed by Stefan Allan,
-       4-Dec-2008.) $)
-    euequ1 $p |- E! x x = y $=
-      ( vz weq weu wex wa wi wal a9e equtr2 gen2 equequ1 eu4 mpbir2an ) ABDZAEP
-      AFPCBDZGACDHZCIAIABJRACACBKLPQACACBMNO $.
-  $}
-
-  ${
-    $d x y $.
-    $( Two ways to express "only one thing exists."  The left-hand side
-       requires only one variable to express this.  Both sides are false in set
-       theory.  (Contributed by NM, 5-Apr-2004.) $)
-    exists1 $p |- ( E! x x = x <-> A. x x = y ) $=
-      ( weq weu wb wal wex df-eu equid tbt bicom bitri albii exbii hbae 3bitr2i
-      19.9h ) AACZADRABCZEZAFZBGSAFZBGUBRABHUBUABSTASSRETRSAIJSRKLMNUBBABBOQP $.
-
-    $( A condition implying that at least two things exist.  (Contributed by
-       NM, 10-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
-    exists2 $p |- ( ( E. x ph /\ E. x -. ph ) -> -. E! x x = x ) $=
-      ( vy wex wn cv wceq weu wal hbeu1 hba1 wi exists1 ax16 sylbi exlimd alex
-      com12 syl6ib con2d imp ) ABDZAEBDZBFZUDGZBHZEUBUFUCUBUFABIZUCEUFUBUGUFAUG
-      BUEBJABKUFUDCFGBIAUGLBCMABCNOPRABQSTUA $.
-  $}
-
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 Classical (not intuitionistic) results
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
-
-  $( Theorem *4.81 of [WhiteheadRussell] p. 122.  This one does not hold
-     intuitionistically, but compare with ~ pm4.8 which does.  (Contributed by
-     NM, 3-Jan-2005.) $)
-  pm4.81 $p |- ( ( -. ph -> ph ) <-> ph ) $=
-    ( wn wi pm2.18 pm2.24 impbii ) ABACAADAAEF $.
 
   $( Theorem *4.52 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 5-Nov-2012.) $)
@@ -20607,155 +25981,6 @@ $)
                 ( ph -> ( ps \/ ch ) ) ) $=
     ( wn wo wi orordi imor orbi12i 3bitr4ri ) ADZBCEZEKBEZKCEZEALFABFZACFZEKBCG
     ALHOMPNABHACHIJ $.
-
-  $( The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
-     of Lukasiewicz.  Using ~ dfor2dc , we can see that this (classically)
-     expresses "disjunction commutes."  Theorem *2.69 of [WhiteheadRussell]
-     p. 108.  Our proof of ~ looinv is a classical, rather than intuitionistic,
-     result.  (Contributed by NM, 12-Aug-2004.) $)
-  looinv $p |- ( ( ( ph -> ps ) -> ps ) -> ( ( ps -> ph ) -> ph ) ) $=
-    ( wi imim1 peirce syl6 ) ABCZBCBACGACAGBADABEF $.
-
-  ${
-    19.36.1 $e |- ( ps -> A. x ps ) $.
-    $( Theorem 19.36 of [Margaris] p. 90.  The forward direction, ~ 19.36i , is
-       valid intuitionistically, but the reverse direction is not.
-       (Contributed by NM, 5-Aug-1993.) $)
-    19.36 $p |- ( E. x ( ph -> ps ) <-> ( A. x ph -> ps ) ) $=
-      ( wi wex wal 19.35 19.9h imbi2i bitri ) ABECFACGZBCFZELBEABCHMBLBCDIJK $.
-  $}
-
-  ${
-    $d x ps $.
-    $( Special case of Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
-       18-Aug-1993.) $)
-    19.36v $p |- ( E. x ( ph -> ps ) <-> ( A. x ph -> ps ) ) $=
-      ( ax-17 19.36 ) ABCBCDE $.
-  $}
-
-  $( Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
-  19.39 $p |- ( ( E. x ph -> E. x ps ) -> E. x ( ph -> ps ) ) $=
-    ( wex wi wal 19.2 imim1i 19.35 sylibr ) ACDZBCDZEACFZLEABECDMKLACCGHABCIJ
-    $.
-
-  $( Theorem 19.24 of [Margaris] p. 90.  It does not hold in intuitionistic
-     logic.  (Contributed by NM, 5-Aug-1993.) $)
-  19.24 $p |- ( ( A. x ph -> A. x ps ) -> E. x ( ph -> ps ) ) $=
-    ( wal wi wex 19.2 imim2i 19.35 sylibr ) ACDZBCDZEKBCFZEABECFLMKBCCGHABCIJ
-    $.
-
-  ${
-    $d x ps $.  $d y ph $.
-    $( Special case of ~ 19.12 where its converse holds.  (Contributed by NM,
-       18-Jul-2001.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
-    19.12vv $p |- ( E. x A. y ( ph -> ps ) <-> A. y E. x ( ph -> ps ) ) $=
-      ( wal wex 19.21v exbii ax-17 hbal 19.36 19.36v albii 19.21h bitr2i 3bitri
-      wi ) ABQZDEZCFABDEZQZCFACEZTQZRCFZDEZSUACABDGHATCBCDBCIJKUEUBBQZDEUCUDUFD
-      ABCLMUBBDADCADIJNOP $.
-  $}
-
-  $( Theorem 19.14 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
-  exnal $p |- ( E. x -. ph <-> -. A. x ph ) $=
-    ( wal wn wex alex con2bii ) ABCADBEABFG $.
-
-  $( Part of theorem *11.5 in [WhiteheadRussell] p. 164.  (Contributed by
-     Andrew Salmon, 24-May-2011.) $)
-  2nalexn $p |- ( -. A. x A. y ph <-> E. x E. y -. ph ) $=
-    ( wn wex wal df-ex alex albii xchbinxr bicomi ) ADCEZBEZACFZBFZDMLDZBFOLBGN
-    PBACHIJK $.
-
-  $( A relationship between two quantifiers and negation.  (Contributed by NM,
-     18-Aug-1993.) $)
-  alexn $p |- ( A. x E. y -. ph <-> -. E. x A. y ph ) $=
-    ( wn wex wal exnal albii alnex bitri ) ADCEZBFACFZDZBFLBEDKMBACGHLBIJ $.
-
-  $( Theorem *11.51 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
-     Salmon, 24-May-2011.)  (Proof shortened by Wolf Lammen, 25-Sep-2014.) $)
-  2exnexn $p |- ( E. x A. y ph <-> -. A. x E. y -. ph ) $=
-    ( wn wex wal alexn con2bii ) ADCEBFACFBEABCGH $.
-
-  $( A transformation of quantifiers and logical connectives.  (Contributed by
-     NM, 25-Mar-1996.)  (Proof shortened by Wolf Lammen, 4-Sep-2014.) $)
-  exanali $p |- ( E. x ( ph /\ -. ps ) <-> -. A. x ( ph -> ps ) ) $=
-    ( wn wa wex wi wal annim exbii exnal bitri ) ABDEZCFABGZDZCFNCHDMOCABIJNCKL
-    $.
-
-  $( Theorem 19.30 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
-     (Proof shortened by Andrew Salmon, 25-May-2011.) $)
-  19.30 $p |- ( A. x ( ph \/ ps ) -> ( A. x ph \/ E. x ps ) ) $=
-    ( wn wi wal wex wo exnal exim syl5bir df-or albii 3imtr4i ) ADZBEZCFZACFZDZ
-    BCGZEABHZCFRTHSOCGQTACIOBCJKUAPCABLMRTLN $.
-
-  ${
-    19.35ri.1 $e |- ( A. x ph -> E. x ps ) $.
-    $( Inference from Theorem 19.35 of [Margaris] p. 90.  (Contributed by NM,
-       5-Aug-1993.) $)
-    19.35ri $p |- E. x ( ph -> ps ) $=
-      ( wi wex wal 19.35 mpbir ) ABECFACGBCFEDABCHI $.
-  $}
-
-  $( Quantified "excluded middle."  Exercise 9.2a of Boolos, p. 111,
-     _Computability and Logic_.  (Contributed by NM, 10-Dec-2000.) $)
-  qexmid $p |- E. x ( ph -> A. x ph ) $=
-    ( wal 19.8a 19.35ri ) AABCZBFBDE $.
-
-  $( Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
-     or always false.  This is a classical result.  (Contributed by Mario
-     Carneiro, 24-Sep-2016.) $)
-  nf4 $p |- ( F/ x ph <-> ( A. x ph \/ A. x -. ph ) ) $=
-    ( wnf wex wal wi wn wo nf2 imor orcom alnex orbi2i bitr4i 3bitri ) ABCABDZA
-    BEZFPGZQHZQAGBEZHZABIPQJSQRHUARQKTRQABLMNO $.
-
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-             Additional substitution theorems (classical)
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-We define substitution via ~ df-sb (and also have theorems such
-as ~ dfsb7 or ~ dfsb7a ), and most of the substitution theorems such as
-~ sbim , ~ sbequ12 , or ~ sbidm have been proven intuitionistically.
-
-Here we collect substitution theorems which have not been proven
-intuitionistically, most of which probably do not have intuitionistic
-proofs.
-$)
-
-  $( A classical (not intuitionistic) alternate definition of proper
-     substitution that, like ~ df-sb , mixes free and bound variables to avoid
-     distinct variable requirements.  (Contributed by NM, 17-Feb-2005.) $)
-  dfsb2 $p |- ( [ y / x ] ph <->
-              ( ( x = y /\ ph ) \/ A. x ( x = y -> ph ) ) ) $=
-    ( wsb weq wa wi wal wo sbequ2 sps ax-4 jctild orc wn sb4 olc pm2.61i sbequ1
-    syl6 imp sb2 jaoi impbii ) ABCDZBCEZAFZUFAGBHZIZUFBHZUEUIGUJUEUGUIUJUEAUFUF
-    UEAGBABCJKUFBLMUGUHNTUJOUEUHUIABCPUHUGQTRUGUEUHUFAUEABCSUAABCUBUCUD $.
-
-  $( A classical (not intuitionistic) alternate definition of proper
-     substitution ~ df-sb that uses only connectives on the right-hand side
-     which are, in classical logic, primitive rather than defined.
-     (Contributed by NM, 6-Mar-2007.) $)
-  dfsb3 $p |- ( [ y / x ] ph <->
-              ( ( x = y -> -. ph ) -> A. x ( x = y -> ph ) ) ) $=
-    ( weq wa wi wal wo wn wsb df-or dfsb2 imnan imbi1i 3bitr4i ) BCDZAEZPAFBGZH
-    QIZRFABCJPAIFZRFQRKABCLTSRPAMNO $.
-
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                  Exclusive or and related theorems (classical)
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-Most exclusive-or theorems are covered in ~ df-xor and related theorems
-(such as ~ xornbi ). Here we have one remaining theorem which depends on
-~ ax-3 .
-
-$)
-
-  $( Conjunction distributes over exclusive-or, using ` -. ( ph <-> ps ) ` to
-     express exclusive-or.  This is one way to interpret the distributive law
-     of multiplication over addition in modulo 2 arithmetic.  (Contributed by
-     NM, 3-Oct-2008.) $)
-  xordi $p |- ( ( ph /\ -. ( ps <-> ch ) ) <->
-                -. ( ( ph /\ ps ) <-> ( ph /\ ch ) ) ) $=
-    ( wb wn wa wi annim pm5.32 xchbinx ) ABCDZEFAKGABFACFDAKHABCIJ $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -20912,6 +26137,12 @@ htmldef "w" as "<IMG SRC='_w.gif' WIDTH=12 HEIGHT=19 TITLE='w' ALIGN=TOP>";
 htmldef "v" as "<IMG SRC='_v.gif' WIDTH=9 HEIGHT=19 TITLE='v' ALIGN=TOP>";
   althtmldef "v" as '<I><FONT COLOR="#FF0000">v</FONT></I>';
   latexdef "v" as "v";
+htmldef "u" as "<IMG SRC='_u.gif' WIDTH=10 HEIGHT=19 TITLE='u' ALIGN=TOP>";
+  althtmldef "u" as '<I><FONT COLOR="#FF0000">u</FONT></I>';
+  latexdef "u" as "u";
+htmldef "t" as "<IMG SRC='_t.gif' WIDTH=7 HEIGHT=19 ALT=' t' TITLE='t'>";
+  althtmldef "t" as '<SPAN CLASS=set STYLE="color:red">&#x1D461;</SPAN>';
+  latexdef "t" as "t";
 htmldef "E." as
     "<IMG SRC='exists.gif' WIDTH=9 HEIGHT=19 TITLE='E.' ALIGN=TOP>";
   althtmldef "E." as '<FONT FACE=sans-serif>&exist;</FONT>'; /* &#8707; */
@@ -20937,9 +26168,6 @@ htmldef "/" as
 htmldef "]" as "<IMG SRC='rbrack.gif' WIDTH=5 HEIGHT=19 TITLE=']' ALIGN=TOP>";
   althtmldef "]" as ']'; /* &rsqb; */
   latexdef "]" as "]";
-htmldef "u" as "<IMG SRC='_u.gif' WIDTH=10 HEIGHT=19 TITLE='u' ALIGN=TOP>";
-  althtmldef "u" as '<I><FONT COLOR="#FF0000">u</FONT></I>';
-  latexdef "u" as "u";
 htmldef "E!" as "<IMG SRC='_e1.gif' WIDTH=12 HEIGHT=19 TITLE='E!' ALIGN=TOP>";
   althtmldef "E!" as '<FONT FACE=sans-serif>&exist;!</FONT>';
   latexdef "E!" as "\exists{!}";
@@ -20960,7 +26188,9 @@ htmldef "F/_" as
     "<IMG SRC='_finvbar.gif' WIDTH=9 HEIGHT=19 ALT=' F/_' TITLE='F/_'>";
   althtmldef "F/_" as "<U>&#8498;</U>";
   latexdef "F/_" as "\underline{\Finv}";
-
+htmldef "CondEq" as "CondEq";
+  althtmldef "CondEq" as "CondEq";
+  latexdef "CondEq" as "\mbox{CondEq}";
 htmldef "./\" as
     " <IMG SRC='_.wedge.gif' WIDTH=11 HEIGHT=19 ALT=' ./\' TITLE='./\'> ";
   althtmldef "./\" as
@@ -21259,6 +26489,53 @@ htmldef "e/" as
   althtmldef "e/" as ' &notin; ';
     /* 2-Jan-2016 reverted sans-serif */
   latexdef "e/" as "\notin";
+htmldef "_V" as "<IMG SRC='rmcv.gif' WIDTH=10 HEIGHT=19 ALT=' _V' TITLE='_V'>";
+  althtmldef "_V" as 'V';
+  latexdef "_V" as "{\rm V}";
+htmldef "[." as
+    "<IMG SRC='_dlbrack.gif' WIDTH=6 HEIGHT=19 ALT=' [.' TITLE='[.'>";
+  /* althtmldef "[." as '&#x298F;'; */   /* corner tick */
+  /* U+0323 COMBINING DOT BELOW (HTML &#803;) */
+  althtmldef "[." as '[&#803;';
+  /* \underaccent is in accents package */
+  latexdef "[." as "\underaccent{\dot}{[}";
+htmldef "]." as
+    "<IMG SRC='_drbrack.gif' WIDTH=5 HEIGHT=19 ALT=' ].' TITLE='].'>";
+  /* althtmldef "]." as '&#x298E;'; */   /* corner tick */
+  althtmldef "]." as ']&#803;';
+  latexdef "]." as "\underaccent{\dot}{]}";
+htmldef "[_" as
+    "<IMG SRC='_ulbrack.gif' WIDTH=6 HEIGHT=19 ALT=' [_' TITLE='[_'>";
+  althtmldef "[_" as '<U>[</U>'; /* &lsqb; */
+  latexdef "[_" as "\underline{[}";
+htmldef "]_" as
+    "<IMG SRC='_urbrack.gif' WIDTH=5 HEIGHT=19 ALT=' ]_' TITLE=']_'>";
+  althtmldef "]_" as '<U>]</U>'; /* &rsqb; */
+  latexdef "]_" as "\underline{]}";
+htmldef "\" as
+    " <IMG SRC='setminus.gif' WIDTH=8 HEIGHT=19 ALT=' \' TITLE='\'> ";
+  althtmldef "\" as ' &#8726; '; /* &setmn; */
+    /* 2-Jan-2016 reverted sans-serif */
+  latexdef "\" as "\setminus";
+htmldef "u." as
+    " <IMG SRC='cup.gif' WIDTH=10 HEIGHT=19 ALT=' u.' TITLE='u.'> ";
+  althtmldef "u." as ' &cup; ';
+  latexdef "u." as "\cup";
+htmldef "i^i" as
+    " <IMG SRC='cap.gif' WIDTH=10 HEIGHT=19 ALT=' i^i' TITLE='i^i'> ";
+  althtmldef "i^i" as ' &cap; ';
+  latexdef "i^i" as "\cap";
+htmldef "C_" as
+    " <IMG SRC='subseteq.gif' WIDTH=12 HEIGHT=19 ALT=' C_' TITLE='C_'> ";
+  althtmldef "C_" as ' &#8838; '; /* &subE; */
+    /* 2-Jan-2016 reverted sans-serif */
+  latexdef "C_" as "\subseteq";
+htmldef "C." as
+    " <IMG SRC='subset.gif' WIDTH=12 HEIGHT=19 ALT=' C.' TITLE='C.'> ";
+  althtmldef "C." as ' &sub; ';
+    /* 2-Jan-2016 reverted sans-serif */
+  latexdef "C." as "\subset";
+
 htmldef "\/_" as
     " <IMG SRC='veebar.gif' WIDTH=9 HEIGHT=19 ALT=' \/_' TITLE='\/_'> ";
   althtmldef "\/_" as " &#8891; ";
