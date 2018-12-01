@@ -1,4 +1,4 @@
-$( iset.mm - Version of 22-Oct-2018
+$( iset.mm - Version of 28-Nov-2018
 
 Created by Mario Carneiro, starting from the 21-Jan-2015 version of
 set.mm (with updates since then, including copying entire theorems
@@ -35190,11 +35190,18 @@ $)
      [TakeutiZaring] p. 38.  (Contributed by NM, 5-Jun-1994.) $)
   df-on $a |- On = { x | Ord x } $.
 
-  $( Define the limit ordinal predicate, which is true for a non-empty ordinal
-     that is not a successor (i.e. that is the union of itself).  Our
-     definition combines the definition of Lim of [BellMachover] p. 471 and
-     Exercise 1 of [TakeutiZaring] p. 42.  (Contributed by NM, 22-Apr-1994.) $)
-  df-lim $a |- ( Lim A <-> ( Ord A /\ A =/= (/) /\ A = U. A ) ) $.
+  $( Define the limit ordinal predicate, which is true for an ordinal that has
+     the empty set as an element and is not a successor (i.e. that is the union
+     of itself).  Our definition combines the definition of Lim of
+     [BellMachover] p. 471 and Exercise 1 of [TakeutiZaring] p. 42, and then
+     changes ` A =/= (/) ` to ` (/) e. A ` (which would be equivalent given the
+     law of the excluded middle, but which is not for us).  (Contributed by Jim
+     Kingdon, 11-Nov-2018.) $)
+  df-ilim $a |- ( Lim A <-> ( Ord A /\ (/) e. A /\ A = U. A ) ) $.
+
+  $( Another name for ~ df-ilim .  (Contributed by NM, 4-Nov-2004.) $)
+  dflim2 $p |- ( Lim A <-> ( Ord A /\ (/) e. A /\ A = U. A ) ) $=
+    ( df-ilim ) AB $.
 
   $( Define the successor of a class.  When applied to an ordinal number, the
      successor means the same thing as "plus 1".  Definition 7.22 of
@@ -35247,9 +35254,9 @@ $)
   $( Equality theorem for the limit predicate.  (Contributed by NM,
      22-Apr-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
   limeq $p |- ( A = B -> ( Lim A <-> Lim B ) ) $=
-    ( wceq word c0 wne cuni w3a wlim ordeq neeq1 unieq eqeq12d 3anbi123d df-lim
-    id 3bitr4g ) ABCZADZAEFZAAGZCZHBDZBEFZBBGZCZHAIBIRSUCTUDUBUFABJABEKRABUAUER
-    PABLMNAOBOQ $.
+    ( wceq word c0 wcel cuni wlim ordeq eleq2 unieq eqeq12d 3anbi123d
+    w3a id dflim2 3bitr4g ) ABCZADZEAFZAAGZCZNBDZEBFZBBGZCZNAHBHRSUCT
+    UDUBUFABIABEJRABUAUEROABKLMAPBPQ $.
 
   ${
     $d x A $.
@@ -35362,22 +35369,27 @@ $)
   $( The empty set is not a limit ordinal.  (Contributed by NM, 24-Mar-1995.)
      (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
   nlim0 $p |- -. Lim (/) $=
-    ( c0 wlim word wne cuni wceq w3a neirr simp2 mto df-lim mtbir ) A
-    BACZAADZAAEFZGZPNAHMNOIJAKL $.
+    ( c0 wlim word wcel cuni wceq w3a noel simp2 mto dflim2 mtbir ) ABACZAADZAA
+    EFZGZPNAHMNOIJAKL $.
 
   $( A limit ordinal is ordinal.  (Contributed by NM, 4-May-1995.) $)
   limord $p |- ( Lim A -> Ord A ) $=
-    ( wlim word c0 wne cuni wceq df-lim simp1bi ) ABACADEAAFGAHI $.
+    ( wlim word c0 wcel cuni wceq dflim2 simp1bi ) ABACDAEAAFGAHI $.
 
   $( A limit ordinal is its own supremum (union).  (Contributed by NM,
      4-May-1995.) $)
   limuni $p |- ( Lim A -> A = U. A ) $=
-    ( wlim word c0 wne cuni wceq df-lim simp3bi ) ABACADEAAFGAHI $.
+    ( wlim word c0 wcel cuni wceq dflim2 simp3bi ) ABACDAEAAFGAHI $.
 
   $( The union of a limit ordinal is a limit ordinal.  (Contributed by NM,
      19-Sep-2006.) $)
   limuni2 $p |- ( Lim A -> Lim U. A ) $=
     ( wlim cuni wceq wb limuni limeq syl ibi ) ABZACZBZJAKDJLEAFAKGHI $.
+
+  $( A limit ordinal contains the empty set.  (Contributed by NM,
+     15-May-1994.) $)
+  0ellim $p |- ( Lim A -> (/) e. A ) $=
+    ( wlim word c0 wcel cuni wceq dflim2 simp2bi ) ABACDAEAAFGAHI $.
 
   $( A limit ordinal class that is also a set is an ordinal number.
      (Contributed by NM, 26-Apr-2004.) $)
@@ -35614,7 +35626,7 @@ $)
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-             ZF Set Theory - add the Axiom of Union
+             IZF Set Theory - add the Axiom of Union
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
@@ -36100,34 +36112,255 @@ $)
 
 
 $(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Ordinals (continued)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y $.
+    $( The class of all ordinal numbers is ordinal.  Proposition 7.12 of
+       [TakeutiZaring] p. 38, but without using the Axiom of Regularity.
+       (Contributed by NM, 17-May-1994.) $)
+    ordon $p |- Ord On $=
+      ( vx con0 word wtr cv wral tron df-on abeq2i ordtr sylbi df-iord mpbir2an
+      wcel rgen ) BCBDAEZDZABFGQABPBNPCZQRABAHIPJKOABLM $.
+  $}
+
+  ${
+    $d x y A $.
+    $( The union of a class of ordinal numbers is ordinal.  Proposition 7.19 of
+       [TakeutiZaring] p. 40.  (Contributed by NM, 30-May-1994.)  (Proof
+       shortened by Andrew Salmon, 12-Aug-2011.) $)
+    ssorduni $p |- ( A C_ On -> Ord U. A ) $=
+      ( vx vy con0 wss cuni wtr word cv wral wcel wrex eluni2 wa wi ssel onelss
+      syl6 rexlimdv syl5bi anc2r syl ssuni syl8 ralrimiv dftr3 sylibr onelon ex
+      ssrdv ordon trssord 3exp mpii sylc ) ADEZAFZGZUQDEZUQHZUPBIZUQEZBUQJURUPV
+      BBUQVAUQKZVACIZKZCALZUPVBCVAAMZUPVEVBCAUPVDAKZVEVAVDEZVHNZVBUPVHVEVIOZOVH
+      VEVJOOUPVHVDDKZVKADVDPZVDVAQRVHVEVIUAUBVAVDAUCUDSTUEBUQUFUGUPBUQDVCVFUPVA
+      DKZVGUPVEVNCAUPVHVLVEVNOVMVLVEVNVDVAUHUIRSTUJURUSDHZUTUKURUSVOUTUQDULUMUN
+      UO $.
+  $}
+
+  $( The union of a set of ordinal numbers is an ordinal number.  Theorem 9 of
+     [Suppes] p. 132.  (Contributed by NM, 1-Nov-2003.) $)
+  ssonuni $p |- ( A e. V -> ( A C_ On -> U. A e. On ) ) $=
+    ( con0 wss cuni wcel word ssorduni cvv wb uniexg elong syl syl5ibr ) ACDAEZ
+    CFZABFZOGZAHQOIFPRJABKOILMN $.
+
+  ${
+    ssonuni.1 $e |- A e. _V $.
+    $( The union of a set of ordinal numbers is an ordinal number.  Corollary
+       7N(d) of [Enderton] p. 193.  (Contributed by NM, 20-Sep-2003.) $)
+    ssonunii $p |- ( A C_ On -> U. A e. On ) $=
+      ( cvv wcel con0 wss cuni wi ssonuni ax-mp ) ACDAEFAGEDHBACIJ $.
+  $}
+
+  ${
+    $d x A $.
+    $( Any ordinal class is a subclass of the class of ordinal numbers.
+       Corollary 7.15 of [TakeutiZaring] p. 38.  (Contributed by NM,
+       18-May-1994.) $)
+    ordsson $p |- ( Ord A -> A C_ On ) $=
+      ( vx word con0 cv wcel ordelon ex ssrdv ) ACZBADJBEZAFKDFAKGHI $.
+  $}
+
+  $( An ordinal number is a subset of the class of ordinal numbers.
+     (Contributed by NM, 5-Jun-1994.) $)
+  onss $p |- ( A e. On -> A C_ On ) $=
+    ( con0 wcel word wss eloni ordsson syl ) ABCADABEAFAGH $.
+
+  $( The union of an ordinal number is an ordinal number.  (Contributed by NM,
+     29-Sep-2006.) $)
+  onuni $p |- ( A e. On -> U. A e. On ) $=
+    ( con0 wcel wss cuni onss ssonuni mpd ) ABCABDAEBCAFABGH $.
+
+  $( The union of an ordinal class is ordinal.  (Contributed by NM,
+     12-Sep-2003.) $)
+  orduni $p |- ( Ord A -> Ord U. A ) $=
+    ( word con0 wss cuni ordsson ssorduni syl ) ABACDAEBAFAGH $.
+
+  ${
+    $d x y A $.
+    bm2.5ii.1 $e |- A e. _V $.
+    $( Problem 2.5(ii) of [BellMachover] p. 471.  (Contributed by NM,
+       20-Sep-2003.) $)
+    bm2.5ii $p |- ( A C_ On -> U. A = |^| { x e. On | A. y e. A y C_ x } ) $=
+      ( con0 wss cuni wcel cv wral crab cint wceq ssonunii wb unissb a1i inteqi
+      rabbiia intmin syl5reqr syl ) CEFCGZEHZUCBIAIZFBCJZAEKZLZMCDNUDUHUCUEFZAE
+      KZLUCUJUGUIUFAEUIUFOUEEHBCUEPQSRAUCETUAUB $.
+  $}
+
+  $( A successor exists iff its class argument exists.  (Contributed by NM,
+     22-Jun-1998.) $)
+  sucexb $p |- ( A e. _V <-> suc A e. _V ) $=
+    ( cvv wcel csn cun csuc unexb snexg pm4.71i df-suc eleq1i 3bitr4i
+    wa ) ABCZADZBCZMAOEZBCNAFZBCAOGNPAHIRQBAJKL $.
+
+  $( The successor of a set is a set (generalization).  (Contributed by NM,
+     5-Jun-1994.) $)
+  sucexg $p |- ( A e. V -> suc A e. _V ) $=
+    ( wcel cvv csuc elex sucexb sylib ) ABCADCAEDCABFAGH $.
+
+  ${
+    sucex.1 $e |- A e. _V $.
+    $( The successor of a set is a set.  (Contributed by NM, 30-Aug-1993.) $)
+    sucex $p |- suc A e. _V $=
+      ( cvv wcel csuc sucexg ax-mp ) ACDAECDBACFG $.
+  $}
+
+  ${
+    $d x A $.
+    $( The successor of an ordinal class is ordinal.  (Contributed by Jim
+       Kingdon, 8-Nov-2018.) $)
+    ordsucim $p |- ( Ord A -> Ord suc A ) $=
+      ( vx word csuc wtr cv wral ordtr suctr syl wcel wceq wo csn df-suc eleq2i
+      cun elun elsn df-iord orbi2i 3bitri wal simprbi df-ral sylib 19.21bi treq
+      wi syl5ibrcom jaod syl5bi ralrimiv sylanbrc ) ACZADZEZBFZEZBUPGUPCUOAEZUQ
+      AHZAIJUOUSBUPURUPKZURAKZURALZMZUOUSVBURAANZQZKVCURVFKZMVEUPVGURAOPURAVFRV
+      HVDVCBASUAUBUOVCUSVDUOVCUSUIZBUOUSBAGZVIBUCUOUTVJBATUDUSBAUEUFUGUOUSVDUTV
+      AURAUHUJUKULUMBUPTUN $.
+  $}
+
+  ${
+    $d x A $.
+    $( The successor of an ordinal number is an ordinal number.  Proposition
+       7.24 of [TakeutiZaring] p. 41.  (Contributed by NM, 6-Jun-1994.) $)
+    suceloni $p |- ( A e. On -> suc A e. On ) $=
+      ( con0 wcel csuc word eloni ordsucim syl wb sucexg elong mpbird
+      cvv ) ABCZADZBCZOEZNAEQAFAGHNOMCPQIABJOMKHL $.
+  $}
+
+  $( The successor of an ordinal class is ordinal.  (Contributed by Jim
+     Kingdon, 20-Nov-2018.) $)
+  ordsucg $p |- ( A e. _V -> ( Ord A <-> Ord suc A ) ) $=
+    ( cvv wcel word csuc ordsucim sucidg ordelord ex syl5com impbid2
+    ) ABCZADZAEZDZAFLANCZOMABGOPMNAHIJK $.
+
+  $( The successor of an ordinal number is an ordinal number.  (Contributed by
+     NM, 9-Sep-2003.) $)
+  sucelon $p |- ( A e. On <-> suc A e. On ) $=
+    ( con0 wcel csuc suceloni word eloni cvv wb elex sucexb elong ordsucg bitrd
+    sylibr syl mpbird impbii ) ABCZADZBCZAEUASTFZTGUAAHCZSUBIUATHCUCTBJAKOUCSAF
+    UBAHLAMNPQR $.
+
+  $( The successor of an element of an ordinal class is a subset of it.
+     (Contributed by NM, 21-Jun-1998.) $)
+  ordsucss $p |- ( Ord B -> ( A e. B -> suc A C_ B ) ) $=
+    ( word wtr wcel csuc wss wi ordtr csn cun wa trss snssi jcad unss
+    a1i syl6ib df-suc sseq1i syl6ibr syl ) BCBDZABEZAFZBGZHBIUCUDAAJZ
+    KZBGZUFUCUDABGZUGBGZLUIUCUDUJUKBAMUDUKHUCABNQOAUGBPRUEUHBASTUAUB
+    $.
+
+  $( A set belongs to an ordinal iff its successor is a subset of the ordinal.
+     Exercise 8 of [TakeutiZaring] p. 42 and its converse.  (Contributed by NM,
+     29-Nov-2003.) $)
+  ordelsuc $p |- ( ( A e. C /\ Ord B ) -> ( A e. B <-> suc A C_ B ) ) $=
+    ( wcel word wa csuc wss wi ordsucss adantl sucssel adantr impbid ) ACDZBEZF
+    ABDZAGBHZPQRIOABJKORQIPABCLMN $.
+
+  ${
+    $d x A $.
+    $( The successor of an ordinal number is the smallest larger ordinal
+       number.  (Contributed by NM, 28-Nov-2003.) $)
+    onsucmin $p |- ( A e. On -> suc A = |^| { x e. On | A e. x } ) $=
+      ( con0 wcel cv crab cint csuc wss word wb ordelsuc sylan2 rabbidva inteqd
+      eloni wceq sucelon intmin sylbi eqtr2d ) BCDZBAEZDZACFZGBHZUCIZACFZGZUFUB
+      UEUHUBUDUGACUCCDUBUCJUDUGKUCPBUCCLMNOUBUFCDUIUFQBRAUFCSTUA $.
+  $}
+
+  ${
+    $d x y A $.
+    $( The class of all ordinal numbers is its own union.  Exercise 11 of
+       [TakeutiZaring] p. 40.  (Contributed by NM, 12-Nov-2003.) $)
+    unon $p |- U. On = On $=
+      ( vx vy con0 cuni cv wcel wrex eluni2 onelon rexlimiva sylbi vex suceloni
+      csuc sucid elunii sylancr impbii eqriv ) ACDZCAEZTFZUACFZUBUABEZFZBCGUCBU
+      ACHUEUCBCUDUAIJKUCUAUANZFUFCFUBUAALOUAMUAUFCPQRS $.
+  $}
+
+  $( The class of ordinal numbers is a limit ordinal.  (Contributed by NM,
+     24-Mar-1995.) $)
+  limon $p |- Lim On $=
+    ( con0 wlim word c0 wcel cuni wceq ordon 0elon unon eqcomi dflim2
+    mpbir3an ) ABACDAEAAFZGHINAJKALM $.
+
+  ${
+    $d x y A $.
+
+    $( An ordinal which contains the successor of each of its members is equal
+       to its union.  (Contributed by Jim Kingdon, 14-Nov-2018.) $)
+    ordunisuc2r $p |- ( Ord A -> ( A. x e. A suc x e. A -> A = U. A ) ) $=
+      ( word cv csuc wcel wral cuni wss wa wceq wi wal sucid elunii mpan imim2i
+      vex alimi df-ral dfss2 3imtr4i a1i orduniss jctird eqss syl6ibr ) BCZADZE
+      ZBFZABGZBBHZIZUMBIZJBUMKUHULUNUOULUNLUHUIBFZUKLZAMUPUIUMFZLZAMULUNUQUSAUK
+      URUPUIUJFUKURUIARNUIUJBOPQSUKABTABUMUAUBUCBUDUEBUMUFUG $.
+  $}
+
+  ${
+    onssi.1 $e |- A e. On $.
+    $( An ordinal number is a subset of ` On ` .  (Contributed by NM,
+       11-Aug-1994.) $)
+    onssi $p |- A C_ On $=
+      ( con0 wcel wss onss ax-mp ) ACDACEBAFG $.
+
+    $( The successor of an ordinal number is an ordinal number.  Corollary
+       7N(c) of [Enderton] p. 193.  (Contributed by NM, 12-Jun-1994.) $)
+    onsuci $p |- suc A e. On $=
+      ( con0 wcel csuc suceloni ax-mp ) ACDAECDBAFG $.
+  $}
+
+  ${
+    $d x y z w s $.  $d z w s ph $.  $d x ph $.
+    ordtriexmid.1 $e |- A. x e. On A. y e. On ( x e. y \/ x = y \/ y e. x ) $.
+    $( Ordinal trichotomy implies the law of the excluded middle (that is,
+       decidability of an arbitrary proposition).  (Contributed by Mario
+       Carneiro and Jim Kingdon, 14-Nov-2018.) $)
+    ordtriexmid $p |- ( ph \/ -. ph ) $=
+      ( vz vs vw wo c0 wceq wcel noel w3o con0 word cv wa wi eleq2 ax-mp wn csn
+      crab wtr wss wal ax-ia1 elrabi elsn sylib mtbiri syl adantl pm2.21dd gen2
+      dftr2 mpbir ssrab2 csuc ord0 ordsucim suc0 ordeq mpbi trssord mp3an rabex
+      wb p0ex eleq1 eqeq1 3orbi123d 0elon 0ex anbi2d eqeq2 imbi12d rspec2 vtocl
+      elon mpan2 vtoclga 3orass mtp-or biidd elrab3 sylnib biimpi orim12i orcom
+      snid ) AAUAZHWLAHZAEIUBZUCZIJZIWOKZHZWMWOIKZWRWOLWSWPWQMZWSWRHWONKZWTXAWO
+      OZWOUDZWOWNUEWNOZXBXCFPZGPZKZXFWOKZQZXEWOKZRZGUFFUFXKFGXIXGXJXGXHUGXHXGUA
+      ZXGXHXFIJZXLXHXFWNKXMAEXFWNUHGIUIUJXMXGXEIKXELXFIXESUKULUMUNUOFGWOUPUQAEW
+      NURIUSZOZXDIOXOUTIVATXNWNJXOXDVHVBXNWNVCTVDWOWNVEVFWOAEWNVIVGVTUQBPZIKZXP
+      IJZIXPKZMZWTBWONXPWOJXQWSXRWPXSWQXPWOIVJXPWOIVKXPWOISVLXPNKZINKZXTVMYACPZ
+      NKZQZXPYCKZXPYCJZYCXPKZMZRYAYBQZXTRCIVNYCIJZYEYJYIXTYKYDYBYAYCINVJVOYKYFX
+      QYGXRYHXSYCIXPSYCIXPVPYCIXPVJVLVQYIBCNNDVRVSWAWBTWSWPWQWCVDWDWPWLWQAWPWQA
+      WPWQIIKILWOIISUKIWNKWQAVHIVNWKAAEIWNEPIJAWEWFTZWGWQAYLWHWITAWLWJUQ $.
+  $}
+
+$(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-          IZF Set Theory - add the Axiom of Membership-Induction
+          IZF Set Theory - add the Axiom of Set Induction
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-          Introduce the Axiom of Membership-Induction
+          Introduce the Axiom of Set Induction
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
 
   ${
     $d y a $.  $d ph y $.
-    $( Axiom of ` e. `-Induction.  An axiom of Intuitionistic Zermelo-Fraenkel
-       set theory.  Axiom 9 of [Crosilla] p.  "Axioms of CZF and IZF".  This
-       replaces the Axiom of Foundation (also called Regularity) from
-       Zermelo-Fraenkel set theory.  (Contributed by Jim Kingdon,
-       19-Oct-2018.) $)
-    ax-elind $a |- ( A. a ( A. y e. a [ y / a ] ph -> ph ) -> A. a ph ) $.
+    $( Axiom of ` e. `-Induction (also known as set induction).  An axiom of
+       Intuitionistic Zermelo-Fraenkel set theory.  Axiom 9 of [Crosilla] p.
+       "Axioms of CZF and IZF".  This replaces the Axiom of Foundation (also
+       called Regularity) from Zermelo-Fraenkel set theory.  (Contributed by
+       Jim Kingdon, 19-Oct-2018.) $)
+    ax-setind $a |- ( A. a ( A. y e. a [ y / a ] ph -> ph ) -> A. a ph ) $.
   $}
 
   ${
     $d x y S $.
     $( ` e. `-Induction in terms of membership in a class.  (Contributed by
        Mario Carneiro and Jim Kingdon, 22-Oct-2018.) $)
-    elindel $p |- ( A. x ( A. y ( y e. x -> y e. S ) -> x e. S ) -> S = _V ) $=
+    setindel $p |- ( A. x ( A. y ( y e. x -> y e. S ) -> x e. S ) -> S = _V ) $=
       ( cv wcel wi wal cvv wceq wral clelsb3 ralbii df-ral bitri imbi1i
-      wsb albii ax-elind sylbir eqv sylibr ) BDZADZEUBCEZFBGZUCCEZFZAGZ
+      wsb albii ax-setind sylbir eqv sylibr ) BDZADZEUBCEZFBGZUCCEZFZAGZ
       UFAGZCHIUHUFABPZBUCJZUFFZAGUIULUGAUKUEUFUKUDBUCJUEUJUDBUCBACKLUDB
       UCMNOQUFBARSACTUA $.
   $}
@@ -36137,7 +36370,7 @@ $)
     $( Set (epsilon) induction.  Theorem 5.22 of [TakeutiZaring] p. 21.
        (Contributed by NM, 17-Sep-2003.) $)
     setind $p |- ( A. x ( x C_ A -> x e. A ) -> A = _V ) $=
-      ( vy cv wss wcel wal cvv wceq dfss2 imbi1i albii elindel sylbi
+      ( vy cv wss wcel wal cvv wceq dfss2 imbi1i albii setindel sylbi
       wi ) ADZBEZPBFZOZAGCDZPFTBFOCGZROZAGBHISUBAQUARCPBJKLACBMN $.
   $}
 
@@ -36149,6 +36382,193 @@ $)
     setind2 $p |- ( ~P A C_ A -> A = _V ) $=
       ( vx cpw wss cv wcel wi wal cvv wceq pwss setind sylbi ) ACADBEZADNAFGBHA
       IJBAAKBALM $.
+  $}
+
+  ${
+    $d A x y $.
+    $( No class is a member of itself.  Exercise 6 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 7-Aug-1994.)  (Proof rewritten by Mario Carneiro and
+       Jim Kingdon, 26-Nov-2018.) $)
+    elirr $p |- -. A e. A $=
+      ( vx vy wcel cvv csn cdif cv wal wsb wral wi wn neldifsnd eleq1 spcgv mpd
+      wceq sylibr albii wa w3a simp1 imbi12d pm2.43b 3ad2ant2 wb eleq2 3ad2ant3
+      imbi1d mpbid 3expia mtod vex eldif mpbiran elsn xchbinx ex alrimiv df-ral
+      clelsb3 imbi2i bitri imbi1i ax-setind syl pm2.65i ) AADZAEAFZGZDZVIBHZVKD
+      ZBIZVLVIVNBCJZCVMKZVNLZBIZVOVICHZVMDZVTVKDZLZCIZVNLZBIVSVIWEBVIWDVNVIWDUA
+      ZVMARZMVNWFWGVLWFAENVIWDWGVLVIWDWGUBZVIVLVIWDWGUCWHAVMDZVLLZVIVLLZWDVIWJW
+      GWDWIVLWCWJCAVMVTARWAWIWBVLVTAVMOVTAVKOUDPUEUFWGVIWJWKUGWDWGWIVIVLVMAAUHU
+      JUIUKQULUMVNVMVJDZWGVNVMEDWLMBUNVMEVJUOUPBAUQURSUSUTVRWEBVQWDVNVQWAVPLZCI
+      WDVPCVMVAWMWCCVPWBWACBVKVBVCTVDVETSVNCBVFVGVNVLBAAVMAVKOPQVIAENVH $.
+  $}
+
+  ${
+    $d A x y $.  $d B x y $.
+    $( No class has 2-cycle membership loops.  Theorem 7X(b) of [Enderton]
+       p. 206.  (Contributed by NM, 16-Oct-1996.)  (Proof rewritten by Mario
+       Carneiro and Jim Kingdon, 27-Nov-2018.) $)
+    en2lp $p |- -. ( A e. B /\ B e. A ) $=
+      ( vx vy wcel wa cvv cv wal wi wceq wn elex eldif pm3.4 eleq1 spcgv adantr
+      syl mpd cpr cdif wsb wral wo prid2g sylbi com12 mt2d ad2antlr w3a imbi12d
+      simp1r pm2.43b 3ad2ant2 wb eleq2 imbi1d 3ad2ant3 mpbid 3expia mtod prid1g
+      simp1l sylanbrc vex mpbiran elpr xchbinx sylibr ex alrimiv df-ral clelsb3
+      ioran imbi2i albii bitri imbi1i ax-setind pm2.65i ) ABEZBAEZFZAGABUAZUBZE
+      ZWDCHZWFEZCIZWGWDWICDUCZDWHUDZWIJZCIZWJWDDHZWHEZWOWFEZJZDIZWIJZCIWNWDWTCW
+      DWSWIWDWSFZWHAKZWHBKZUEZLZWIXAXBLXCLXEXAXBBWFEZWCXFLZWBWSWCBGEZXGBAMXHXFB
+      WEEZABGUFXFXHXILZXFXHXJFXHXJJBGWENXHXJOUGUHUISUJWDWSXBXFWDWSXBUKZWCXFWBWC
+      WSXBUMXKBWHEZXFJZWCXFJZWSWDXMXBWSXLXFWRXMDBWHWOBKWPXLWQXFWOBWHPWOBWFPULQU
+      NUOXBWDXMXNUPWSXBXLWCXFWHABUQURUSUTTVAVBXAXCWGWDWGLZWSWBXOWCWBAGEZXOABMXP
+      WGAWEEZABGVCWGXPXQLZWGXPXRFXPXRJAGWENXPXROUGUHUISRZRWDWSXCWGWDWSXCUKZWBWG
+      WBWCWSXCVDXTAWHEZWGJZWBWGJZWSWDYBXCWSYAWGWRYBDAWHWOAKWPYAWQWGWOAWHPWOAWFP
+      ULQUNUOXCWDYBYCUPWSXCYAWBWGWHBAUQURUSUTTVAVBXBXCVOVEWIWHWEEZXDWIWHGEYDLCV
+      FZWHGWENVGWHABYEVHVIVJVKVLWMWTCWLWSWIWLWPWKJZDIWSWKDWHVMYFWRDWKWQWPDCWFVN
+      VPVQVRVSVQVJWIDCVTSWBWJWGJWCWIWGCABWHAWFPQRTXSWA $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+          Transfinite induction
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y A $.
+    $( The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
+       p. 39.  This principle states that if ` A ` is a class of ordinal
+       numbers with the property that every ordinal number included in ` A `
+       also belongs to ` A ` , then every ordinal number is in ` A ` .
+
+       (Contributed by NM, 18-Feb-2004.) $)
+    tfi $p |- ( ( A C_ On /\ A. x e. On ( x C_ A -> x e. A ) ) -> A = On ) $=
+      ( vy con0 wss cv wcel wi wral wa wal df-ral albii bitri imbi1i spi imim1i
+      dfss2 impexp wsb wceq imdi imbi2i 19.21v bitr4i ax-ia1 wtr tron dftr2 jca
+      mpbi bi2.04 3imtr3i alimi sylbi adantl sbim clelsb3 imbi12i ralbii sylbir
+      ax-setind sylibr syl eqss biimpri syldan ) BDEZAFZBEZVIBGZHZADIZDBEZBDUAZV
+      HVMJCFZVIGZVPDGZVPBGZHZHZCKZVIDGZVKHZHZAKZVNVMWFVHVMWCVQVSHZHZCKZWDHZAKZW
+      FVMWCVJHZWDHZAKZWKVMWCVLHZAKWNVLADLWOWMAWCVJVKUBMNWMWJAWLWIWDWLWCWGCKZHWI
+      VJWPWCCVIBRUCWCWGCUDUEOMNWJWEAWBWIWDWAWHCVQVRJZVSHVQWCJZVSHZWAWHWRWQVSWRV
+      QVRVQWCUFWRVRHZAWTAKZCDUGXACKUHCADUIUKPPUJQVQVRVSSWSVQWCVSHHWHVQWCVSSVQWC
+      VSULNUMUNQUNUOUPWFWDAKZVNWFWDACTZCVIIZWDHZAKXBXEWEAXDWBWDXDVTCVIIWBXCVTCV
+      IXCWCACTZVKACTZHVTWCVKACUQXFVRXGVSCADURCABURUSNUTVTCVILNOMWDCAVBVAADBRVCV
+      DVOVHVNJBDVEVFVG $.
+  $}
+
+  ${
+    $d w y z ph $.  $d w x y z $.
+    tfis.1 $e |- ( x e. On -> ( A. y e. x [ y / x ] ph -> ph ) ) $.
+    $( Transfinite Induction Schema.  If all ordinal numbers less than a given
+       number ` x ` have a property (induction hypothesis), then all ordinal
+       numbers have the property (conclusion).  Exercise 25 of [Enderton]
+       p. 200.  (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
+       20-Nov-2016.) $)
+    tfis $p |- ( x e. On -> ph ) $=
+      ( vz vw cv con0 wcel crab wss wi wral wceq ssrab2 wa nfcv syl5bbr simprbi
+      wsb nfrab1 nfss nfcri dfss3 sseq1 rabid eleq1 imbi12d sbequ nfs1v sbequ12
+      nfim nfv cbvrab elrab2 ralimi syl5 anc2li vtoclgaf rgen tfi mp2an rabeq2i
+      eqcomi ) BGZHIZVFAABHHABHJZHVGHKEGZVGKZVHVGIZLZEHMVGHNABHOVKEHCGZVGIZCVEM
+      ZVFAPZLVKBVHHBVHQZVIVJBBVHVGVPABHUAZUBBEVGVQUCULVEVHNZVNVIVOVJVNVEVGKVRVI
+      CVEVGUDVEVHVGUERVOVEVGIVRVJABHUFVEVHVGUGRUHVFVNAVNABCTZCVEMVFAVMVSCVEVMVL
+      HIVSABFTZVSFVLHVGAFCBUIAVTBFHBHQFHQAFUMABFUJABFUKUNUOSUPDUQURUSUTEVGVAVBV
+      DVCS $.
+  $}
+
+  ${
+    $d y ph $.  $d x y $.
+    tfis2f.1 $e |- F/ x ps $.
+    tfis2f.2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    tfis2f.3 $e |- ( x e. On -> ( A. y e. x ps -> ph ) ) $.
+    $( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) $)
+    tfis2f $p |- ( x e. On -> ph ) $=
+      ( wsb cv wral con0 wcel sbie ralbii syl5bi tfis ) ACDACDHZDCIZJBDRJRKLAQB
+      DRABCDEFMNGOP $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x y $.
+    tfis2.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    tfis2.2 $e |- ( x e. On -> ( A. y e. x ps -> ph ) ) $.
+    $( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) $)
+    tfis2 $p |- ( x e. On -> ph ) $=
+      ( nfv tfis2f ) ABCDBCGEFH $.
+  $}
+
+  ${
+    $d x ps $.  $d y ph $.  $d x ch $.  $d x A $.  $d x y $.
+    tfis3.1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+    tfis3.2 $e |- ( x = A -> ( ph <-> ch ) ) $.
+    tfis3.3 $e |- ( x e. On -> ( A. y e. x ps -> ph ) ) $.
+    $( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 4-Nov-2003.) $)
+    tfis3 $p |- ( A e. On -> ch ) $=
+      ( con0 tfis2 vtoclga ) ACDFJHABDEGIKL $.
+  $}
+
+  ${
+    $d x v w y z T $.  $d v w y z R $.  $d x v w z S $.  $d x v w z ch $.
+    $d x v w y z ph $.  $d w y z ps $.  $d x A $.  $d x th $.
+    tfisi.a $e |- ( ph -> A e. V ) $.
+    tfisi.b $e |- ( ph -> T e. On ) $.
+    tfisi.c $e |- ( ( ph /\ ( R e. On /\ R C_ T ) /\
+          A. y ( S e. R -> ch ) ) -> ps ) $.
+    tfisi.d $e |- ( x = y -> ( ps <-> ch ) ) $.
+    tfisi.e $e |- ( x = A -> ( ps <-> th ) ) $.
+    tfisi.f $e |- ( x = y -> R = S ) $.
+    tfisi.g $e |- ( x = A -> R = T ) $.
+    $( A transfinite induction scheme in "implicit" form where the induction is
+       done on an object derived from the object of interest.  (Contributed by
+       Stefan O'Rear, 24-Aug-2015.) $)
+    tfisi $p |- ( ph -> th ) $=
+      ( vv wi vz vw wss ssid wceq wa eqid wcel wal con0 weq eqeq2 anbi2d imbi1d
+      cv sseq1 imbi12d albidv eqeq1d imbi2d cbvalv syl6bb wral w3a simp3l simp2
+      simp1l eqeltrd simp3r eqsstrd csb wsb simpl3l simpl1l simpr simpl2 onelss
+      eleqtrd simpl3r sstrd simpl1r rspcva syl2anc eqidd csbhypf eqcomd equcoms
+      sylc nfcv wb nfv sbhypf bicomd spv mp2and ex alrimiv sylib syl121anc 3exp
+      eleq1d tfis3 syl spcgv mpi exp3a pm2.43i ) AJJUCZDJUDAXHDTAAXHDAJJUEZAXHU
+      FZDTZJUGAGKUHHJUEZXJBTZTZEUIZXIXKTZLAJUJUHXOMHUAUOZUEZAXQJUCZUFZBTZTZEUIZ
+      IUBUOZUEZAYDJUCZUFZCTZTZFUIZXOUAUBJUAUBUKZYCHYDUEZYGBTZTZEUIYJYKYBYNEYKXR
+      YLYAYMXQYDHULYKXTYGBYKXSYFAXQYDJUPUMUNUQURYNYIEFEFUKZYLYEYMYHYOHIYDQUSYOB
+      CYGOUTUQVAVBXQJUEZYBXNEYPXRXLYAXMXQJHULYPXTXJBYPXSXHAXQJJUPUMUNUQURXQUJUH
+      ZYJUBXQVCZYCYQYRUFZYBEYSXRXTBYSXRXTVDZAHUJUHHJUCIHUHZCTZFUIZBYSXRAXSVEYTH
+      XQUJYSXRXTVFZYQYRXRXTVGVHYTHXQJUUDYSXRAXSVIVJYTESUOHVKZHUHZBESVLZTZSUIUUC
+      YTUUHSYTUUFUUGYTUUFUFZAUUEJUCZUUGAXSYSXRUUFVMUUIUUEXQJUUIYQUUEXQUHZUUEXQU
+      CYQYRXRXTUUFVNUUIUUEHXQYTUUFVOYSXRXTUUFVPVRZXQUUEVQWHAXSYSXRUUFVSVTUUIIUU
+      EUEZAUUJUFZCTZTZFUIZUUEUUEUEZUUNUUGTZUUIUUKYRUUQUULYQYRXRXTUUFWAYJUUQUBUU
+      EXQYDUUEUEZYIUUPFUUTYEUUMYHUUOYDUUEIULUUTYGUUNCUUTYFUUJAYDUUEJUPUMUNUQURW
+      BWCUUIUUEWDUUPUURUUSTFSFSUKZUUMUURUUOUUSUVAIUUEUUEUUMSFSFUKZUUEIESFUOZHIE
+      UVCWIEIWIQWEZWFWGUSUVACUUGUUNCUUGWJSFUVBUUGCBCESUVCCEWKOWLZWMWGUTUQWNWHWO
+      WPWQUUHUUBSFUVBUUFUUAUUGCUVBUUEIHUVDXAUVEUQVAWRNWSWTWQWPXBXCXNXPEGKEUOGUE
+      ZXLXIXMXKUVFHJJRUSUVFBDXJPUTUQXDWHXEXFXGXE $.
+  $}
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+             IZF Set Theory - add the Axiom of Infinity
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                 Introduce the Axiom of Infinity
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y $.
+    $( Axiom of Infinity.  Axiom 5 of [Crosilla] p.  "Axioms of CZF and IZF".
+       (Contributed by Jim Kingdon, 16-Nov-2018.) $)
+    ax-iinf $a |- E. x ( (/) e. x /\ A. y ( y e. x -> suc y e. x ) ) $.
+  $}
+
+  ${
+    $d x y z w $.
+    $( A standard version of the Axiom of Infinity, using definitions to
+       abbreviate.  Axiom Inf of [BellMachover] p. 472.  (Contributed by NM,
+       30-Aug-1993.) $)
+    zfinf2 $p |- E. x ( (/) e. x /\ A. y e. x suc y e. x ) $=
+      ( c0 cv wcel csuc wral wa wex wi wal ax-iinf df-ral exbii mpbir
+      anbi2i ) CADZEZBDZFQEZBQGZHZAIRSQETJBKZHZAIABLUBUDAUAUCRTBQMPNO
+      $.
   $}
 
 $(
