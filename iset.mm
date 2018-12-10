@@ -1,4 +1,4 @@
-$( iset.mm - Version of 28-Nov-2018
+$( iset.mm - Version of 6-Dec-2018
 
 Created by Mario Carneiro, starting from the 21-Jan-2015 version of
 set.mm (with updates since then, including copying entire theorems
@@ -5365,6 +5365,12 @@ $)
     ( wo wn wa pm2.45 pm2.46 jca simpl con2i simpr jaoi impbii ) ABCZDZADZBDZEZ
     OPQABFABGHNRARDBRAPQIJRBPQKJLJM $.
 
+  $( Negated conjunction in terms of disjunction (one direction of De Morgan's
+     law).  The biconditional holds for decidable propositions as seen at
+     ~ ianordc .  (Contributed by Jim Kingdon, 1-Dec-2018.) $)
+  ianorr $p |- ( ( -. ph \/ -. ps ) -> -. ( ph /\ ps ) ) $=
+    ( wn wa ax-ia1 con3i ax-ia2 jaoi ) ACABDZCBCIAABEFIBABGFH $.
+
   $( Theorem *3.14 of [WhiteheadRussell] p. 111.  The converse holds for
      decidable propositions, as seen at ~ pm3.13dc .  (Contributed by NM,
      3-Jan-2005.)  (Revised by Mario Carneiro, 31-Jan-2015.) $)
@@ -5806,25 +5812,25 @@ $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
   $( Declare connective for stability. $)
-  $c STABLE $.
+  $c STAB $.
 
   $( Extend wff definition to include stability. $)
-  wstable $a wff STABLE ph $.
+  wstab $a wff STAB ph $.
 
   $( Propositions where a double-negative can be removed are called stable.
      See Chapter 2 [Moschovakis] p. 2.
 
-     Our notation for stability is a connective ` STABLE ` which we place
-     before the formula in question.  For example, ` STABLE x = y ` corresponds
+     Our notation for stability is a connective ` STAB ` which we place
+     before the formula in question.  For example, ` STAB x = y ` corresponds
      to "x = y is stable".
 
      (Contributed by David A. Wheeler, 13-Aug-2018.) $)
-  df-stable $a |- ( STABLE ph <-> ( -. -. ph -> ph ) ) $.
+  df-stab $a |- ( STAB ph <-> ( -. -. ph -> ph ) ) $.
 
   $( Every formula of the form ` -. ph ` is stable.  Uses ~ notnotnot .
      (Contributed by David A. Wheeler, 13-Aug-2018.) $)
-  stablenot $p |- STABLE -. ph $=
-    ( wn wstable wi notnotnot biimpi df-stable mpbir ) ABZCIBBZIDJIAEFIGH $.
+  stabnot $p |- STAB -. ph $=
+    ( wn wstab wi notnotnot biimpi df-stab mpbir ) ABZCIBBZIDJIAEFIGH $.
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -5832,20 +5838,26 @@ $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
   $( Declare connective for testability. $)
-  $c TESTABLE $.
+  $c TEST $.
 
   $( Extend wff definition to include stability. $)
-  wtestable $a wff TESTABLE ph $.
+  wtest $a wff TEST ph $.
 
   $( Propositions where its negative or double-negative is true are called
      testable.  See Chapter 2 [Moschovakis] p. 2.
 
-     Our notation for testability is a connective ` TESTABLE ` which we place
-     before the formula in question.  For example, ` TESTABLE x = y `
+     Our notation for testability is a connective ` TEST ` which we place
+     before the formula in question.  For example, ` TEST x = y `
      corresponds to "x = y is testable".
 
      (Contributed by David A. Wheeler, 13-Aug-2018.) $)
-  df-testable $a |- ( TESTABLE ph <-> ( -. ph \/ -. -. ph ) ) $.
+  df-test $a |- ( TEST ph <-> ( -. ph \/ -. -. ph ) ) $.
+
+  $( A proposition is testable iff its negation is testable.  See also ~ dcn .
+    (Contributed by David A.  Wheeler, 6-Dec-2018.) $)
+  testbitestn $p |- ( TEST ph <-> TEST -. ph ) $=
+    ( wn wo wtest notnotnot orbi2i orcom bitri df-test 3bitr4ri ) ABZ
+    BZLBZCZKLCZKDADNLKCOMKLAEFLKGHKIAIJ $.
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -5960,21 +5972,21 @@ $)
 
   $( Decidability implies stability.  The converse is not necessarily true.
      (Contributed by David A. Wheeler, 13-Aug-2018.) $)
-  dcimpstable $p |- ( DECID ph -> STABLE ph ) $=
-    ( wdc wn wi wstable notnot2dc df-stable sylibr ) ABACCADAEAFAGH $.
+  dcimpstab $p |- ( DECID ph -> STAB ph ) $=
+    ( wdc wn wi wstab notnot2dc df-stab sylibr ) ABACCADAEAFAGH $.
 
   $( Decidability implies testability.  (Contributed by David A. Wheeler,
      14-Aug-2018.) $)
-  dcimptestable $p |- ( DECID ph -> TESTABLE ph ) $=
-    ( wn wo wdc wtestable notnot1 orim1i orcomd df-dc df-testable 3imtr4i ) AAB
+  dcimptest $p |- ( DECID ph -> TEST ph ) $=
+    ( wn wo wdc wtest notnot1 orim1i orcomd df-dc df-test 3imtr4i ) AAB
     ZCZLLBZCADAEMNLANLAFGHAIAJK $.
 
   $( "Stable and testable" is equivalent to decidable.  (Contributed by David
      A. Wheeler, 13-Aug-2018.) $)
-  stabletestableimpdc $p |-
-    ( ( STABLE ph /\ TESTABLE ph ) <-> DECID ph ) $=
-    ( wstable wtestable wa wdc wn wo df-testable biimpi adantl df-stable orim2d
-    wi adantr mpd orcomd df-dc sylibr dcimpstable dcimptestable jca impbii ) AB
+  stabtestimpdc $p |-
+    ( ( STAB ph /\ TEST ph ) <-> DECID ph ) $=
+    ( wstab wtest wa wdc wn wo df-test biimpi adantl df-stab orim2d
+    wi adantr mpd orcomd df-dc sylibr dcimpstab dcimptest jca impbii ) AB
     ZACZDZAEZUEAAFZGUFUEUGAUEUGUGFZGZUGAGZUDUIUCUDUIAHIJUCUIUJMUDUCUHAUGUCUHAMA
     KILNOPAQRUFUCUDASATUAUB $.
 
@@ -9096,11 +9108,8 @@ $)
   ${
     ecased.1 $e |- ( ph -> -. ch ) $.
     ecased.2 $e |- ( ph -> ( ps \/ ch ) ) $.
-    $( Elimination by cases based on a disjunction (rather than an implication)
-       does hold intuitionistically.  However, it is more of a curiosity than
-       something useful in proofs, because in intuitionistic logic it will be
-       just as hard to prove ` ph \/ ps ` as it would be to prove one of ` ph `
-       or ` ps ` .  (Contributed by Jim Kingdon, 9-Dec-2017.) $)
+    $( Deduction form of disjunctive syllogism.  (Contributed by Jim Kingdon,
+       9-Dec-2017.) $)
     ecased $p |- ( ph -> ps ) $=
       ( wn wo wa jca orel2 imp syl ) ACFZBCGZHBAMNDEI
       MNBCBJKL $.
@@ -17972,6 +17981,16 @@ $)
     clelsb3 $p |- ( [ x / y ] y e. A <-> x e. A ) $=
       ( vw cv wcel wsb nfv sbco2 eleq1 sbie sbbii 3bitr3i ) DEZCFZDBGZBAGODAGBE
       ZCFZBAGAEZCFZODABOBHIPRBAORDBRDHNQCJKLOTDATDHNSCJKM $.
+  $}
+
+  ${
+    $d y A $.  $d w y $.  $d w A $.  $d w x $.
+    $( Substitution applied to an atomic wff (class version of ~ elsb4 ).
+       (Contributed by Jim Kingdon, 22-Nov-2018.) $)
+    clelsb4 $p |- ( [ x / y ] A e. y <-> A e. x ) $=
+      ( vw cv wcel wsb nfv sbco2 eleq2 sbie sbbii 3bitr3i ) CDEZFZDBG
+      ZBAGODAGCBEZFZBAGCAEZFZODABOBHIPRBAORDBRDHNQCJKLOTDATDHNSCJKM
+      $.
   $}
 
   ${
@@ -33950,6 +33969,16 @@ $)
   $}
 
   ${
+    $d y x $.  $d y ph $.
+    $( The abstraction of a wff with existential uniqueness exists.
+       (Contributed by NM, 25-Nov-1994.) $)
+    euabex $p |- ( E! x ph -> { x | ph } e. _V ) $=
+      ( vy weu cab csn wceq wex cvv wcel euabsn2 vex snexg ax-mp mpbiri
+      cv eleq1 exlimiv sylbi ) ABDABEZCPZFZGZCHTIJZABCKUCUDCUCUDUBIJZUA
+      IJUECLUAMNTUBIQORS $.
+  $}
+
+  ${
     $d w x y $.  $d w x z $.  $d x y A $.
     $( An inhabited class (even if proper) has an inhabited subset.
        (Contributed by Jim Kingdon, 17-Sep-2018.) $)
@@ -36402,6 +36431,41 @@ $)
   $}
 
   ${
+    $d x y z $.
+    $( The membership relation is irreflexive: no set is a member of itself.
+       Theorem 105 of [Suppes] p. 54.  (Contributed by NM, 19-Aug-1993.) $)
+    elirrv $p |- -. x e. x $=
+      ( cv elirr ) ABC $.
+  $}
+
+  ${
+    $d A x $.
+    $( A class is equal to its successor iff it is a proper class (assuming the
+       Axiom of Set Induction).  (Contributed by NM, 9-Jul-2004.) $)
+    sucprcreg $p |- ( -. A e. _V <-> suc A = A ) $=
+      ( vx cvv wcel wn csuc sucprc cv wi wal elirr nfv eleq1 ceqsalg mtbiri csn
+      wceq elsn wss syl5bir wo olc cun elun wb df-suc eqeq1i sseq1 sylbi mpbiri
+      ssid sseld syl5 alrimiv nsyl3 impbii ) ACDZEAFZAQZAGUQBHZAQZUTADZIZBJZUSU
+      QVDAADZAKVBVEBACVEBLUTAAMNOUSVCBVAUTAPZDZUSVBBARVGVBVGUAZUSVBVGVBUBVHUTAV
+      FUCZDUSVBUTAVFUDUSVIAUTUSVIASZAASZAUKUSVIAQVJVKUEURVIAAUFUGVIAAUHUIUJULTU
+      MTUNUOUP $.
+  $}
+
+  $( The Russell class is equal to the universe ` _V ` .  Exercise 5 of
+     [TakeutiZaring] p. 22.  (Contributed by Alan Sare, 4-Oct-2008.) $)
+  ruv $p |- { x | x e/ x } = _V $=
+    ( cvv weq cab cv wnel df-v equid elirrv nelir 2th abbii eqtr2i ) BAACZADAEZ
+    OFZADAGNPANPAHOOAIJKLM $.
+
+  $( Alternate proof of Russell's Paradox ~ ru , simplified using (indirectly)
+     the Axiom of Set Induction ~ ax-setind .  (Contributed by Alan Sare,
+     4-Oct-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) $)
+  ruALT $p |- { x | x e/ x } e/ _V $=
+    ( cv wnel cab cvv wcel wn vprc df-nel mpbir wceq wb ruv neleq1 ax-mp ) ABZP
+    CADZECZEECZSEEFGHEEIJQEKRSLAMQEENOJ $.
+
+  ${
     $d A x y $.  $d B x y $.
     $( No class has 2-cycle membership loops.  Theorem 7X(b) of [Enderton]
        p. 206.  (Contributed by NM, 16-Oct-1996.)  (Proof rewritten by Mario
@@ -36423,6 +36487,50 @@ $)
       FZWHGWENVGWHABYEVHVIVJVKVLWMWTCWLWSWIWLWPWKJZDIWSWKDWHVMYFWRDWKWQWPDCWFVN
       VPVQVRVSVQVJWIDCVTSWBWJWGJWCWIWGCABWHAWFPQRTXSWA $.
   $}
+
+  ${
+    preleq.1 $e |- A e. _V $.
+    preleq.2 $e |- B e. _V $.
+    preleq.3 $e |- C e. _V $.
+    preleq.4 $e |- D e. _V $.
+    $( Equality of two unordered pairs when one member of each pair contains
+       the other member.  (Contributed by NM, 16-Oct-1996.) $)
+    preleq $p |- ( ( ( A e. B /\ C e. D ) /\ { A , B } = { C , D } ) ->
+                   ( A = C /\ B = D ) ) $=
+      ( wcel wa cpr wceq wn en2lp eleq12 anbi1d mtbiri con2i adantr wo preq12b
+      biimpi adantl ecased ) ABIZCDIZJZABKCDKLZJACLBDLJZADLBCLJZUGUJMUHUJUGUJUG
+      DCIZUFJDCNUJUEUKUFADBCOPQRSUHUIUJTZUGUHULABCDEFGHUAUBUCUD $.
+
+    $( Theorem for alternate representation of ordered pairs, requiring the
+       Axiom of Set Induction ~ ax-setind (via the ~ preleq step).  See ~ df-op
+       for a description of other ordered pair representations.  Exercise 34 of
+       [Enderton] p. 207.  (Contributed by NM, 16-Oct-1996.) $)
+    opthreg $p |- ( { A , { A , B } } = { C , { C , D } } <->
+                   ( A = C /\ B = D ) ) $=
+      ( cpr wceq wa prid1 cvv prexg mp2an preleq mpanl12 preq1 eqeq1d
+      wcel preqr2 syl6bi imdistani adantr preq12 preq2d eqtrd impbii
+      syl ) AABIZIZCCDIZIZJZACJZBDJZKZUNUOUJULJZKZUQAUJTCULTUNUSABELC
+      DGLAUJCULEAMTBMTUJMTEFABNOGCMTDMTULMTGHCDNOPQUOURUPUOURCBIZULJU
+      PUOUJUTULACBRSBDCFHUAUBUCUIUQUKCUJIZUMUOUKVAJUPACUJRUDUQUJULCAB
+      CDUEUFUGUH $.
+  $}
+
+  $( The successor operation behaves like a one-to-one function (assuming the
+     Axiom of Set Induction).  Similar to Exercise 35 of [Enderton] p. 208 and
+     its converse.  (Contributed by NM, 25-Oct-2003.) $)
+  suc11g $p |- ( ( A e. V /\ B e. W ) -> ( suc A = suc B <-> A = B ) ) $=
+    ( wcel wa csuc w3a wn en2lp sucidg eleq2 syl5ibrcom elsucg sylibd
+    wceq wo imp 3adant1 syl5ibcom jca eqcom orbi2i anbi1i sylib ordir
+    3adant2 sylibr ord mpi 3expia suceq impbid1 ) ACEZBDEZFAGZBGZPZAB
+    PZUNUOURUSUNUOURHZBAEZABEZFZIUSBAJUTVCUSUTVAUSQZVBUSQZFZVCUSQUTVA
+    BAPZQZVEFVFUTVHVEUOURVHUNUOURVHUOURBUPEZVHUOVIURBUQEBDKUPUQBLMBAD
+    NORSUNURVEUOUNURVEUNURAUQEZVEUNAUPEURVJACKUPUQALTABCNORUGUAVHVDVE
+    VGUSVABAUBUCUDUEVAVBUSUFUHUIUJUKABULUM $.
+
+  $( The successor operation behaves like a one-to-one function.  Compare
+     Exercise 16 of [Enderton] p. 194.  (Contributed by NM, 3-Sep-2003.) $)
+  suc11 $p |- ( ( A e. On /\ B e. On ) -> ( suc A = suc B <-> A = B ) ) $=
+    ( con0 suc11g ) ABCCD $.
 
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -36569,6 +36677,323 @@ $)
       ( c0 cv wcel csuc wral wa wex wi wal ax-iinf df-ral exbii mpbir
       anbi2i ) CADZEZBDZFQEZBQGZHZAIRSQETJBKZHZAIABLUBUDAUAUCRTBQMPNO
       $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The natural numbers (i.e. finite ordinals)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  $( Declare new symbol. $)
+  $c om $. $( Greek letter omega $)
+
+  $( Extend class notation to include the class of natural numbers. $)
+  com $a class om $.
+
+  ${
+    $d x y z $.
+    $( Define the class of natural numbers as the smallest inductive set, which
+       is valid provided we assume the Axiom of Infinity.  Definition 6.3 of
+       [Eisenberg] p. 82.
+
+       _Note_: the natural numbers ` om ` are a subset of the ordinal numbers
+       ~ df-on .  Later, when we define complex numbers, we will be able to
+       also define a subset of the complex numbers with analogous properties
+       and operations, but they will be different sets.  (Contributed by NM,
+       6-Aug-1994.) $)
+    df-iom $a |- om = |^| { x | ( (/) e. x /\ A. y e. x suc y e. x ) } $.
+  $}
+
+  ${
+    $d x y z $.
+    $( Another name for ~ df-iom .  (Contributed by NM, 6-Aug-1994.) $)
+    dfom3 $p |- om = |^| { x | ( (/) e. x /\ A. y e. x suc y e. x ) } $=
+      ( df-iom ) ABC $.
+  $}
+
+  ${
+    $d x y $.
+    $( The existence of omega (the class of natural numbers).  Axiom 7 of
+       [TakeutiZaring] p. 43.  (Contributed by NM, 6-Aug-1994.) $)
+    omex $p |- om e. _V $=
+      ( vy vx com cvv wcel c0 csuc wral cab cint wex zfinf2 intexabim
+      cv wa ax-mp dfom3 eleq1i mpbir ) CDEFANZEBNGTEBTHOZAIJZDEZUAAKU
+      CABLUAAMPCUBDABQRS $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                 Peano's postulates
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y z $.
+    $( Zero is a natural number.  One of Peano's 5 postulates for arithmetic.
+       Proposition 7.30(1) of [TakeutiZaring] p. 42.  (Contributed by NM,
+       15-May-1994.) $)
+    peano1 $p |- (/) e. om $=
+      ( vy vx vz c0 cv wcel csuc wral wa cab cint com wi 0ex wsb df-clab ax-ia1
+      elint sbimi clelsb4 sylib sylbi mpgbir dfom3 eleqtrri ) DDAEZFZBEGUFFBUFH
+      ZIZAJZKZLDUKFCEZUJFZDULFZMCCDUJNRUMUIACOZUNUICAPUOUGACOUNUIUGACUGUHQSCADT
+      UAUBUCABUDUE $.
+  $}
+
+  ${
+    $d x y z A $.
+    $( The successor of any natural number is a natural number.  One of Peano's
+       5 postulates for arithmetic.  Proposition 7.30(2) of [TakeutiZaring]
+       p. 42.  (Contributed by NM, 3-Sep-2003.) $)
+    peano2 $p |- ( A e. om -> suc A e. om ) $=
+      ( vy vx vz cvv wcel com csuc cv wa wi wb imbi12d adantl wsb wal sylib nfv
+      wral nfan elex c0 cab cint ax-ia1 wceq eleq1 eleq1d df-clab ax-ia2 df-ral
+      suceq sbimi sbim elsb4 clelsb4 imbi12i bitri sbalv sylbi nfra1 nfsab nfvd
+      19.21bi nfcvd vtocldf ralrimiva ralim elintg sucexg syl syl5ibr mpd dfom3
+      eleq2i 3imtr4g mpcom ) AEFZAGFZAHZGFZAGUAVRAUBBIZFZCIZHZWBFZCWBSZJZBUCZUD
+      ZFZVTWJFZVSWAVRADIZFZVTWMFZKZDWISZWKWLKZVRWPDWIVRWMWIFZJZWDWMFZWEWMFZKZWP
+      CAEVRWSUEWDAUFZXCWPLWTXDXAWNXBWOWDAWMUGXDWEVTWMWDAULUHMNWSXCVRWSXCCWSWHBD
+      OZXCCPZWHDBUIXEWDWBFZWFKZCPZBDOXFWHXIBDWHWGXIWCWGUJWFCWBUKQUMXHXCBDCXHBDO
+      XGBDOZWFBDOZKXCXGWFBDUNXJXAXKXBDBCUODBWEUPUQURUSQUTVDNVRWSCVRCRWHCBDWCWGC
+      WCCRWFCWBVATVBTWTCAVEWTWPCVCVFVGWQWRVRWNDWISZWODWISZKWNWODWIVHVRWKXLWLXMD
+      AWIEVIVRVTEFWLXMLAEVJDVTWIEVIVKMVLVMGWJABCVNZVOGWJVTXNVOVPVQ $.
+  $}
+
+  $( The successor of any natural number is not zero.  One of Peano's 5
+     postulates for arithmetic.  Proposition 7.30(3) of [TakeutiZaring] p. 42.
+     (Contributed by NM, 3-Sep-2003.) $)
+  peano3 $p |- ( A e. om -> suc A =/= (/) ) $=
+    ( com wcel cvv csuc c0 wne elex nsuceq0g syl ) ABCADCAEFGABHAIJ $.
+
+  $( Two natural numbers are equal iff their successors are equal, i.e. the
+     successor function is one-to-one.  One of Peano's 5 postulates for
+     arithmetic.  Proposition 7.30(4) of [TakeutiZaring] p. 43.  (Contributed
+     by NM, 3-Sep-2003.) $)
+  peano4 $p |- ( ( A e. om /\ B e. om ) -> ( suc A = suc B <-> A = B ) ) $=
+    ( com suc11g ) ABCCD $.
+
+  ${
+    $d x y A $.
+    $( The induction postulate: any class containing zero and closed under the
+       successor operation contains all natural numbers.  One of Peano's 5
+       postulates for arithmetic.  Proposition 7.30(5) of [TakeutiZaring]
+       p. 43.  The more traditional statement of mathematical induction as a
+       theorem schema, with a basis and an induction hypothesis, is derived
+       from this theorem as theorem ~ findes .  (Contributed by NM,
+       18-Feb-2004.) $)
+    peano5 $p |- ( ( (/) e. A /\
+                 A. x e. om ( x e. A -> suc x e. A ) ) -> om C_ A ) $=
+      ( vy c0 wcel cv csuc wi com wral wa cin wss cint elin df-ral sylibr eleq2
+      cab wal dfom3 peano1 mpbiran biimpri peano2 adantr a1i jcad alimi imbi12i
+      pm3.31 albii 3imtr4i anim12i omex wceq raleqbi1dv anbi12d elab intss1 syl
+      inex1 syl5eqss ssid biantrur ssin bitri ) DBEZAFZBEZVIGZBEZHZAIJZKZIIBLZM
+      ZIBMZVOIDCFZEZVKVSEZAVSJZKZCSZNZVPCAUAVOVPWDEZWEVPMVODVPEZVKVPEZAVPJZKZWF
+      VHWGVNWIWGVHWGDIEVHUBDIBOUCUDVNVIVPEZWHHZATZWIVIIEZVMHZATWNVJKZVKIEZVLKZH
+      ZATVNWMWOWSAWOWPWQVLWPWQHWOWNWQVJVIUEUFUGWNVJVLUKUHUIVMAIPWLWSAWKWPWHWRVI
+      IBOVKIBOUJULUMWHAVPPQUNWCWJCVPIBUOVBVSVPUPVTWGWBWIVSVPDRWAWHAVSVPVSVPVKRU
+      QURUSQVPWDUTVAVCVRIIMZVRKVQWTVRIVDVEIIBVFVGQ $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+              Finite induction (for finite ordinals)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x A $.
+    find.1 $e |- ( A C_ om /\ (/) e. A /\ A. x e. A suc x e. A ) $.
+    $( The Principle of Finite Induction (mathematical induction).  Corollary
+       7.31 of [TakeutiZaring] p. 43.  The simpler hypothesis shown here was
+       suggested in an email from "Colin" on 1-Oct-2001.  The hypothesis states
+       that ` A ` is a set of natural numbers, zero belongs to ` A ` , and
+       given any member of ` A ` the member's successor also belongs to
+       ` A ` .  The conclusion is that every natural number is in ` A ` .
+       (Contributed by NM, 22-Feb-2004.)  (Proof shortened by Andrew Salmon,
+       27-Aug-2011.) $)
+    find $p |- A = om $=
+      ( com wss c0 wcel cv csuc wral simp1i wi wa w3a 3simpc ax-mp df-ral alral
+      wal sylbi anim2i peano5 eqssi ) BDBDEZFBGZAHZIBGZABJZCKUEUFBGUGLZADJZMZDB
+      EUEUHMZUKUDUEUHNULCUDUEUHOPUHUJUEUHUIASUJUGABQUIADRTUAPABUBPUC $.
+  $}
+
+  ${
+    $d x y $.  $d x A $.  $d x ps $.  $d x ch $.  $d x th $.  $d x ta $.
+    $d y ph $.
+    $( Substitutions. $)
+    finds.1 $e |- ( x = (/) -> ( ph <-> ps ) ) $.
+    finds.2 $e |- ( x = y -> ( ph <-> ch ) ) $.
+    finds.3 $e |- ( x = suc y -> ( ph <-> th ) ) $.
+    finds.4 $e |- ( x = A -> ( ph <-> ta ) ) $.
+    $( Basis. $)
+    finds.5 $e |- ps $.
+    $( Induction hypothesis. $)
+    finds.6 $e |- ( y e. om -> ( ch -> th ) ) $.
+    $( Principle of Finite Induction (inference schema), using implicit
+       substitutions.  The first four hypotheses establish the substitutions we
+       need.  The last two are the basis and the induction hypothesis.  Theorem
+       Schema 22 of [Suppes] p. 136.  (Contributed by NM, 14-Apr-1995.) $)
+    finds $p |- ( A e. om -> ta ) $=
+      ( com wcel cab c0 cv elab csuc wi wral wss 0ex mpbir sucex 3imtr4g peano5
+      vex rgen mp2an sseli elabg mpbid ) HOPHAFQZPEOUPHRUPPZGSZUPPZURUAZUPPZUBZ
+      GOUCOUPUDUQBMABFRUEITUFVBGOUROPCDUSVANACFURGUJZJTADFUTURVCUGKTUHUKGUPUIUL
+      UMAEFHOLUNUO $.
+  $}
+
+  ${
+    $d x y ta $.  $d x ps $.  $d x ch $.  $d x th $.  $d y ph $.
+    $( Substitutions. $)
+    finds2.1 $e |- ( x = (/) -> ( ph <-> ps ) ) $.
+    finds2.2 $e |- ( x = y -> ( ph <-> ch ) ) $.
+    finds2.3 $e |- ( x = suc y -> ( ph <-> th ) ) $.
+    $( Basis. $)
+    finds2.4 $e |- ( ta -> ps ) $.
+    $( Induction hypothesis. $)
+    finds2.5 $e |- ( y e. om -> ( ta -> ( ch -> th ) ) ) $.
+    $( Principle of Finite Induction (inference schema), using implicit
+       substitutions.  The first three hypotheses establish the substitutions
+       we need.  The last two are the basis and the induction hypothesis.
+       Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
+       29-Nov-2002.) $)
+    finds2 $p |- ( x e. om -> ( ta -> ph ) ) $=
+      ( cv com wcel wi c0 wceq imbi2d elab cab csuc wss 0ex mpbir a2d vex sucex
+      wral 3imtr4g rgen peano5 mp2an sseli abid sylib ) FMZNOUQEAPZFUAZOURNUSUQ
+      QUSOZGMZUSOZVAUBZUSOZPZGNUINUSUCUTEBPZKURVFFQUDUQQRABEHSTUEVEGNVANOZECPZE
+      DPZVBVDVGECDLUFURVHFVAGUGZUQVARACEISTURVIFVCVAVJUHUQVCRADEJSTUJUKGUSULUMU
+      NURFUOUP $.
+  $}
+
+  ${
+    $d x y $.  $d x ps $.  $d x ch $.  $d x th $.  $d y ph $.
+    $( Substitutions. $)
+    finds1.1 $e |- ( x = (/) -> ( ph <-> ps ) ) $.
+    finds1.2 $e |- ( x = y -> ( ph <-> ch ) ) $.
+    finds1.3 $e |- ( x = suc y -> ( ph <-> th ) ) $.
+    $( Basis. $)
+    finds1.4 $e |- ps $.
+    $( Induction hypothesis. $)
+    finds1.5 $e |- ( y e. om -> ( ch -> th ) ) $.
+    $( Principle of Finite Induction (inference schema), using implicit
+       substitutions.  The first three hypotheses establish the substitutions
+       we need.  The last two are the basis and the induction hypothesis.
+       Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
+       22-Mar-2006.) $)
+    finds1 $p |- ( x e. om -> ph ) $=
+      ( cv com wcel c0 wceq eqid a1i wi a1d finds2 mpi ) ELMNOOPZAOQABCDUCEFGHI
+      BUCJRFLMNCDSUCKTUAUB $.
+  $}
+
+  ${
+    $d x y z $.  $d y z ph $.
+    findes.1 $e |- [. (/) / x ]. ph $.
+    findes.2 $e |- ( x e. om -> ( ph -> [. suc x / x ]. ph ) ) $.
+    $( Finite induction with explicit substitution.  The first hypothesis is
+       the basis and the second is the induction hypothesis.  Theorem Schema 22
+       of [Suppes] p. 136.  (Contributed by Raph Levien, 9-Jul-2003.) $)
+    findes $p |- ( x e. om -> ph ) $=
+      ( vz vy wsb c0 wsbc csuc dfsbcq2 sbequ sbequ12r com wcel nfv nfim imbi12d
+      cv wi nfs1v nfsbc1v weq eleq1 sbequ12 wceq suceq dfsbcq syl chvar finds
+      wb ) ABEGABHIABFGZABFSZJZIZAEFBSZABEHKAEFBLABEUOKAEBMCUQNOZAABUQJZIZTZTUN
+      NOZUMUPTZTBFVBVCBVBBPUMUPBABFUAABUOUBQQBFUCZURVBVAVCUQUNNUDVDAUMUTUPABFUE
+      VDUSUOUFUTUPULUQUNUGABUSUOUHUIRRDUJUK $.
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                  The Natural Numbers (continued)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y z A $.
+
+    $( A natural number is either 0 or a successor.  Similar theorems for
+       arbitrary sets or real numbers will not be provable (without the law of
+       the excluded middle), but equality of natural numbers is decidable.
+       (Contributed by NM, 27-May-1998.) $)
+    nn0suc $p |- ( A e. om -> ( A = (/) \/ E. x e. om A = suc x ) ) $=
+      ( vy vz cv c0 wceq csuc wrex wo eqeq1 rexbidv orbi12d eqid orci
+      com wcel suceq eqeq2d rspcev mpan2 olcd a1d finds ) CEZFGZUEAEZ
+      HZGZAPIZJFFGZFUHGZAPIZJDEZFGZUNUHGZAPIZJZUNHZFGZUSUHGZAPIZJZBFG
+      ZBUHGZAPIZJCDBUFUFUKUJUMUEFFKUFUIULAPUEFUHKLMUEUNGZUFUOUJUQUEUN
+      FKVGUIUPAPUEUNUHKLMUEUSGZUFUTUJVBUEUSFKVHUIVAAPUEUSUHKLMUEBGZUF
+      VDUJVFUEBFKVIUIVEAPUEBUHKLMUKUMFNOUNPQZVCURVJVBUTVJUSUSGZVBUSNV
+      AVKAUNPUGUNGUHUSUSUGUNRSTUAUBUCUD $.
+  $}
+
+  ${
+    $d x y B $.
+
+    $( A member of a natural number is a natural number.  (Contributed by NM,
+       21-Jun-1998.) $)
+    elnn $p |- ( ( A e. B /\ B e. om ) -> A e. om ) $=
+      ( vy vx com wcel wss cv c0 csuc sseq1 0ss wa csn cun unss vex snss anbi2i
+      df-suc sseq1i 3bitr4i biimpi expcom finds ssel2 ancoms sylan2 ) BEFABFZBE
+      GZAEFZCHZEGIEGDHZEGZUMJZEGZUJCDBULIEKULUMEKULUOEKULBEKELUNUMEFZUPUNUQMZUP
+      UNUMNZEGZMUMUSOZEGURUPUMUSEPUQUTUNUMEDQRSUOVAEUMTUAUBUCUDUEUJUIUKBEAUFUGU
+      H $.
+  $}
+
+  ${
+    $d x y $.
+    $( Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
+       by NM, 18-Oct-1995.) $)
+    ordom $p |- Ord om $=
+      ( vx vy com word wtr cv wral wcel wa wi wal elnn gen2 dftr2 mpbir
+      c0 csuc treq tr0 suctr a1i finds rgen df-iord mpbir2an ) CDCEZAFZ
+      EZACGUFUGBFZHUICHIUGCHZJZBKAKUKABUGUILMABCNOUHACUIEPEUHUGQZEZUHBA
+      UGUIPRUIUGRZUIULRUNSUHUMJUJUGTUAUBUCACUDUE $.
+  $}
+
+  ${
+    $( Omega is an ordinal number.  (Contributed by Mario Carneiro,
+       30-Jan-2013.) $)
+    omelon2 $p |- ( om e. _V -> om e. On ) $=
+      ( com cvv wcel con0 word ordom elong mpbiri ) ABCADCAEFABGH $.
+  $}
+
+  $( Omega is an ordinal number.  (Contributed by NM, 10-May-1998.)  (Revised
+     by Mario Carneiro, 30-Jan-2013.) $)
+  omelon $p |- om e. On $=
+    ( com cvv wcel con0 omex omelon2 ax-mp ) ABCADCEFG $.
+
+  $( A natural number is an ordinal number.  (Contributed by NM,
+     27-Jun-1994.) $)
+  nnon $p |- ( A e. om -> A e. On ) $=
+    ( com omelon oneli ) BACD $.
+
+  ${
+    nnoni.1 $e |- A e. om $.
+    $( A natural number is an ordinal number.  (Contributed by NM,
+       27-Jun-1994.) $)
+    nnoni $p |- A e. On $=
+      ( com wcel con0 nnon ax-mp ) ACDAEDBAFG $.
+  $}
+
+  $( A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) $)
+  nnord $p |- ( A e. om -> Ord A ) $=
+    ( com wcel con0 word nnon eloni syl ) ABCADCAEAFAGH $.
+
+  ${
+    $d x y $.
+    $( Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.) $)
+    omsson $p |- om C_ On $=
+      ( vx com con0 cv nnon ssriv ) ABCADEF $.
+  $}
+
+  $( A class belongs to omega iff its successor does.  (Contributed by NM,
+     3-Dec-1995.) $)
+  peano2b $p |- ( A e. om <-> suc A e. om ) $=
+    ( com wcel csuc peano2 cvv elex sucexb sylibr sucidg elnn mpancom
+    syl impbii ) ABCZADZBCZAEAPCZQOQAFCZRQPFCSPBGAHIAFJMAPKLN $.
+
+  ${
+    $d x A $.
+    $( A nonzero natural number is a successor.  (Contributed by NM,
+       18-Feb-2004.) $)
+    nnsuc $p |- ( ( A e. om /\ A =/= (/) ) -> E. x e. om A = suc x ) $=
+      ( c0 wne com wcel wceq wn cv csuc wrex df-ne nn0suc ord sylan2b
+      imp ) BCDBEFZBCGZHZBAIJGAEKZBCLQSTQRTABMNPO $.
   $}
 
 $(
@@ -37250,6 +37675,11 @@ htmldef "suc" as
     "<IMG SRC='_suc.gif' WIDTH=22 HEIGHT=19 ALT=' suc' TITLE='suc'> ";
   althtmldef "suc" as 'suc ';
   latexdef "suc" as "{\rm suc}";
+htmldef "om" as
+    "<IMG SRC='omega.gif' WIDTH=11 HEIGHT=19 ALT=' om' TITLE='om'>";
+  /*althtmldef "om" as '&omega;';*/
+  althtmldef "om" as '&#x1D714;'; /* math italic omega */
+  latexdef "om" as "\omega";
 
 htmldef "\/_" as
     " <IMG SRC='veebar.gif' WIDTH=9 HEIGHT=19 ALT=' \/_' TITLE='\/_'> ";
@@ -37264,12 +37694,12 @@ htmldef "F." as
     " <IMG SRC='perp.gif' WIDTH=11 HEIGHT=19 TITLE='F.' ALIGN=TOP> ";
   althtmldef "F." as ' &perp; ';
   latexdef "F." as "\bot";
-htmldef "STABLE" as "<SMALL>STABLE</SMALL> ";
-  althtmldef "STABLE" as "<SMALL>STABLE</SMALL> ";
-  latexdef "STABLE" as "\mathrm{STABLE} ";
-htmldef "TESTABLE" as "<SMALL>TESTABLE</SMALL> ";
-  althtmldef "TESTABLE" as "<SMALL>TESTABLE</SMALL> ";
-  latexdef "TESTABLE" as "\mathrm{TESTABLE} ";
+htmldef "STAB" as "<SMALL>STAB</SMALL> ";
+  althtmldef "STAB" as "<SMALL>STAB</SMALL> ";
+  latexdef "STAB" as "\mathrm{STAB} ";
+htmldef "TEST" as "<SMALL>TEST</SMALL> ";
+  althtmldef "TEST" as "<SMALL>TEST</SMALL> ";
+  latexdef "TEST" as "\mathrm{TEST} ";
 htmldef "DECID" as "<SMALL>DECID</SMALL> ";
   althtmldef "DECID" as "<SMALL>DECID</SMALL> ";
   latexdef "DECID" as "\mathrm{DECID} ";
