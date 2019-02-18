@@ -1,0 +1,27 @@
+#!/bin/sh
+# regen-from-raw - regenerate files from .raw parts
+
+# Simple raw.html files
+simple_raw='mmcomplex mmnatded mmset mmdeduction mmzfcnd'
+markup_options="${1:-"/HTML"} /SYMBOLS"
+
+generate_simple_html() {
+  echo "read set.mm"
+  echo 'set scroll continuous'
+  for file in $simple_raw ; do
+    echo "markup \"${file}.raw.html\" \"${file}.demo.html\" ${markup_options}"
+  done
+  echo quit
+}
+
+generate_iset_html() {
+  echo "read iset.mm"
+  echo 'set scroll continuous'
+  for file in mmil ; do
+    echo "markup \"${file}.raw.html\" \"${file}.demo.html\" ${markup_options}"
+  done
+  echo quit
+}
+
+generate_simple_html | metamath
+generate_iset_html | metamath
